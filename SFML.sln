@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Asteroids", "Asteroids\Asteroids.vcxproj", "{74B5F3F5-7EA3-4F49-A2F4-0619A329E213}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Asteroids Setup", "Asteroids Setup\Asteroids Setup.vdproj", "{D1DC8221-F7DB-4769-A221-087DD85E769B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74B5F3F5-7EA3-4F49-A2F4-0619A329E213}.Debug|x86.ActiveCfg = Debug|Win32
+		{74B5F3F5-7EA3-4F49-A2F4-0619A329E213}.Debug|x86.Build.0 = Debug|Win32
+		{74B5F3F5-7EA3-4F49-A2F4-0619A329E213}.Release|x86.ActiveCfg = Release|Win32
+		{74B5F3F5-7EA3-4F49-A2F4-0619A329E213}.Release|x86.Build.0 = Release|Win32
+		{D1DC8221-F7DB-4769-A221-087DD85E769B}.Debug|x86.ActiveCfg = Debug
+		{D1DC8221-F7DB-4769-A221-087DD85E769B}.Release|x86.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27ED35B2-1A72-4D44-930A-7C8E11DB29B5}
+	EndGlobalSection
+EndGlobal

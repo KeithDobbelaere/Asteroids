@@ -1,0 +1,295 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="AIComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DemoState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HighScoresState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuSubItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionsState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PausedState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreEntryState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoresManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SplashState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vendor\SFMLExt\Fader.cpp">
+      <Filter>Vendor\SFMLExt</Filter>
+    </ClCompile>
+    <ClCompile Include="Vendor\SHA256\sha256.cpp">
+      <Filter>Vendor\Sha256</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AIComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Asteroid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HighScoresState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuSubItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionsState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PausedState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Powerups.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreEntryState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoresManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SplashState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StarField.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextEffects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendor\SFMLExt\Fader.hpp">
+      <Filter>Vendor\SFMLExt</Filter>
+    </ClInclude>
+    <ClInclude Include="Vendor\SHA256\sha256.h">
+      <Filter>Vendor\Sha256</Filter>
+    </ClInclude>
+    <ClInclude Include="Registry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{26025029-77a4-4f9c-9cd8-dee0f4a57a65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{527cac0d-583e-402b-86c0-dd6de6729807}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1ea73302-cc2b-407b-9482-24bc3c517d02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Images">
+      <UniqueIdentifier>{cb5b8e2e-7af6-485a-9b98-0fea466f539e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Sounds">
+      <UniqueIdentifier>{ed832bfa-c051-4d6f-ba50-f625af566dd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Fonts">
+      <UniqueIdentifier>{1d8d38f1-5398-4d0c-89bb-97d9599150d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendor">
+      <UniqueIdentifier>{0fb7512f-7fe4-4567-8cec-4d95f5de43d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendor\SFMLExt">
+      <UniqueIdentifier>{35cceb54-6bde-49f8-9101-56dfb7b8241c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vendor\Sha256">
+      <UniqueIdentifier>{307a9e6d-3bde-41ba-88b4-56128fc432dc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\asteroids.ico">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\fire_blue.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\fire_red.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\galaxy-1.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\galaxy-2.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\galaxy-4.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\haze.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\icon.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\lives.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\range_slider.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\rapid_fire.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\rock.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\rock_small.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\spaceship.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\special.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\splash_screen.jpg">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+    <Image Include="Images\starfield.png">
+      <Filter>Resource Files\Images</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sounds\Basic_Phaser.ogg">
+      <Filter>Resource Files\Sounds</Filter>
+    </None>
+    <None Include="Sounds\Click_Sound.ogg">
+      <Filter>Resource Files\Sounds</Filter>
+    </None>
+    <None Include="Sounds\Nearly_There.ogg">
+      <Filter>Resource Files\Sounds</Filter>
+    </None>
+    <None Include="Sounds\Power_up1.ogg">
+      <Filter>Resource Files\Sounds</Filter>
+    </None>
+    <None Include="Sounds\Power_up2.ogg">
+      <Filter>Resource Files\Sounds</Filter>
+    </None>
+    <None Include="Sounds\Power_up3.ogg">
+      <Filter>Resource Files\Sounds</Filter>
+    </None>
+    <None Include="Sounds\Rapid_Phaser.ogg">
+      <Filter>Resource Files\Sounds</Filter>
+    </None>
+    <None Include="Sounds\Special_Weapon.ogg">
+      <Filter>Resource Files\Sounds</Filter>
+    </None>
+    <None Include="Sounds\Stardust_Memories.ogg">
+      <Filter>Resource Files\Sounds</Filter>
+    </None>
+    <None Include="asteroids.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Sounds\Impact.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+    <Media Include="Sounds\Ship_Explosion.wav">
+      <Filter>Resource Files\Sounds</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Fonts\Barcade.otf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="Fonts\BarcadeBoldItalic.otf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+    <Font Include="Fonts\BarcadeNoBar.ttf">
+      <Filter>Resource Files\Fonts</Filter>
+    </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Vendor\SHA256\LICENSE.txt">
+      <Filter>Vendor\Sha256</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

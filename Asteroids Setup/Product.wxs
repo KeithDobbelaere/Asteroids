@@ -1,0 +1,902 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+    <Product Id='*' Name='Asteroids!' Language='1033' Version='1.0.0' Manufacturer='2R Games' UpgradeCode='{386F21F1-2216-4851-A7A7-B3C9CC364DB9}' Codepage='1252'>
+        <Package AdminImage='no' Comments='Asteroids! Game' Compressed='yes' Description='Asteroids Setup' InstallerVersion='300' Languages='1033' Manufacturer='2R Games' Platform='x86' ReadOnly='no' ShortNames='no' />
+        <Media Id='1' Cabinet='product.cab' EmbedCab='yes' DiskPrompt='CD-ROM #1' />
+        <Property Id='DiskPrompt' Value='Asteroids! Installation [1]' />
+        <Property Id='ARPCOMMENTS' Value='Asteroids! Game' />
+        <Property Id='ARPCONTACT' Value='Keith Dobbelaere' />
+        <Property Id='ARPHELPLINK' Value='https://github.com/KeithDobbelaere/Asteroids' />
+        <Property Id='ARPPRODUCTICON'>_361FBE3A02EA</Property>
+        <Icon Id='_361FBE3A02EA' SourceFile='..\Asteroids\Images\asteroids.ico' />
+        <CustomAction Id='PreventDowngrading' Error='Newer version already installed.' />
+        <Binary Id='ADXDPCADLL' SourceFile='Resources\Binary\adxdpca.dll' />
+        <!-- Initialize the '' directory property. -->
+        <CustomAction Id='DIRCA_TARGETDIR' BinaryKey='ADXDPCADLL' DllEntry='SetTARGETDIR' Execute='firstSequence' />
+        <!-- The directory tree of the installation package. -->
+        <Directory Id='TARGETDIR' Name='SourceDir'>
+            <Component Id='com_42A252E1_2B11_584E_973B_13EDCE54F1E9' Guid='BD909848-36AB-48AA-9848-AFABE3847DDB' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                <File Id='_42A252E1_2B11_584E_973B_13EDCE54F1E9' DiskId='1' Hidden='yes' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='asteroids.bin' Source='..\Asteroids\asteroids.bin' KeyPath='yes' />
+            </Component>
+            <Component Id='com_BAAD5BDD_F144_C1C8_BF24_A393E31C9C3F' Guid='9E577E57-DB72-4D30-8B82-45A1C1260B9D' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                <File Id='_BAAD5BDD_F144_C1C8_BF24_A393E31C9C3F' DiskId='1' Hidden='yes' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='OpenAL32.dll' Source='OpenAL32.dll' KeyPath='yes' />
+            </Component>
+            <Component Id='com_DF16167C_A334_D74F_8293_361FBE3A02EA' Guid='57C0AD9D-2398-494D-BC26-2278B6CC2A2A' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                <File Id='_DF16167C_A334_D74F_8293_361FBE3A02EA' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='asteroids.ico' Source='..\Asteroids\Images\asteroids.ico' KeyPath='yes' />
+            </Component>
+            <!-- The 'Asteroids' project output. -->
+            <Directory Id='Asteroids.Binaries' />
+            <Directory Id='_8085220D_58D5_3F49_8DDC_890086461449' Name='Sounds'>
+                <Component Id='com_228FCD0A_D6B5_6D4C_B8CB_0CFB59CAC102' Guid='EE40EE29-D5E7-45BA-A0D4-E8B90BAE4832' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_228FCD0A_D6B5_6D4C_B8CB_0CFB59CAC102' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='Special_Weapon.ogg' Source='..\Asteroids\Sounds\Special_Weapon.ogg' KeyPath='yes' />
+                </Component>
+                <Component Id='com_342F3A02_562E_0941_8C98_818041F40F68' Guid='1EBA4F13-A91A-4750-9E3C-8C42E2DBB429' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_342F3A02_562E_0941_8C98_818041F40F68' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='Ship_Explosion.wav' Source='..\Asteroids\Sounds\Ship_Explosion.wav' KeyPath='yes' />
+                </Component>
+                <Component Id='com_3EB85110_25F2_2740_AF73_67915903DFDF' Guid='19832208-37E6-44E4-BDC2-0DA827D58270' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_3EB85110_25F2_2740_AF73_67915903DFDF' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='Impact.wav' Source='..\Asteroids\Sounds\Impact.wav' KeyPath='yes' />
+                </Component>
+                <Component Id='com_40276B0A_9558_9946_B37E_71C72F796D2C' Guid='4EC50513-A50A-4A27-9451-2B86F4CE25AB' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_40276B0A_9558_9946_B37E_71C72F796D2C' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='Rapid_Phaser.ogg' Source='..\Asteroids\Sounds\Rapid_Phaser.ogg' KeyPath='yes' />
+                </Component>
+                <Component Id='com_7403DDA4_C654_D547_8E1C_685E5E81F085' Guid='B5F9BA2F-EE6B-4C73-A612-3C7CEC640FA4' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_7403DDA4_C654_D547_8E1C_685E5E81F085' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='Basic_Phaser.ogg' Source='..\Asteroids\Sounds\Basic_Phaser.ogg' KeyPath='yes' />
+                </Component>
+                <Component Id='com_9FF3D164_29BC_EE48_8615_55391969A1BB' Guid='3FF4E55D-A829-463A-B1C6-3E83A360C88C' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_9FF3D164_29BC_EE48_8615_55391969A1BB' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='Stardust_Memories.ogg' Source='..\Asteroids\Sounds\Stardust_Memories.ogg' KeyPath='yes' />
+                </Component>
+                <Component Id='com_A6908BFD_3987_154B_887A_8DF085E34544' Guid='C9ECFCDE-9008-4D59-BD13-9CBB25854F7F' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_A6908BFD_3987_154B_887A_8DF085E34544' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='Power_up1.ogg' Source='..\Asteroids\Sounds\Power_up1.ogg' KeyPath='yes' />
+                </Component>
+                <Component Id='com_ABC39334_FD2E_B54B_B97A_4581FAA69269' Guid='1B5CF42F-CACE-4611-AD49-56F7E175DD0E' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_ABC39334_FD2E_B54B_B97A_4581FAA69269' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='Power_up2.ogg' Source='..\Asteroids\Sounds\Power_up2.ogg' KeyPath='yes' />
+                </Component>
+                <Component Id='com_E083AA4D_9575_F240_A6E7_442BD7AF408A' Guid='465ADC43-79E1-4D71-9DB2-F59EDA499394' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_E083AA4D_9575_F240_A6E7_442BD7AF408A' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='Nearly_There.ogg' Source='..\Asteroids\Sounds\Nearly_There.ogg' KeyPath='yes' />
+                </Component>
+                <Component Id='com_E52BB130_F747_3049_9AEF_9D359C313DD0' Guid='89BAA790-43D5-4B43-B55C-B1A29628201D' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_E52BB130_F747_3049_9AEF_9D359C313DD0' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='Click_Sound.ogg' Source='..\Asteroids\Sounds\Click_Sound.ogg' KeyPath='yes' />
+                </Component>
+                <Component Id='com_F205F8F5_8A6C_4548_A89B_5541D702CCFB' Guid='E2B88C94-A03A-4E42-85AD-786C079FE71A' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_F205F8F5_8A6C_4548_A89B_5541D702CCFB' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='Power_up3.ogg' Source='..\Asteroids\Sounds\Power_up3.ogg' KeyPath='yes' />
+                </Component>
+            </Directory>
+            <Directory Id='_C6E71E44_6F28_E848_A20D_71F4A6E83803' Name='Fonts'>
+                <Component Id='com_2BCA1718_D57F_8D42_9317_AA231F2D4BD9' Guid='3C375569-678B-4145-B264-E9375AEB9224' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_2BCA1718_D57F_8D42_9317_AA231F2D4BD9' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='BarcadeNoBar.ttf' Source='..\Asteroids\Fonts\BarcadeNoBar.ttf' KeyPath='yes' />
+                </Component>
+                <Component Id='com_31DFAE32_019F_DF4B_89AA_C09286BE4004' Guid='00437BFA-9688-4695-BEFF-56F1F1255B65' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_31DFAE32_019F_DF4B_89AA_C09286BE4004' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='BarcadeBoldItalic.otf' Source='..\Asteroids\Fonts\BarcadeBoldItalic.otf' KeyPath='yes' />
+                </Component>
+                <Component Id='com_93FE0D4C_FAC9_F641_A999_483EAC61E131' Guid='BBA37492-2B15-4B4D-8404-C55536A348C6' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_93FE0D4C_FAC9_F641_A999_483EAC61E131' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='Barcade.otf' Source='..\Asteroids\Fonts\Barcade.otf' KeyPath='yes' />
+                </Component>
+            </Directory>
+            <Directory Id='_917ACED7_96C1_204D_A897_17F8E9616F0C' Name='Images'>
+                <Component Id='com_0E6FFE14_436E_5F4C_8988_10F6F3C78CBB' Guid='9342BD6B-46E9-467D-AF85-F3F5FDFE7B2C' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_0E6FFE14_436E_5F4C_8988_10F6F3C78CBB' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='range_slider.png' Source='..\Asteroids\Images\range_slider.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_1CFAB8E6_1851_1348_AE17_A295726DDFD4' Guid='BBDCC19F-CB81-4335-AD51-F35EA2FB4946' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_1CFAB8E6_1851_1348_AE17_A295726DDFD4' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='spaceship.png' Source='..\Asteroids\Images\spaceship.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_1F554699_0FCA_984D_8337_6341909BE79C' Guid='19EAE19D-CE9A-4E4D-9BA2-4B1843C67744' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_1F554699_0FCA_984D_8337_6341909BE79C' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='rapid_fire.png' Source='..\Asteroids\Images\rapid_fire.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_311B23C9_6A35_B040_B501_BF4F8D5132DC' Guid='4F6DF2DB-E922-4A9D-94EA-EB2E4A50D991' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_311B23C9_6A35_B040_B501_BF4F8D5132DC' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='galaxy-1.png' Source='..\Asteroids\Images\galaxy-1.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_61C8FD17_60BE_E842_978A_7D25474A44A6' Guid='D0E770A0-A038-42F0-A0BD-EE55D5FD4C54' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_61C8FD17_60BE_E842_978A_7D25474A44A6' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='lives.png' Source='..\Asteroids\Images\lives.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_63044CF8_ACCB_9A41_AC51_ABD451CA388B' Guid='9A56BDA5-5C9F-4AA5-93E7-D5207B9BB959' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_63044CF8_ACCB_9A41_AC51_ABD451CA388B' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='special.png' Source='..\Asteroids\Images\special.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_736E8924_A976_2B4F_8CC8_00528EDA0E05' Guid='CF5A3B72-CD7E-4D9E-AF27-CCC8A7E5536A' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_736E8924_A976_2B4F_8CC8_00528EDA0E05' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='starfield.png' Source='..\Asteroids\Images\starfield.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_7869E8B2_239D_0941_99A9_2BE68E532150' Guid='4B81583E-0F8B-4262-8985-F2187DAA8F24' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_7869E8B2_239D_0941_99A9_2BE68E532150' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='fire_blue.png' Source='..\Asteroids\Images\fire_blue.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_79668A05_F31F_804C_AC10_E8FC96CF6502' Guid='6D80B940-4025-4763-B12E-05F0B9EF4EC7' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_79668A05_F31F_804C_AC10_E8FC96CF6502' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='fire_red.png' Source='..\Asteroids\Images\fire_red.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_B17BDE91_3B9A_0248_A848_E4A6B323B0F4' Guid='CBA95EC2-EE59-49FB-84FC-748AFC1F5B14' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_B17BDE91_3B9A_0248_A848_E4A6B323B0F4' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='icon.png' Source='..\Asteroids\Images\icon.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_BA0BD9A6_0282_FE46_9FE7_EA51748D5AE6' Guid='12F2D7CE-E45D-416D-8361-F9CDEC0E0389' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_BA0BD9A6_0282_FE46_9FE7_EA51748D5AE6' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='rock_small.png' Source='..\Asteroids\Images\rock_small.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_BBB1BDB6_8AE6_CD44_A50E_1BD4A700DEA8' Guid='A5FECD1D-24ED-4986-910D-C51AD319E864' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_BBB1BDB6_8AE6_CD44_A50E_1BD4A700DEA8' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='haze.png' Source='..\Asteroids\Images\haze.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_CBB2B4C9_8F2E_5B42_8601_F1E139012E7C' Guid='A2019FAA-0BAF-4EEF-AAC8-CF0A64E06635' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_CBB2B4C9_8F2E_5B42_8601_F1E139012E7C' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='rock.png' Source='..\Asteroids\Images\rock.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_D3627F5C_D2C1_EE41_BA84_A569D70AD7C1' Guid='068DE0A0-D7BE-4031-8993-D6DAB8C0177F' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_D3627F5C_D2C1_EE41_BA84_A569D70AD7C1' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='splash_screen.jpg' Source='..\Asteroids\Images\splash_screen.jpg' KeyPath='yes' />
+                </Component>
+                <Component Id='com_E01112CE_F418_DF4C_A2BA_AA77298A92B9' Guid='5C1BCC33-83A6-4C35-A331-6950900C6AD3' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_E01112CE_F418_DF4C_A2BA_AA77298A92B9' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='galaxy-4.png' Source='..\Asteroids\Images\galaxy-4.png' KeyPath='yes' />
+                </Component>
+                <Component Id='com_EA89AA3B_5288_114A_B064_8C52314CE92A' Guid='AD511AB8-1A27-47EA-B408-D28558C4188A' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                    <File Id='_EA89AA3B_5288_114A_B064_8C52314CE92A' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='galaxy-2.png' Source='..\Asteroids\Images\galaxy-2.png' KeyPath='yes' />
+                </Component>
+                <Directory Id='_0DA6DB5D_17F2_B24B_A67A_9729A4D42552' Name='Explosions'>
+                    <Component Id='com_A523557B_E379_5448_9923_EB0C7423C211' Guid='786CA26A-0464-4402-B5E4-0EF1DDCD0F34' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                        <File Id='_A523557B_E379_5448_9923_EB0C7423C211' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='type_C.png' Source='..\Asteroids\Images\explosions\type_C.png' KeyPath='yes' />
+                    </Component>
+                    <Component Id='com_F5ECEF05_97D5_1545_AC60_4D9FB35F7261' Guid='7D80735F-0F4D-4777-BE08-C60CF9E90D1A' Permanent='no' SharedDllRefCount='no' Transitive='no'>
+                        <File Id='_F5ECEF05_97D5_1545_AC60_4D9FB35F7261' DiskId='1' Hidden='no' ReadOnly='no' System='no' Vital='yes' Compressed='yes' Name='type_B.png' Source='..\Asteroids\Images\explosions\type_B.png' KeyPath='yes' />
+                    </Component>
+                </Directory>
+            </Directory>
+            <Directory Id='DesktopFolder' Name='Desktop'>
+                <Component Id='com_dirDesktopFolder' Guid='64F8FA4B-390F-4B6C-8AF0-7A0F3890C3B0' Transitive='no'>
+                    <RemoveFolder Id='_EAD0D0AE_8FFA_4774_A942_E87C5D34AD9E' On='uninstall' />
+                    <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]\Installer' Name='com_dirDesktopFolder' Type='string' Value='Desktop directory' KeyPath='yes' />
+                    <Shortcut Id='_E25204CE_1C2E_CF4A_B4BC_700FD4729B5E' Name='Asteroids!' Show='normal' WorkingDirectory='TARGETDIR' Target='[TARGETDIR]Asteroids.exe'>
+                        <Icon Id='_700FD4729B5E' SourceFile='..\Asteroids\Images\asteroids.ico' />
+                    </Shortcut>
+                </Component>
+            </Directory>
+            <Directory Id='ProgramMenuFolder' Name='Program Menu'>
+                <Component Id='com_dirProgramMenuFolder' Guid='931C5AE6-80B8-47B1-AAB1-BFA173DC34BD' Transitive='no'>
+                    <RemoveFolder Id='_3389D57D_7ABE_4F8D_AB49_B4EFB6C1B110' On='uninstall' />
+                    <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]\Installer' Name='com_dirProgramMenuFolder' Type='string' Value='Program Menu directory' KeyPath='yes' />
+                    <Shortcut Id='_826D2E09_2314_CF43_9027_683E1A84FECB' Name='Asteroids!' Show='normal' WorkingDirectory='TARGETDIR' Target='[TARGETDIR]Asteroids.exe'>
+                        <Icon Id='_683E1A84FECB' SourceFile='..\Asteroids\Images\asteroids.ico' />
+                    </Shortcut>
+                </Component>
+            </Directory>
+        </Directory>
+        <!-- The FileSystem group of the installation package. -->
+        <ComponentGroup Id='FileSystemGroup'>
+            <ComponentGroupRef Id='Asteroids.Binaries' />
+            <ComponentRef Id='com_42A252E1_2B11_584E_973B_13EDCE54F1E9' />
+            <ComponentRef Id='com_BAAD5BDD_F144_C1C8_BF24_A393E31C9C3F' />
+            <ComponentRef Id='com_DF16167C_A334_D74F_8293_361FBE3A02EA' />
+            <ComponentRef Id='com_228FCD0A_D6B5_6D4C_B8CB_0CFB59CAC102' />
+            <ComponentRef Id='com_342F3A02_562E_0941_8C98_818041F40F68' />
+            <ComponentRef Id='com_3EB85110_25F2_2740_AF73_67915903DFDF' />
+            <ComponentRef Id='com_40276B0A_9558_9946_B37E_71C72F796D2C' />
+            <ComponentRef Id='com_7403DDA4_C654_D547_8E1C_685E5E81F085' />
+            <ComponentRef Id='com_9FF3D164_29BC_EE48_8615_55391969A1BB' />
+            <ComponentRef Id='com_A6908BFD_3987_154B_887A_8DF085E34544' />
+            <ComponentRef Id='com_ABC39334_FD2E_B54B_B97A_4581FAA69269' />
+            <ComponentRef Id='com_E083AA4D_9575_F240_A6E7_442BD7AF408A' />
+            <ComponentRef Id='com_E52BB130_F747_3049_9AEF_9D359C313DD0' />
+            <ComponentRef Id='com_F205F8F5_8A6C_4548_A89B_5541D702CCFB' />
+            <ComponentRef Id='com_2BCA1718_D57F_8D42_9317_AA231F2D4BD9' />
+            <ComponentRef Id='com_31DFAE32_019F_DF4B_89AA_C09286BE4004' />
+            <ComponentRef Id='com_93FE0D4C_FAC9_F641_A999_483EAC61E131' />
+            <ComponentRef Id='com_0E6FFE14_436E_5F4C_8988_10F6F3C78CBB' />
+            <ComponentRef Id='com_1CFAB8E6_1851_1348_AE17_A295726DDFD4' />
+            <ComponentRef Id='com_1F554699_0FCA_984D_8337_6341909BE79C' />
+            <ComponentRef Id='com_311B23C9_6A35_B040_B501_BF4F8D5132DC' />
+            <ComponentRef Id='com_61C8FD17_60BE_E842_978A_7D25474A44A6' />
+            <ComponentRef Id='com_63044CF8_ACCB_9A41_AC51_ABD451CA388B' />
+            <ComponentRef Id='com_736E8924_A976_2B4F_8CC8_00528EDA0E05' />
+            <ComponentRef Id='com_7869E8B2_239D_0941_99A9_2BE68E532150' />
+            <ComponentRef Id='com_79668A05_F31F_804C_AC10_E8FC96CF6502' />
+            <ComponentRef Id='com_B17BDE91_3B9A_0248_A848_E4A6B323B0F4' />
+            <ComponentRef Id='com_BA0BD9A6_0282_FE46_9FE7_EA51748D5AE6' />
+            <ComponentRef Id='com_BBB1BDB6_8AE6_CD44_A50E_1BD4A700DEA8' />
+            <ComponentRef Id='com_CBB2B4C9_8F2E_5B42_8601_F1E139012E7C' />
+            <ComponentRef Id='com_D3627F5C_D2C1_EE41_BA84_A569D70AD7C1' />
+            <ComponentRef Id='com_E01112CE_F418_DF4C_A2BA_AA77298A92B9' />
+            <ComponentRef Id='com_EA89AA3B_5288_114A_B064_8C52314CE92A' />
+            <ComponentRef Id='com_A523557B_E379_5448_9923_EB0C7423C211' />
+            <ComponentRef Id='com_F5ECEF05_97D5_1545_AC60_4D9FB35F7261' />
+            <ComponentRef Id='com_dirDesktopFolder' />
+            <ComponentRef Id='com_dirProgramMenuFolder' />
+        </ComponentGroup>
+        <!-- The Registry group of the installation package. -->
+        <ComponentGroup Id='RegistryGroup'>
+            <Component Id='_D310F113_9CA2_4E78_9F32_A080EAC7888F' Guid='B0730919-BDBD-4F8C-9EE0-F47D3051C0F3' Transitive='no' Directory='TARGETDIR'>
+                <RegistryKey Root='HKLM' Key='Software' ForceCreateOnInstall='no' ForceDeleteOnUninstall='no' />
+            </Component>
+            <Component Id='_CD60E31E_B5F0_4138_AB4B_CD18A8968B57' Guid='36DACC79-1478-4450-B181-DAFD5672FDD7' Transitive='no' Directory='TARGETDIR'>
+                <RegistryKey Root='HKLM' Key='Software\[Manufacturer]' ForceCreateOnInstall='no' ForceDeleteOnUninstall='no' />
+            </Component>
+            <Component Id='_4A75160F_0D7D_4B2B_AD8F_C54676DD12DA' Guid='4AF356B7-0431-4D70-B520-8174026D11EE' Transitive='no' Directory='TARGETDIR'>
+                <RegistryKey Root='HKCU' Key='Software' ForceCreateOnInstall='no' ForceDeleteOnUninstall='no' />
+            </Component>
+            <Component Id='_9A654B03_ACC5_43E3_B33B_47223448A820' Guid='6657B477-971A-4579-B0D2-D425DF778729' Transitive='no' Directory='TARGETDIR'>
+                <RegistryKey Root='HKCU' Key='Software\2R Games' ForceCreateOnInstall='no' ForceDeleteOnUninstall='no' />
+            </Component>
+            <Component Id='_9F030D69_E797_442B_9D20_6CB8CDDC7DBA' Guid='EEFF046C-5FEF-49AB-9271-626B13BB7FF7' Transitive='no' Directory='TARGETDIR'>
+                <RegistryKey Root='HKCU' Key='Software\2R Games\Asteroids' ForceCreateOnInstall='no' ForceDeleteOnUninstall='no'>
+                    <RegistryValue Type='string' Name='HighScoresHash' Value='' />
+                </RegistryKey>
+            </Component>
+        </ComponentGroup>
+        <!-- The composite feature of the installation package. -->
+        <Feature Id='CompleteInstall' Title='All Files' Level='1'>
+            <ComponentGroupRef Id='FileSystemGroup' />
+            <ComponentGroupRef Id='RegistryGroup' />
+        </Feature>
+        <Upgrade Id='{386F21F1-2216-4851-A7A7-B3C9CC364DB9}'>
+            <UpgradeVersion Minimum='1.0.0' Property='NEWPRODUCTFOUND' OnlyDetect='yes' IncludeMinimum='no' Language='1033' />
+        </Upgrade>
+        <InstallExecuteSequence>
+            <Custom Action='DIRCA_TARGETDIR' Before='CostInitialize'><![CDATA[TARGETDIR = ""]]></Custom>
+            <Custom Action='PreventDowngrading' After='FindRelatedProducts'><![CDATA[NEWPRODUCTFOUND]]></Custom>
+        </InstallExecuteSequence>
+        <InstallUISequence>
+            <Custom Action='ERRCA_UIANDADVERTISED' Sequence='5'><![CDATA[ProductState=1]]></Custom>
+            <AppSearch Sequence='100' />
+            <FindRelatedProducts Sequence='200' />
+            <LaunchConditions Sequence='400'><![CDATA[NOT Installed]]></LaunchConditions>
+            <CCPSearch Sequence='500'><![CDATA[NOT Installed]]></CCPSearch>
+            <RMCCPSearch Sequence='600'><![CDATA[NOT Installed]]></RMCCPSearch>
+            <ValidateProductID Sequence='700' />
+            <Custom Action='DIRCA_TARGETDIR' Before='CostInitialize'><![CDATA[TARGETDIR = ""]]></Custom>
+            <Custom Action='PreventDowngrading' After='FindRelatedProducts'><![CDATA[NEWPRODUCTFOUND]]></Custom>
+            <CostInitialize Sequence='800' />
+            <FileCost Sequence='900' />
+            <IsolateComponents Sequence='950'><![CDATA[RedirectedDllSupport]]></IsolateComponents>
+            <CostFinalize Sequence='1000' />
+            <ExecuteAction Sequence='1300' />
+            <Show Dialog='WelcomeForm' Sequence='1001'><![CDATA[Installed="" AND NOT RESUME]]></Show>
+            <Show Dialog='ProgressForm' Sequence='1299' />
+            <Show Dialog='FatalErrorForm' OnExit='error'><![CDATA[NOT HideFatalErrorForm]]></Show>
+            <Show Dialog='UserExitForm' OnExit='cancel' />
+            <Show Dialog='FinishedForm' OnExit='success' />
+            <Show Dialog='ResumeForm' Sequence='998'><![CDATA[Installed="" AND RESUME]]></Show>
+            <Show Dialog='MaintenanceForm' Sequence='999'><![CDATA[Installed<>""]]></Show>
+        </InstallUISequence>
+        <AdminUISequence>
+            <Custom Action='DIRCA_TARGETDIR' Before='CostInitialize'><![CDATA[TARGETDIR = ""]]></Custom>
+            <CostInitialize Sequence='800' />
+            <FileCost Sequence='900' />
+            <CostFinalize Sequence='1000' />
+            <ExecuteAction Sequence='1300' />
+            <Show Dialog='AdminWelcomeForm' Sequence='1001'><![CDATA[Installed="" AND NOT RESUME]]></Show>
+            <Show Dialog='AdminProgressForm' Sequence='1299' />
+            <Show Dialog='AdminFatalErrorForm' OnExit='error' />
+            <Show Dialog='AdminUserExitForm' OnExit='cancel' />
+            <Show Dialog='AdminFinishedForm' OnExit='success' />
+            <Show Dialog='AdminResumeForm' Sequence='998'><![CDATA[Installed="" AND RESUME]]></Show>
+            <Show Dialog='AdminMaintenanceForm' Sequence='999'><![CDATA[Installed<>""]]></Show>
+        </AdminUISequence>
+        <UI Id='Base'>
+            <Property Id='VSDNETURLMSG' Value='This setup requires the .NET Framework version [1].  Please install the .NET Framework and run this setup again.  The .NET Framework can be obtained from the web.  Would you like to do this now?' />
+            <Property Id='VSDIISMSG' Value='This setup requires Internet Information Server 5.1 or higher and Windows XP or higher.  This setup cannot be installed on Windows 2000.  Please install Internet Information Server or a newer operating system and run this setup again.' />
+            <Property Id='VSDUIANDADVERTISED' Value='This advertised application will not be installed because it might be unsafe. Contact your administrator to change the installation user interface option of the package to basic.' />
+            <Property Id='VSDNETMSG' Value='This setup requires the .NET Framework version [1].  Please install the .NET Framework and run this setup again.' />
+            <Property Id='VSDINVALIDURLMSG' Value='The specified path &apos;[2]&apos; is unavailable. The Internet Information Server might not be running or the path exists and is redirected to another machine. Please check the status of this virtual directory in the Internet Services Manager.' />
+            <Property Id='VSDVERSIONMSG' Value='Unable to install because a newer version of this product is already installed.' />
+        </UI>
+        <UI Id='UserInterface'>
+            <Binary Id='DefBannerBitmap' SourceFile='Resources\WiXDefBannerBitmap.bmp' />
+            <Property Id='DefaultUIFont' Value='VsdDefaultUIFont.524F4245_5254_5341_4C45_534153783400' />
+            <TextStyle Id='VsdDefaultUIFont.524F4245_5254_5341_4C45_534153783400' FaceName='MS Sans Serif' Size='9' Red='0' Green='0' Blue='0' />
+            <UIText Id='MenuLocal'><![CDATA[Will be installed on local hard drive]]></UIText>
+            <UIText Id='SelParentCostNegNeg'><![CDATA[This feature frees up [1] on your hard drive. It has [2] of [3] subfeatures selected. The subfeatures free up [4] on your hard drive.]]></UIText>
+            <UIText Id='SelNetworkNetwork'><![CDATA[This feature will remain to be run from the network]]></UIText>
+            <UIText Id='SelNetworkLocal'><![CDATA[This feature will change from run from network state to be installed on the local hard drive]]></UIText>
+            <UIText Id='SelNetworkAdvertise'><![CDATA[This feature will change from run from network state to set to be installed when required]]></UIText>
+            <UIText Id='SelNetworkAbsent'><![CDATA[This feature will be uninstalled completely, you won't be able to run it from the network]]></UIText>
+            <UIText Id='SelAbsentAbsent'><![CDATA[This feature will remain uninstalled]]></UIText>
+            <UIText Id='ScriptInProgress'><![CDATA[Gathering required information...]]></UIText>
+            <UIText Id='MenuCD'><![CDATA[Will be installed to run from CD]]></UIText>
+            <UIText Id='SelChildCostNeg'><![CDATA[This feature frees up [1] on your hard drive.]]></UIText>
+            <UIText Id='SelCDLocal'><![CDATA[This feature will change from run from CD state to be installed on the local hard drive]]></UIText>
+            <UIText Id='MenuAbsent'><![CDATA[Entire feature will be unavailable]]></UIText>
+            <UIText Id='SelCDAdvertise'><![CDATA[This feature will change from run from CD state to set to be installed when required]]></UIText>
+            <UIText Id='MenuAllNetwork'><![CDATA[Entire feature will be installed to run from network]]></UIText>
+            <UIText Id='SelLocalNetwork'><![CDATA[This feature will be removed from your local hard drive, but will be still available to run from the network]]></UIText>
+            <UIText Id='SelAdvertiseNetwork'><![CDATA[This feature will be available to run from the network]]></UIText>
+            <UIText Id='MenuAllLocal'><![CDATA[Entire feature will be installed on local hard drive]]></UIText>
+            <UIText Id='SelAdvertiseLocal'><![CDATA[This feature will be installed on your local hard drive]]></UIText>
+            <UIText Id='MenuAllCD'><![CDATA[Entire feature will be installed to run from CD]]></UIText>
+            <UIText Id='SelCDAbsent'><![CDATA[This feature will be uninstalled completely, you won't be able to run it from CD]]></UIText>
+            <UIText Id='MenuAdvertise'><![CDATA[Feature will be installed when required]]></UIText>
+            <UIText Id='SelAdvertiseCD'><![CDATA[This feature will be available to run from CD]]></UIText>
+            <UIText Id='bytes'><![CDATA[bytes]]></UIText>
+            <UIText Id='SelAdvertiseAdvertise'><![CDATA[Will be installed when required]]></UIText>
+            <UIText Id='AbsentPath' />
+            <UIText Id='MB'><![CDATA[MB]]></UIText>
+            <UIText Id='SelAdvertiseAbsent'><![CDATA[This feature will become unavailable]]></UIText>
+            <UIText Id='KB'><![CDATA[KB]]></UIText>
+            <UIText Id='GB'><![CDATA[GB]]></UIText>
+            <UIText Id='SelAbsentNetwork'><![CDATA[This feature will be installed to run from the network]]></UIText>
+            <UIText Id='SelAbsentCD'><![CDATA[This feature will be installed to run from CD]]></UIText>
+            <UIText Id='SelAbsentAdvertise'><![CDATA[This feature will be set to be installed when required]]></UIText>
+            <UIText Id='SelAbsentLocal'><![CDATA[This feature will be installed on the local hard drive]]></UIText>
+            <UIText Id='SelCDCD'><![CDATA[This feature will remain to be run from CD]]></UIText>
+            <UIText Id='NewFolder'><![CDATA[Folder|New Folder]]></UIText>
+            <UIText Id='MenuNetwork'><![CDATA[Will be installed to run from network]]></UIText>
+            <UIText Id='SelLocalCD'><![CDATA[This feature will be removed from your local hard drive, but will be still available to run from CD]]></UIText>
+            <UIText Id='SelLocalAbsent'><![CDATA[This feature will be completely removed]]></UIText>
+            <UIText Id='SelCostPending'><![CDATA[Compiling cost for this feature...]]></UIText>
+            <UIText Id='SelLocalLocal'><![CDATA[This feature will remain on you local hard drive]]></UIText>
+            <UIText Id='SelChildCostPos'><![CDATA[This feature requires [1] on your hard drive.]]></UIText>
+            <UIText Id='SelLocalAdvertise'><![CDATA[This feature will be removed from your local hard drive, but will be set to be installed when required]]></UIText>
+            <UIText Id='SelParentCostNegPos'><![CDATA[This feature frees up [1] on your hard drive. It has [2] of [3] subfeatures selected. The subfeatures require [4] on your hard drive.]]></UIText>
+            <UIText Id='SelParentCostPosNeg'><![CDATA[This feature requires [1] on your hard drive. It has [2] of [3] subfeatures selected. The subfeatures free up [4] on your hard drive.]]></UIText>
+            <UIText Id='SelParentCostPosPos'><![CDATA[This feature requires [1] on your hard drive. It has [2] of [3] subfeatures selected. The subfeatures require [4] on your hard drive.]]></UIText>
+            <UIText Id='TimeRemaining'><![CDATA[Time remaining: {[1] minutes }{[2] seconds}]]></UIText>
+            <UIText Id='VolumeCostAvailable'><![CDATA[Available]]></UIText>
+            <UIText Id='VolumeCostDifference'><![CDATA[Difference]]></UIText>
+            <UIText Id='VolumeCostRequired'><![CDATA[Required]]></UIText>
+            <UIText Id='VolumeCostSize'><![CDATA[Disk Size]]></UIText>
+            <UIText Id='VolumeCostVolume'><![CDATA[Volume]]></UIText>
+        </UI>
+        <UI Id='BasicDialogs'>
+            <Binary Id='NewFldrBtn' SourceFile='Resources\WiXNewFolderBtn.ico' />
+            <Binary Id='UpFldrBtn' SourceFile='Resources\WiXUpFolderBtn.ico' />
+            <Property Id='ErrorDialog' Value='ErrorDialog' />
+            <Property Id='SFF_UpFldrBtn' Value='UpFldrBtn' />
+            <Property Id='SFF_NewFldrBtn' Value='NewFldrBtn' />
+            <TextStyle Id='VSI_MS_Sans_Serif13.0_0_0' FaceName='MS Sans Serif' Size='9' Red='0' Green='0' Blue='0' />
+            <TextStyle Id='VSI_MS_Sans_Serif16.0_1_0' FaceName='MS Sans Serif' Size='12' Red='0' Green='0' Blue='0' Bold='yes' />
+            <TextStyle Id='VSI_MS_Shell_Dlg13.0_0_0' FaceName='MS Shell Dlg' Size='9' Red='0' Green='0' Blue='0' />
+            <Dialog Id='Cancel' X='50' Y='50' Width='271' Height='78' Title='[ProductName]' NoMinimize='yes'>
+                <Control Id='NoButton' Type='PushButton' X='198' Y='48' Width='65' Height='21' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;No' TabSkip='no' Default='yes' Cancel='yes'>
+                    <Publish Event='EndDialog' Value='Return' />
+                </Control>
+                <Control Id='YesButton' Type='PushButton' X='126' Y='48' Width='65' Height='21' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Yes' TabSkip='no'>
+                    <Publish Event='EndDialog' Value='Exit' />
+                </Control>
+                <Control Id='BodyText' Type='Text' X='6' Y='9' Width='258' Height='24' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installation is not yet complete. Are you sure you want to exit?' TabSkip='yes' NoPrefix='yes' />
+            </Dialog>
+            <Dialog Id='ConfirmRemoveDialog' X='50' Y='50' Width='271' Height='78' Title='Remove [ProductName]' NoMinimize='yes'>
+                <Control Id='NoButton' Type='PushButton' X='198' Y='48' Width='65' Height='21' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;No' TabSkip='no' Default='yes' Cancel='yes'>
+                    <Publish Property='WelcomeForm_ConfirmRemove' Value='No' />
+                    <Publish Event='EndDialog' Value='Return' />
+                </Control>
+                <Control Id='YesButton' Type='PushButton' X='126' Y='48' Width='65' Height='21' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Yes' TabSkip='no'>
+                    <Publish Property='WelcomeForm_ConfirmRemove' Value='Yes' />
+                    <Publish Event='EndDialog' Value='Return' />
+                </Control>
+                <Control Id='BodyText' Type='Text' X='6' Y='9' Width='258' Height='24' Text='{\VSI_MS_Sans_Serif13.0_0_0}You have chosen to remove [ProductName] from your computer. Are you sure you want to remove it?' TabSkip='yes' NoPrefix='yes' />
+            </Dialog>
+            <Dialog Id='DiskCost' X='50' Y='50' Width='361' Height='192' Title='[ProductName] Disk Space' NoMinimize='yes' TrackDiskSpace='yes'>
+                <Control Id='OKButton' Type='PushButton' X='288' Y='165' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}OK' TabSkip='no' Default='yes' Cancel='yes'>
+                    <Publish Event='EndDialog' Value='Return' />
+                </Control>
+                <Control Id='VolumeCostList1' Type='VolumeCostList' X='6' Y='39' Width='348' Height='114' Text='{\VSI_MS_Sans_Serif13.0_0_0}{116}{80}{80}{80}{80}' TabSkip='no' Sunken='yes' Removable='yes' Fixed='yes' Remote='yes' />
+                <Control Id='AvailableBodyText' Type='Text' X='6' Y='9' Width='348' Height='24' Text='{\VSI_MS_Sans_Serif13.0_0_0}The list below includes the drives you can install [ProductName] to, along with each drive&apos;s available and required disk space.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[OutOfDiskSpace<>1]]></Condition>
+                    <Condition Action='hide'><![CDATA[OutOfDiskSpace=1]]></Condition>
+                </Control>
+                <Control Id='RequiredBodyText' Type='Text' X='6' Y='9' Width='348' Height='24' Text='{\VSI_MS_Sans_Serif13.0_0_0}The amount of required disk space exceeds the amount of available disk space. The highlighted items indicate the drives with insufficient disk space.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[OutOfDiskSpace=1]]></Condition>
+                    <Condition Action='hide'><![CDATA[OutOfDiskSpace<>1]]></Condition>
+                </Control>
+            </Dialog>
+            <Dialog Id='FilesInUse' X='50' Y='50' Width='361' Height='177' Title='[ProductName] Files in Use' NoMinimize='yes'>
+                <Control Id='RetryButton' Type='PushButton' X='99' Y='150' Width='81' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Try Again' TabSkip='no' Default='yes'>
+                    <Publish Event='EndDialog' Value='Retry' />
+                </Control>
+                <Control Id='ContinueButton' Type='PushButton' X='186' Y='150' Width='81' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Continue' TabSkip='no'>
+                    <Publish Event='EndDialog' Value='Ignore' />
+                </Control>
+                <Control Id='ExitButton' Type='PushButton' X='273' Y='150' Width='81' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}E&amp;xit Installation' TabSkip='no' Cancel='yes'>
+                    <Publish Event='EndDialog' Value='Exit' />
+                </Control>
+                <Control Id='ListFilesInUse' Type='ListBox' X='6' Y='51' Width='348' Height='90' Property='FileInUseProcess' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiFilesInUse' TabSkip='no' Sunken='yes' Sorted='yes' />
+                <Control Id='InstallBodyText' Type='Text' X='6' Y='9' Width='345' Height='36' Text='{\VSI_MS_Sans_Serif13.0_0_0}The following applications are using files which the installer must update. You can either close the applications and click "Try Again", or click "Continue" so that the installer continues the installation, and replaces these files when your system restarts.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE=""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE<>""]]></Condition>
+                </Control>
+                <Control Id='RemoveBodyText' Type='Text' X='6' Y='9' Width='345' Height='36' Text='{\VSI_MS_Sans_Serif13.0_0_0}The following applications are using files which the installer must remove. You can either close the applications and click "Try Again", or click "Continue" so that the installer continues the installation, and replaces these files when your system restarts.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE<>""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE=""]]></Condition>
+                </Control>
+            </Dialog>
+            <Dialog Id='SelectFolderDialog' X='50' Y='50' Width='313' Height='223' Title='Browse for Folder' NoMinimize='yes'>
+                <Control Id='OKButton' Type='PushButton' X='168' Y='198' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}OK' TabSkip='no' Default='yes'>
+                    <Publish Event='SetTargetPath' Value='[SelectFolderDialog_Property]'><![CDATA[1]]></Publish>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='240' Y='198' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='Reset' Value='{}'><![CDATA[1]]></Publish>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='BrowseText' Type='Text' X='6' Y='9' Width='60' Height='12' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Browse:' TabSkip='no' />
+                <Control Id='FolderCombo' Type='DirectoryCombo' X='66' Y='6' Width='198' Height='120' Property='SelectFolderDialog_Property' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiDirectoryCombo' TabSkip='no' Indirect='yes' Removable='yes' Fixed='yes' Remote='yes' RAMDisk='yes' Floppy='yes' />
+                <Control Id='FolderUpButton' Type='PushButton' X='270' Y='6' Width='18' Height='18' Text='[SFF_UpFldrBtn]' TabSkip='no' IconSize='16' FixedSize='yes' Icon='yes'>
+                    <Publish Event='DirectoryListUp' Value='{}'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='NewFolderButton' Type='PushButton' X='288' Y='6' Width='18' Height='18' Text='[SFF_NewFldrBtn]' TabSkip='no' IconSize='16' FixedSize='yes' Icon='yes'>
+                    <Publish Event='DirectoryListNew' Value='{}'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='FolderList' Type='DirectoryList' X='6' Y='30' Width='300' Height='129' Property='SelectFolderDialog_Property' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiDirectoryList' TabSkip='no' Sunken='yes' Indirect='yes' />
+                <Control Id='FolderText' Type='Text' X='6' Y='171' Width='60' Height='12' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Folder:' TabSkip='no' />
+                <Control Id='FolderPathEdit' Type='PathEdit' X='66' Y='168' Width='240' Height='18' Property='SelectFolderDialog_Property' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiPathEdit' TabSkip='no' Sunken='yes' Indirect='yes' />
+            </Dialog>
+            <Dialog Id='ErrorDialog' X='50' Y='50' Width='330' Height='101' Title='[ProductName]' ErrorDialog='yes'>
+                <Control Id='ErrorText' Type='Text' X='6' Y='9' Width='318' Height='48' Text='{\VSI_MS_Sans_Serif13.0_0_0}' TabSkip='no' Disabled='yes' NoPrefix='yes' />
+                <Control Id='Y' Type='PushButton' X='240' Y='72' Width='81' Height='21' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Yes' TabSkip='yes'>
+                    <Publish Event='EndDialog' Value='ErrorYes' />
+                </Control>
+                <Control Id='A' Type='PushButton' X='0' Y='72' Width='81' Height='21' Text='{\VSI_MS_Sans_Serif13.0_0_0}E&amp;xit Installation' TabSkip='yes'>
+                    <Publish Event='EndDialog' Value='ErrorAbort' />
+                </Control>
+                <Control Id='C' Type='PushButton' X='42' Y='72' Width='81' Height='21' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='yes'>
+                    <Publish Event='EndDialog' Value='ErrorCancel' />
+                </Control>
+                <Control Id='I' Type='PushButton' X='81' Y='72' Width='81' Height='21' Text='{\VSI_MS_Sans_Serif13.0_0_0}C&amp;ontinue' TabSkip='yes'>
+                    <Publish Event='EndDialog' Value='ErrorIgnore' />
+                </Control>
+                <Control Id='N' Type='PushButton' X='120' Y='72' Width='81' Height='21' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;No' TabSkip='yes'>
+                    <Publish Event='EndDialog' Value='ErrorNo' />
+                </Control>
+                <Control Id='O' Type='PushButton' X='159' Y='72' Width='81' Height='21' Text='{\VSI_MS_Sans_Serif13.0_0_0}OK' TabSkip='yes'>
+                    <Publish Event='EndDialog' Value='ErrorOk' />
+                </Control>
+                <Control Id='R' Type='PushButton' X='198' Y='72' Width='81' Height='21' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Try Again' TabSkip='yes'>
+                    <Publish Event='EndDialog' Value='ErrorRetry' />
+                </Control>
+            </Dialog>
+        </UI>
+        <CustomAction Id='ERRCA_UIANDADVERTISED' Error='[VSDUIANDADVERTISED]' />
+        <Property Id='WelcomeForm_NextArgs' Value='FolderForm' />
+        <Property Id='FolderForm_PrevArgs' Value='WelcomeForm' />
+        <Property Id='FolderForm_NextArgs' Value='ConfirmInstallForm' />
+        <Property Id='ConfirmInstallForm_PrevArgs' Value='FolderForm' />
+        <UI Id='WelcomeDlg'>
+            <Dialog Id='WelcomeForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='NextButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Next &gt;' TabSkip='no' Default='yes'>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[WelcomeForm_NextArgs=""]]></Publish>
+                    <Publish Event='NewDialog' Value='[WelcomeForm_NextArgs]'><![CDATA[WelcomeForm_NextArgs<>""]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='SpawnDialog' Value='Cancel' />
+                </Control>
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no'>
+                    <Condition Action='disable'><![CDATA[WelcomeForm_PrevArgs=""]]></Condition>
+                    <Condition Action='enable'><![CDATA[WelcomeForm_PrevArgs<>""]]></Condition>
+                    <Publish Event='NewDialog' Value='[WelcomeForm_PrevArgs]'><![CDATA[WelcomeForm_PrevArgs<>""]]></Publish>
+                </Control>
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='CopyrightWarningText' Type='Text' X='9' Y='186' Width='354' Height='66' Text='{\VSI_MS_Sans_Serif13.0_0_0}WARNING: This computer program is protected by copyright law and international treaties. Unauthorized duplication or distribution of this program, or any portion of it, may result in severe civil or criminal penalties, and will be prosecuted to the maximum extent possible under the law.' TabSkip='yes' NoPrefix='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Welcome to the [ProductName] Setup Wizard' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='WelcomeText' Type='Text' X='9' Y='63' Width='354' Height='114' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer will guide you through the steps required to install [ProductName] on your computer.&#xD;&#xA;&#xD;&#xA;Click "Next" to continue.' TabSkip='yes' NoPrefix='yes' />
+            </Dialog>
+        </UI>
+        <UI Id='FolderDlg'>
+            <Property Id='FolderForm_AllUsers' Value='ME' />
+            <Property Id='FolderForm_AllUsersVisible' Value='1' />
+            <RadioButtonGroup Property='FolderForm_AllUsers'>
+                <RadioButton Height='17' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Everyone' Value='ALL' Width='342' X='0' Y='0' />
+                <RadioButton Height='17' Text='{\VSI_MS_Sans_Serif13.0_0_0}Just &amp;me' Value='ME' Width='342' X='0' Y='18' />
+            </RadioButtonGroup>
+            <Dialog Id='FolderForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]' TrackDiskSpace='yes'>
+                <Control Id='NextButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Next &gt;' TabSkip='no' Default='yes'>
+                    <Publish Event='SetTargetPath' Value='TARGETDIR'><![CDATA[1]]></Publish>
+                    <Publish Event='SpawnDialog' Value='DiskCost'><![CDATA[OutOfDiskSpace=1]]></Publish>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[FolderForm_NextArgs="" AND OutOfDiskSpace<>1]]></Publish>
+                    <Publish Event='NewDialog' Value='[FolderForm_NextArgs]'><![CDATA[FolderForm_NextArgs<>"" AND OutOfDiskSpace<>1]]></Publish>
+                    <Publish Property='ALLUSERS' Value='2'><![CDATA[FolderForm_AllUsers="ALL" AND VersionNT>=400 AND Privileged=1 AND FolderForm_AllUsersVisible=1]]></Publish>
+                    <Publish Property='ALLUSERS'><![CDATA[FolderForm_AllUsers="ME" AND VersionNT>=400 AND Privileged=1 AND FolderForm_AllUsersVisible=1]]></Publish>
+                    <Publish Event='DoAction' Value='FindRelatedProducts'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='FolderLabel' Type='Text' X='18' Y='114' Width='348' Height='12' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Folder:' TabSkip='no' />
+                <Control Id='FolderEdit' Type='PathEdit' X='18' Y='126' Width='252' Height='18' Property='TARGETDIR' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiPathEdit' TabSkip='no' Sunken='yes' Disabled='yes' />
+                <Control Id='BrowseButton' Type='PushButton' X='276' Y='126' Width='90' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}B&amp;rowse...' TabSkip='no' Disabled='yes'>
+                    <Publish Property='SelectFolderDialog_Property' Value='TARGETDIR'><![CDATA[1]]></Publish>
+                    <Publish Event='SpawnDialog' Value='SelectFolderDialog'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='DiskCostButton' Type='PushButton' X='276' Y='150' Width='90' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Disk Cost...' TabSkip='no'>
+                    <Publish Event='SetTargetPath' Value='TARGETDIR'><![CDATA[1]]></Publish>
+                    <Publish Event='SpawnDialog' Value='DiskCost'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='AllUsersRadioGroup' Type='RadioButtonGroup' X='24' Y='210' Width='342' Height='42' Property='FolderForm_AllUsers' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiRadioButtonGroup' TabSkip='no'>
+                    <Condition Action='show'><![CDATA[VersionNT>=400 AND Privileged=1 AND FolderForm_AllUsersVisible=1]]></Condition>
+                    <Condition Action='hide'><![CDATA[NOT (VersionNT>=400 AND Privileged=1 AND FolderForm_AllUsersVisible=1)]]></Condition>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='SpawnDialog' Value='Cancel' />
+                </Control>
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no'>
+                    <Condition Action='disable'><![CDATA[FolderForm_PrevArgs=""]]></Condition>
+                    <Condition Action='enable'><![CDATA[FolderForm_PrevArgs<>""]]></Condition>
+                    <Publish Event='NewDialog' Value='[FolderForm_PrevArgs]'><![CDATA[FolderForm_PrevArgs<>""]]></Publish>
+                </Control>
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Select Installation Folder' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='Body' Type='Text' X='9' Y='63' Width='354' Height='48' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer will install [ProductName] to the following folder.&#xD;&#xA;&#xD;&#xA;To install in this folder, click "Next". To install to a different folder, enter it below or click "Browse".' TabSkip='yes' NoPrefix='yes' />
+                <Control Id='AllUsersText' Type='Text' X='18' Y='186' Width='348' Height='24' Text='{\VSI_MS_Shell_Dlg13.0_0_0}Install [ProductName] for yourself, or for anyone who uses this computer:' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[VersionNT>=400 AND Privileged=1 AND FolderForm_AllUsersVisible=1]]></Condition>
+                    <Condition Action='hide'><![CDATA[NOT (VersionNT>=400 AND Privileged=1 AND FolderForm_AllUsersVisible=1)]]></Condition>
+                </Control>
+            </Dialog>
+        </UI>
+        <UI Id='ConfirmDlg'>
+            <Dialog Id='ConfirmInstallForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='NextButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Next &gt;' TabSkip='no' Default='yes'>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[ConfirmInstallForm_NextArgs=""]]></Publish>
+                    <Publish Event='NewDialog' Value='[ConfirmInstallForm_NextArgs]'><![CDATA[ConfirmInstallForm_NextArgs<>""]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='SpawnDialog' Value='Cancel' />
+                </Control>
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no'>
+                    <Condition Action='disable'><![CDATA[ConfirmInstallForm_PrevArgs=""]]></Condition>
+                    <Condition Action='enable'><![CDATA[ConfirmInstallForm_PrevArgs<>""]]></Condition>
+                    <Publish Event='NewDialog' Value='[ConfirmInstallForm_PrevArgs]'><![CDATA[ConfirmInstallForm_PrevArgs<>""]]></Publish>
+                </Control>
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Confirm Installation' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BodyText1' Type='Text' X='9' Y='63' Width='354' Height='180' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer is ready to install [ProductName] on your computer.&#xD;&#xA;&#xD;&#xA;Click "Next" to start the installation.' TabSkip='yes' NoPrefix='yes' />
+            </Dialog>
+        </UI>
+        <UI Id='ProgressDlg'>
+            <Dialog Id='ProgressForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]' Modeless='yes'>
+                <Control Id='NextButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Next &gt;' TabSkip='no' Disabled='yes' />
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='SpawnDialog' Value='Cancel' />
+                </Control>
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='ProgressBar' Type='ProgressBar' X='18' Y='108' Width='336' Height='15' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiProgressBar' TabSkip='yes' Disabled='yes'>
+                    <Subscribe Event='InstallFiles' Attribute='Progress' />
+                    <Subscribe Event='WriteRegistryValues' Attribute='Progress' />
+                    <Subscribe Event='WriteIniValues' Attribute='Progress' />
+                    <Subscribe Event='UnmoveFiles' Attribute='Progress' />
+                    <Subscribe Event='StopServices' Attribute='Progress' />
+                    <Subscribe Event='StartServices' Attribute='Progress' />
+                    <Subscribe Event='RemoveRegistryValues' Attribute='Progress' />
+                    <Subscribe Event='RemoveFiles' Attribute='Progress' />
+                    <Subscribe Event='MoveFiles' Attribute='Progress' />
+                    <Subscribe Event='InstallAdminPackage' Attribute='Progress' />
+                    <Subscribe Event='DeleteServices' Attribute='Progress' />
+                    <Subscribe Event='SetProgress' Attribute='Progress' />
+                </Control>
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='ProgressLabel' Type='Text' X='18' Y='96' Width='336' Height='12' Text='{\VSI_MS_Sans_Serif13.0_0_0}Please wait...' TabSkip='yes' />
+                <Control Id='InstalledBody' Type='Text' X='9' Y='63' Width='354' Height='12' Text='{\VSI_MS_Sans_Serif13.0_0_0}[ProductName] is being installed.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE=""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE<>""]]></Condition>
+                </Control>
+                <Control Id='RemovedBody' Type='Text' X='18' Y='63' Width='336' Height='12' Text='{\VSI_MS_Sans_Serif13.0_0_0}[ProductName] is being removed.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE<>""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE=""]]></Condition>
+                </Control>
+                <Control Id='RemoveBannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Removing [ProductName]' TabSkip='yes' Transparent='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE<>""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE=""]]></Condition>
+                </Control>
+                <Control Id='InstalledBannerText' Type='Text' X='9' Y='9' Width='255' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Installing [ProductName]' TabSkip='yes' Transparent='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE=""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE<>""]]></Condition>
+                </Control>
+            </Dialog>
+        </UI>
+        <UI Id='FinishedDlg'>
+            <Property Id='MaintenanceForm_Action' Value='Repair' />
+            <RadioButtonGroup Property='MaintenanceForm_Action'>
+                <RadioButton Height='17' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Repair [ProductName]' Value='Repair' Width='348' X='0' Y='0' />
+                <RadioButton Height='17' Text='{\VSI_MS_Sans_Serif13.0_0_0}Re&amp;move [ProductName]' Value='Remove' Width='348' X='0' Y='18' />
+            </RadioButtonGroup>
+            <Dialog Id='FinishedForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='CloseButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Close' TabSkip='no' Default='yes' Cancel='yes'>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Disabled='yes' />
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Installation Complete' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='BodyTextRemove' Type='Text' X='9' Y='63' Width='354' Height='138' Text='{\VSI_MS_Sans_Serif13.0_0_0}[ProductName] has been successfully removed.&#xD;&#xA;&#xD;&#xA;Click "Close" to exit.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE<>""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE=""]]></Condition>
+                </Control>
+                <Control Id='UpdateText' Type='Text' X='9' Y='216' Width='354' Height='36' Text='{\VSI_MS_Sans_Serif13.0_0_0}Please use Windows Update to check for any critical updates to the .NET Framework.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE=""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE<>""]]></Condition>
+                </Control>
+                <Control Id='BodyText' Type='Text' X='9' Y='63' Width='354' Height='138' Text='{\VSI_MS_Sans_Serif13.0_0_0}[ProductName] has been successfully installed.&#xD;&#xA;&#xD;&#xA;Click "Close" to exit.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE=""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE<>""]]></Condition>
+                </Control>
+            </Dialog>
+            <Dialog Id='UserExitForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='CloseButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Close' TabSkip='no' Default='yes' Cancel='yes'>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Disabled='yes' />
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Installation Interrupted' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='BodyTextRemove' Type='Text' X='9' Y='63' Width='354' Height='180' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer was interrupted before [ProductName] could be removed. You need to restart the installer to try again.&#xD;&#xA;&#xD;&#xA;Click "Close" to exit.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE<>""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE=""]]></Condition>
+                </Control>
+                <Control Id='BodyTextInstall' Type='Text' X='18' Y='63' Width='342' Height='24' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installation was interrupted before [ProductName] could be installed. You need to restart the installer to try again.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE=""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE<>""]]></Condition>
+                </Control>
+            </Dialog>
+            <Dialog Id='FatalErrorForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='CloseButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Close' TabSkip='no' Default='yes' Cancel='yes'>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Disabled='yes' />
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Installation Incomplete' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='BodyTextRemove' Type='Text' X='9' Y='63' Width='354' Height='180' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer was interrupted before [ProductName] could be installed. You need to restart the installer to try again.&#xD;&#xA;&#xD;&#xA;Click "Close" to exit.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE=""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE<>""]]></Condition>
+                </Control>
+                <Control Id='BodyTextInstall' Type='Text' X='9' Y='63' Width='354' Height='180' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer was interrupted before [ProductName] could be removed. You need to restart the installer to try again.&#xD;&#xA;&#xD;&#xA;Click "Close" to exit.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE<>""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE=""]]></Condition>
+                </Control>
+            </Dialog>
+            <Dialog Id='MaintenanceForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='FinishButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Finish' TabSkip='no' Default='yes'>
+                    <Publish Property='REINSTALL' Value='ALL'><![CDATA[MaintenanceForm_Action="Repair"]]></Publish>
+                    <Publish Event='Reinstall' Value='ALL'><![CDATA[MaintenanceForm_Action="Repair"]]></Publish>
+                    <Publish Property='REMOVE' Value='ALL'><![CDATA[MaintenanceForm_Action="Remove"]]></Publish>
+                    <Publish Event='Remove' Value='ALL'><![CDATA[MaintenanceForm_Action="Remove"]]></Publish>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='RepairRadioGroup' Type='RadioButtonGroup' X='18' Y='108' Width='348' Height='48' Property='MaintenanceForm_Action' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiRadioButtonGroup' TabSkip='no' />
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='SpawnDialog' Value='Cancel' />
+                </Control>
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Welcome to the [ProductName] Setup Wizard' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='BodyText' Type='Text' X='9' Y='63' Width='354' Height='42' Text='{\VSI_MS_Sans_Serif13.0_0_0}Select whether you want to repair or remove [ProductName].' TabSkip='yes' NoPrefix='yes' />
+            </Dialog>
+            <Dialog Id='ResumeForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='FinishButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Finish' TabSkip='no' Default='yes'>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='SpawnDialog' Value='Cancel' />
+                </Control>
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Welcome to the [ProductName] Setup Wizard' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='BodyText' Type='Text' X='9' Y='63' Width='354' Height='180' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer will resume the installation of [ProductName] on your computer.&#xD;&#xA;&#xD;&#xA;Click "Finish" to continue.' TabSkip='yes' NoPrefix='yes' />
+            </Dialog>
+        </UI>
+        <Property Id='AdminWelcomeForm_NextArgs' Value='AdminFolderForm' />
+        <Property Id='AdminFolderForm_PrevArgs' Value='AdminWelcomeForm' />
+        <Property Id='AdminFolderForm_NextArgs' Value='AdminConfirmInstallForm' />
+        <Property Id='AdminConfirmInstallForm_PrevArgs' Value='AdminFolderForm' />
+        <UI Id='AdminWelcomeDlg'>
+            <Dialog Id='AdminWelcomeForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='NextButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Next &gt;' TabSkip='no' Default='yes'>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[AdminWelcomeForm_NextArgs=""]]></Publish>
+                    <Publish Event='NewDialog' Value='[AdminWelcomeForm_NextArgs]'><![CDATA[AdminWelcomeForm_NextArgs<>""]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='SpawnDialog' Value='Cancel' />
+                </Control>
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no'>
+                    <Condition Action='disable'><![CDATA[AdminWelcomeForm_PrevArgs=""]]></Condition>
+                    <Condition Action='enable'><![CDATA[AdminWelcomeForm_PrevArgs<>""]]></Condition>
+                    <Publish Event='NewDialog' Value='[AdminWelcomeForm_PrevArgs]'><![CDATA[AdminWelcomeForm_PrevArgs<>""]]></Publish>
+                </Control>
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Welcome to the [ProductName] Network Setup Wizard' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='CopyrightWarningText' Type='Text' X='9' Y='186' Width='354' Height='66' Text='{\VSI_MS_Sans_Serif13.0_0_0}WARNING: This computer program is protected by copyright law and international treaties. Unauthorized duplication or distribution of this program, or any portion of it, may result in severe civil or criminal penalties, and will be prosecuted to the maximum extent possible under the law.' TabSkip='yes' NoPrefix='yes' />
+                <Control Id='WelcomeText' Type='Text' X='9' Y='63' Width='354' Height='114' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer will guide you through the steps required to create a network image of [ProductName].&#xD;&#xA;&#xD;&#xA;Click "Next" to continue.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[Installed="" AND NOT RESUME]]></Condition>
+                    <Condition Action='hide'><![CDATA[Installed<>"" OR RESUME]]></Condition>
+                </Control>
+            </Dialog>
+        </UI>
+        <UI Id='AdminFolderDlg'>
+            <Dialog Id='AdminFolderForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]' TrackDiskSpace='yes'>
+                <Control Id='NextButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Next &gt;' TabSkip='no' Default='yes'>
+                    <Publish Event='SetTargetPath' Value='TARGETDIR'><![CDATA[1]]></Publish>
+                    <Publish Event='SpawnDialog' Value='DiskCost'><![CDATA[OutOfDiskSpace=1]]></Publish>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[AdminFolderForm_NextArgs="" AND OutOfDiskSpace<>1]]></Publish>
+                    <Publish Event='NewDialog' Value='[AdminFolderForm_NextArgs]'><![CDATA[AdminFolderForm_NextArgs<>"" AND OutOfDiskSpace<>1]]></Publish>
+                    <Publish Property='ALLUSERS' Value='2'><![CDATA[AdminFolderForm_AllUsers="ALL"]]></Publish>
+                </Control>
+                <Control Id='FolderLabel' Type='Text' X='18' Y='114' Width='348' Height='12' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Folder:' TabSkip='no' />
+                <Control Id='FolderEdit' Type='PathEdit' X='18' Y='126' Width='258' Height='18' Property='TARGETDIR' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiPathEdit' TabSkip='no' Sunken='yes' Disabled='yes' />
+                <Control Id='BrowseButton' Type='PushButton' X='282' Y='126' Width='84' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}B&amp;rowse...' TabSkip='no' Disabled='yes'>
+                    <Publish Property='SelectFolderDialog_Property' Value='TARGETDIR'><![CDATA[1]]></Publish>
+                    <Publish Event='SpawnDialog' Value='SelectFolderDialog'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='DiskCostButton' Type='PushButton' X='282' Y='150' Width='84' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Disk Cost...' TabSkip='no'>
+                    <Publish Event='SetTargetPath' Value='TARGETDIR'><![CDATA[1]]></Publish>
+                    <Publish Event='SpawnDialog' Value='DiskCost'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='SpawnDialog' Value='Cancel' />
+                </Control>
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no'>
+                    <Condition Action='disable'><![CDATA[AdminFolderForm_PrevArgs=""]]></Condition>
+                    <Condition Action='enable'><![CDATA[AdminFolderForm_PrevArgs<>""]]></Condition>
+                    <Publish Event='NewDialog' Value='[AdminFolderForm_PrevArgs]'><![CDATA[AdminFolderForm_PrevArgs<>""]]></Publish>
+                </Control>
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Network Location' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='Body' Type='Text' X='9' Y='63' Width='354' Height='48' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer will create a network image at the following location.&#xD;&#xA;&#xD;&#xA;To create an image in this folder, click "Next". To use a different folder, enter it below or click "Browse".' TabSkip='yes' NoPrefix='yes' />
+            </Dialog>
+        </UI>
+        <UI Id='AdminConfirmDlg'>
+            <Dialog Id='AdminConfirmInstallForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='NextButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Next &gt;' TabSkip='no' Default='yes'>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[AdminConfirmInstallForm_NextArgs=""]]></Publish>
+                    <Publish Event='NewDialog' Value='[AdminConfirmInstallForm_NextArgs]'><![CDATA[AdminConfirmInstallForm_NextArgs<>""]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='SpawnDialog' Value='Cancel' />
+                </Control>
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no'>
+                    <Condition Action='disable'><![CDATA[AdminConfirmInstallForm_PrevArgs=""]]></Condition>
+                    <Condition Action='enable'><![CDATA[AdminConfirmInstallForm_PrevArgs<>""]]></Condition>
+                    <Publish Event='NewDialog' Value='[AdminConfirmInstallForm_PrevArgs]'><![CDATA[AdminConfirmInstallForm_PrevArgs<>""]]></Publish>
+                </Control>
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Confirm Installation' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BodyText1' Type='Text' X='9' Y='63' Width='354' Height='180' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer is ready to install [ProductName] on your computer.&#xD;&#xA;&#xD;&#xA;Click "Next" to start the installation.' TabSkip='yes' NoPrefix='yes' />
+            </Dialog>
+        </UI>
+        <UI Id='AdminProgressDlg'>
+            <Dialog Id='AdminProgressForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]' Modeless='yes'>
+                <Control Id='NextButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Next &gt;' TabSkip='no' Disabled='yes' />
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='SpawnDialog' Value='Cancel' />
+                </Control>
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='ProgressBar' Type='ProgressBar' X='18' Y='108' Width='336' Height='15' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiProgressBar' TabSkip='yes' Disabled='yes'>
+                    <Subscribe Event='InstallFiles' Attribute='Progress' />
+                    <Subscribe Event='WriteRegistryValues' Attribute='Progress' />
+                    <Subscribe Event='WriteIniValues' Attribute='Progress' />
+                    <Subscribe Event='UnmoveFiles' Attribute='Progress' />
+                    <Subscribe Event='StopServices' Attribute='Progress' />
+                    <Subscribe Event='StartServices' Attribute='Progress' />
+                    <Subscribe Event='RemoveRegistryValues' Attribute='Progress' />
+                    <Subscribe Event='RemoveFiles' Attribute='Progress' />
+                    <Subscribe Event='MoveFiles' Attribute='Progress' />
+                    <Subscribe Event='InstallAdminPackage' Attribute='Progress' />
+                    <Subscribe Event='DeleteServices' Attribute='Progress' />
+                    <Subscribe Event='SetProgress' Attribute='Progress' />
+                </Control>
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='ProgressLabel' Type='Text' X='18' Y='96' Width='336' Height='12' Text='{\VSI_MS_Sans_Serif13.0_0_0}Please wait...' TabSkip='yes' />
+                <Control Id='InstalledBody' Type='Text' X='9' Y='63' Width='354' Height='12' Text='{\VSI_MS_Sans_Serif13.0_0_0}[ProductName] is being installed.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE=""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE<>""]]></Condition>
+                </Control>
+                <Control Id='RemovedBody' Type='Text' X='18' Y='63' Width='336' Height='12' Text='{\VSI_MS_Sans_Serif13.0_0_0}[ProductName] is being removed.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE<>""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE=""]]></Condition>
+                </Control>
+                <Control Id='RemoveBannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Removing [ProductName]' TabSkip='yes' Transparent='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE<>""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE=""]]></Condition>
+                </Control>
+                <Control Id='InstalledBannerText' Type='Text' X='9' Y='9' Width='255' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Installing [ProductName]' TabSkip='yes' Transparent='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE=""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE<>""]]></Condition>
+                </Control>
+            </Dialog>
+        </UI>
+        <UI Id='AdminFinishedDlg'>
+            <Property Id='AdminMaintenanceForm_Action' Value='Repair' />
+            <RadioButtonGroup Property='AdminMaintenanceForm_Action'>
+                <RadioButton Height='17' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Repair [ProductName]' Value='Repair' Width='348' X='0' Y='0' />
+                <RadioButton Height='17' Text='{\VSI_MS_Sans_Serif13.0_0_0}Re&amp;move [ProductName]' Value='Remove' Width='348' X='0' Y='18' />
+            </RadioButtonGroup>
+            <Dialog Id='AdminFinishedForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='CloseButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Close' TabSkip='no' Default='yes' Cancel='yes'>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Disabled='yes' />
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Installation Complete' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='BodyTextInstall' Type='Text' X='9' Y='63' Width='354' Height='180' Text='{\VSI_MS_Sans_Serif13.0_0_0}A network image of [ProductName] has been successfully created.&#xD;&#xA;&#xD;&#xA;Click "Close" to exit.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE=""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE<>""]]></Condition>
+                </Control>
+                <Control Id='BodyText' Type='Text' X='9' Y='63' Width='354' Height='180' Text='{\VSI_MS_Sans_Serif13.0_0_0}[ProductName] has been successfully removed.&#xD;&#xA;&#xD;&#xA;Click "Close" to exit.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE<>""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE=""]]></Condition>
+                </Control>
+            </Dialog>
+            <Dialog Id='AdminUserExitForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='CloseButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Close' TabSkip='no' Default='yes' Cancel='yes'>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Disabled='yes' />
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Installation Interrupted' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='BodyTextInstall' Type='Text' X='18' Y='63' Width='342' Height='24' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installation was interrupted before [ProductName] could be installed. You need to restart the installer to try again.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE=""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE<>""]]></Condition>
+                </Control>
+                <Control Id='BodyTextRemove' Type='Text' X='9' Y='63' Width='354' Height='180' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer was interrupted before [ProductName] could be removed. You need to restart the installer to try again.&#xD;&#xA;&#xD;&#xA;Click "Close" to exit.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE<>""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE=""]]></Condition>
+                </Control>
+            </Dialog>
+            <Dialog Id='AdminFatalErrorForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='CloseButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Close' TabSkip='no' Default='yes' Cancel='yes'>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Disabled='yes' />
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Installation Incomplete' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='BodyTextInstall' Type='Text' X='9' Y='63' Width='354' Height='180' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer was interrupted before [ProductName] could be installed. You need to restart the installer to try again.&#xD;&#xA;&#xD;&#xA;Click "Close" to exit.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE<>""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE=""]]></Condition>
+                </Control>
+                <Control Id='BodyTextRemove' Type='Text' X='9' Y='63' Width='354' Height='180' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer was interrupted before [ProductName] could be removed. You need to restart the installer to try again.&#xD;&#xA;&#xD;&#xA;Click "Close" to exit.' TabSkip='yes' NoPrefix='yes'>
+                    <Condition Action='show'><![CDATA[REMOVE=""]]></Condition>
+                    <Condition Action='hide'><![CDATA[REMOVE<>""]]></Condition>
+                </Control>
+            </Dialog>
+            <Dialog Id='AdminMaintenanceForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='FinishButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Finish' TabSkip='no' Default='yes'>
+                    <Publish Property='REINSTALL' Value='ALL'><![CDATA[AdminMaintenanceForm_Action="Repair"]]></Publish>
+                    <Publish Event='Reinstall' Value='ALL'><![CDATA[AdminMaintenanceForm_Action="Repair"]]></Publish>
+                    <Publish Property='REMOVE' Value='ALL'><![CDATA[AdminMaintenanceForm_Action="Remove"]]></Publish>
+                    <Publish Event='Remove' Value='ALL'><![CDATA[AdminMaintenanceForm_Action="Remove"]]></Publish>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='RepairRadioGroup' Type='RadioButtonGroup' X='18' Y='108' Width='348' Height='48' Property='AdminMaintenanceForm_Action' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiRadioButtonGroup' TabSkip='no' />
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='SpawnDialog' Value='Cancel' />
+                </Control>
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Welcome to the [ProductName] Setup Wizard' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='BodyText' Type='Text' X='9' Y='63' Width='354' Height='42' Text='{\VSI_MS_Sans_Serif13.0_0_0}Select whether you want to repair or remove [ProductName].' TabSkip='yes' NoPrefix='yes' />
+            </Dialog>
+            <Dialog Id='AdminResumeForm' X='50' Y='50' Width='373' Height='287' Title='[ProductName]'>
+                <Control Id='FinishButton' Type='PushButton' X='300' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&amp;Finish' TabSkip='no' Default='yes'>
+                    <Publish Event='EndDialog' Value='Return'><![CDATA[1]]></Publish>
+                </Control>
+                <Control Id='CancelButton' Type='PushButton' X='156' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}Cancel' TabSkip='no' Cancel='yes'>
+                    <Publish Event='SpawnDialog' Value='Cancel' />
+                </Control>
+                <Control Id='PreviousButton' Type='PushButton' X='228' Y='261' Width='66' Height='18' Text='{\VSI_MS_Sans_Serif13.0_0_0}&lt; &amp;Back' TabSkip='no' Disabled='yes' />
+                <Control Id='BannerBmp' Type='Bitmap' X='0' Y='0' Width='375' Height='52' Text='DefBannerBitmap' TabSkip='no' Disabled='yes' />
+                <Control Id='Line1' Type='Line' X='0' Y='52' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='Line2' Type='Line' X='0' Y='252' Width='375' Height='6' Text='{\VSI_MS_Sans_Serif13.0_0_0}MsiHorizontalLine' TabSkip='yes' Disabled='yes' />
+                <Control Id='BannerText' Type='Text' X='9' Y='9' Width='306' Height='33' Text='{\VSI_MS_Sans_Serif16.0_1_0}Welcome to the [ProductName] Setup Wizard' TabSkip='yes' Transparent='yes' NoPrefix='yes' />
+                <Control Id='BodyText' Type='Text' X='9' Y='63' Width='354' Height='180' Text='{\VSI_MS_Sans_Serif13.0_0_0}The installer will resume the installation of [ProductName] on your computer.&#xD;&#xA;&#xD;&#xA;Click "Finish" to continue.' TabSkip='yes' NoPrefix='yes' />
+            </Dialog>
+        </UI>
+    </Product>
+</Wix>
