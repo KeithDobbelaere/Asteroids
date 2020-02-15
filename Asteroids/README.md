@@ -1,5 +1,4 @@
-﻿
-#Asteroids!
+# Asteroids!
 
 Copyright (c) 2019-2020 Keith Dobbelaere. keith77mn77@gmail.com
 
@@ -30,7 +29,7 @@ Just unzip the file Asteroids.zip, and run setup.exe.
 ## Credits
 ___
 
-###Code
+### Code
 
 This game was written in C++ using [SFML](https://www.sfml-dev.org/).  These are very simple to use, multi-platform, OpenGL libraries for windows, graphics, audio, networking, etc.
 If you want to get something up and running quickly, I recommend them.
@@ -48,7 +47,7 @@ I used an audio fader routine by [Glocke](https://github.com/cgloeckner/), from 
 
 I used routines for creating SHA-256 hashes by [Olivier Gay](http://www.ouah.org/ogay/sha2/).
 
-###Audio
+### Audio
 
 Main song is 'Nearly There..' originally by Jochen Hippel for the Atari ST version of the game 'A Prehistoric Tale' from 1990, remake by Jogeir Liljedahl (1991).
 
@@ -56,7 +55,7 @@ Title music is 'Stardust Memories' by Jester/Sanity (1992).
 
 _Ah, the days of Mod Tracker music..._
 
-###Font
+### Font
 
 Barcade by Daniel Zadorozny, [Iconian Fonts](http://www.iconian.com/).
 
