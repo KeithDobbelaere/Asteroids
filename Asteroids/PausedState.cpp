@@ -1,40 +1,41 @@
 #include "PausedState.h"
 
-#include <iostream>
-
 #include "TitleState.h"
 #include "OptionsState.h"
+
+#include <iostream>
+
 
 PausedState::PausedState(AppDataRef data, GameDataRef gameData) :
 	m_gameData(gameData), MenuState(data, gameData)
 {
-#if _DEBUG
-	std::cout << "STATE_MACHINE: PausedState constructed!\n";
-#endif
+#	if _DEBUG
+		std::cout << "STATE_MACHINE: PausedState constructed!\n";
+#	endif
 }
 
 PausedState::~PausedState()
 {
-#if _DEBUG
-	std::cout << "STATE_MACHINE: PausedState destroyed!\n";
-#endif
+#	if _DEBUG
+		std::cout << "STATE_MACHINE: PausedState destroyed!\n";
+#	endif
 }
 
 void PausedState::init()
 {
-	auto& musicMan = m_data->musicManager;
-	musicMan.setMaxVolume(m_data->musicVolumeFactor * 100);
-	musicMan.play("Sounds/Stardust_Memories.ogg");
-	musicMan.getMusic().setLoop(true);
+	auto& music = m_data->music;
+	music.setMaxVolume(m_data->musicVolumeFactor * 100);
+	music.play("Sounds/Stardust_Memories.ogg");
+	music.getCurrent().setLoop(true);
 
 	m_starField.init(m_data);
 	setDefaultColor(sf::Color::Yellow);
 	setHighlightColor(sf::Color::White);
 	setTitle("(Paused)", 160.0f, m_data->assets.getFont("arcadeBar"), sf::Text::Style::Regular, sf::Color::Yellow, sf::Color::Transparent, 84, .9f);
 	setTopItemPos(300);
-	setLineSpacing(50);
-	setItemAttribs(sf::Text::Bold | sf::Text::Italic, 62, 54);
-	addMenuItem("Exit");
+	setDefaultLineSpacing(14);
+	setDefaultAttribs(sf::Text::Bold | sf::Text::Italic, 62, 54);
+	addMenuItem("Exit Game");
 	addMenuItem("Resume");
 	addMenuItem("Options");
 	addMenuItem("Restart");
@@ -83,7 +84,6 @@ void PausedState::updateImpl()
 			m_data->restartRequired = true;
 			break;
 		case 4:
-			//m_data->machine.addState(StateRef(std::make_unique<TitleState>(m_data, m_gameData)), true, true);
 			m_data->machine.removeState();
 			m_data->backToTitle = true;
 			break;

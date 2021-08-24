@@ -1,10 +1,11 @@
 #pragma once
 
+#include "GameState.h"
+
 #include <memory>
 #include <stack>
 
 
-class GameState;
 using StateRef = std::unique_ptr<GameState>;
 
 class StateMachine
@@ -25,7 +26,7 @@ private:
 	std::stack<StateRef> m_states;
 	StateRef m_newState;
 
-	bool m_isRemoving;
-	bool m_isAdding;
-	bool m_isReplacing;
+	bool m_isRemoving = false;
+	bool m_isAdding = false;
+	bool m_isReplacing = false;
 };

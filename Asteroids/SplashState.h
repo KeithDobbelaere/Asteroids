@@ -22,7 +22,6 @@ private:
 	AppDataRef m_data;
 	GameDataRef m_gameData;
 	sf::Clock m_clock;
-	sf::Texture m_backgroundTexture;
 	sf::Sprite m_background;
 	sf::RenderWindow& m_window;
 };

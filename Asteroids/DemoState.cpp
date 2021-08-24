@@ -2,37 +2,37 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <iostream>
-
 #include "Defines.h"
 #include "Player.h"
 #include "Bullets.h"
+
+#include <iostream>
 
 
 DemoState::DemoState(AppDataRef data, GameDataRef gameData) :
 	PlayState(data, gameData)
 {
-#if _DEBUG
-	std::cout << "STATE_MACHINE: DemoState constructed!\n";
-#endif
-	pressKeyText.text = sf::Text("Press any key to play!", *m_font);
-	pressKeyText.text.setStyle(sf::Text::Bold);
-	const auto& bounds1 = pressKeyText.text.getLocalBounds();
-	pressKeyText.text.setPosition(SCRN_WIDTH / 2 - bounds1.width / 2, SCRN_HEIGHT - 50);
-	demoModeText.text = sf::Text("-- DEMO MODE --", *m_font);
-	demoModeText.text.setStyle(sf::Text::Bold);
-	const auto& bounds2 = demoModeText.text.getLocalBounds();
-	demoModeText.text.setPosition(SCRN_WIDTH / 2 - bounds2.width / 2, 10);
+#	if _DEBUG
+		std::cout << "STATE_MACHINE: DemoState constructed!\n";
+#	endif
+	pressKeyText = sf::Text("Press any key to play!", *m_font);
+	pressKeyText.setStyle(sf::Text::Bold);
+	const auto& bounds1 = pressKeyText.getLocalBounds();
+	pressKeyText.setPosition(SCRN_WIDTH / 2 - bounds1.width / 2, SCRN_HEIGHT - 50);
+	demoModeText = sf::Text("-- DEMO MODE --", *m_font);
+	demoModeText.setStyle(sf::Text::Bold);
+	const auto& bounds2 = demoModeText.getLocalBounds();
+	demoModeText.setPosition(SCRN_WIDTH / 2 - bounds2.width / 2, 10);
 	oldDifficulty = m_data->difficulty;
-	m_data->difficulty = 1;
+	m_data->difficulty = Difficulty::Hard;
 	fadeOut = 0;
 }
 
 DemoState::~DemoState()
 {
-#if _DEBUG
-	std::cout << "STATE_MACHINE: DemoState destroyed!\n";
-#endif
+#	if _DEBUG
+		std::cout << "STATE_MACHINE: DemoState destroyed!\n";
+#	endif
 	m_data->difficulty = oldDifficulty;
 }
 
@@ -48,7 +48,7 @@ void DemoState::processInput()
 {
 	Player* p = m_gameData->p.get();
 
-	m_data->input.update(m_data->window);
+	m_data->input.update(m_data->window, m_data->view);
 
 	if (m_data->input.anyKeyPressed())
 	{
@@ -56,7 +56,7 @@ void DemoState::processInput()
 		return;
 	}
 
-	if (m_gameData->livesRemaining > 0)
+	if (p->getLivesRemaining() > 0)
 		ai.update();
 	else
 		ai.input = AIComponent::KeyPressed::NONE;
@@ -67,24 +67,24 @@ void DemoState::processInput()
 	}
 	if (ai.input & AIComponent::KeyPressed::SHIFT)
 	{
-		if (m_gameData->specialWeapons > 0)
+		if (p->getSpecialWeapons() > 0)
 		{
 			specialWeaponSound->play();
 			for (int angle = 0; angle < 360; angle += 4)
 			{
-				(void)addEntity<SidewinderBullet>(redBulletSprite, (int)p->x, (int)p->y, (float)angle, 10.0f);
+				addEntity<SidewinderBullet>(redBulletSprite, (int)p->x, (int)p->y, (float)angle, 10.0f);
 			}
-			m_gameData->specialWeapons--;
+			p->fireSpecialWeapon();
 		}
 	}
-	if (m_gameData->rapidFirePerk)
+	if (p->hasRapidFire())
 	{
 		if (ai.input & AIComponent::KeyPressed::SPACE)
 		{
 			if (m_gameData->frameCounter % FIRE_RATE_DELAY == 0)
 			{
 				rapidPhaserSound->play();
-				(void)addEntity<SidewinderBullet>(redBulletSprite, (int)p->x, (int)p->y, p->angle, 10.0f);
+				addEntity<SidewinderBullet>(redBulletSprite, (int)p->x, (int)p->y, p->angle, 10.0f);
 			}
 		}
 	}
@@ -93,7 +93,7 @@ void DemoState::processInput()
 		if (ai.input & AIComponent::KeyPressed::SPACE)
 		{
 			basicPhaserSound->play();
-			(void)addEntity<StandardBullet>(blueBulletSprite, (int)p->x, (int)p->y, p->angle, 10.0f);
+			addEntity<StandardBullet>(blueBulletSprite, (int)p->x, (int)p->y, p->angle, 10.0f);
 		}
 	}
 	if (ai.input & AIComponent::KeyPressed::RIGHT) p->angle += 3;
@@ -109,7 +109,7 @@ void DemoState::processInput()
 void DemoState::update(float dt)
 {
 	PlayState::update(dt);
-	if (m_gameData->livesRemaining == 0)
+	if (m_gameData->p->getLivesRemaining() == 0)
 		fadeOut += 2;
 
 	if (fadeOut >= 255)
@@ -123,6 +123,7 @@ void DemoState::update(float dt)
 void DemoState::draw(float dt)
 {
 	m_window->clear();
+	m_window->setView(m_data->view);
 	drawScene();
 	drawText();
 	if (fadeIn > 0)
@@ -144,26 +145,25 @@ void DemoState::drawScene()
 {
 	PlayState::drawScene();
 
-#if _DEBUG
-	for (auto line : ai.lines)
-	{
-		m_window->draw(&line[0], 2, sf::Lines);
-	}
-	m_window->draw(ai.targetCircle);
-	m_window->draw(ai.interceptPosCircle);
-	m_window->draw(ai.trajectoryPosCircle);
-#endif
+#	if _DEBUG
+		for (auto& line : ai.lines)
+		{
+			m_window->draw(&line[0], 2, sf::PrimitiveType::Lines);
+		}
+		if(ai.t.entity) m_window->draw(ai.targetCircle);
+		m_window->draw(ai.interceptPosCircle);
+		m_window->draw(ai.trajectoryPosCircle);
+#	endif
 }
 
 void DemoState::drawText()
 {
 	PlayState::drawText();
 
-	m_window->draw(pressKeyText.text);
-	m_window->draw(demoModeText.text);
+	m_window->draw(pressKeyText);
+	m_window->draw(demoModeText);
 }
 
 void DemoState::gameOver()
 {
-	m_gameData->countdown = 2000;
 }

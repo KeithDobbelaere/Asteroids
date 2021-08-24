@@ -2,41 +2,39 @@
 
 #include <SFML/Graphics.hpp>
 
+
 class Animation
 {
 public:
-	float Frame, speed;
+	float frame{}, speed{};
 	sf::Sprite sprite;
 	std::vector<sf::IntRect> frames;
 
 	Animation() = default;
-
-	Animation(const sf::Texture& t, int x, int y, int w, int h, int count, float Speed)
+	Animation(const sf::Texture& t, sf::IntRect rect, int count, float Speed) :
+		frame(0), speed(Speed)
 	{
-		Frame = 0;
-		speed = Speed;
-
 		for (int i = 0; i < count; i++)
 		{
-			frames.emplace_back(x + i * w, y, w, h);
+			frames.emplace_back(rect.left + i * rect.width, rect.top, rect.width, rect.height);
 		}
 
 		sprite.setTexture(t);
-		sprite.setOrigin((float)w / 2, (float)h / 2);
+		sprite.setOrigin((float)rect.width / 2, (float)rect.height / 2);
 		sprite.setTextureRect(frames[0]);
 	}
 
 
 	void update()
 	{
-		Frame += speed;
-		int n = frames.size();
-		if (Frame >= n) Frame -= n;
-		if (n > 0) sprite.setTextureRect(frames[int(Frame)]);
+		frame += speed;
+		int n = (int)frames.size();
+		if (frame >= n) frame -= n;
+		if (n > 0) sprite.setTextureRect(frames[size_t(frame)]);
 	}
 
 	bool isEnd()
 	{
-		return Frame + speed >= frames.size();
+		return frame + speed >= frames.size();
 	}
 };

@@ -1,10 +1,10 @@
 #pragma once
 
-#include <vector>
-
 #include "MenuState.h"
 #include "Application.h"
 #include "StarField.h"
+
+#include <vector>
 
 
 class PausedState : public MenuState

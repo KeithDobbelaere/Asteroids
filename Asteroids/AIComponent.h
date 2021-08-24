@@ -1,10 +1,11 @@
 #pragma once
 
+#include "Application.h"
+#include "Player.h"
+
 #include <vector>
 #include <memory>
 
-#include "Application.h"
-#include "Player.h"
 
 class AIComponent
 {
@@ -17,10 +18,10 @@ public:
 
 private:
 	bool quadraticSolver(float a, float b, float c, float& solution1, float& solution2);
-	float vecLength(const sf::Vector2f& vec) const;
-	float vecAngle(const sf::Vector2f& vec) const;
-	sf::Vector2f normalize(const sf::Vector2f& vec) const;
-	float dotProduct(const sf::Vector2f& vec1, const sf::Vector2f& vec2) const;
+	inline float vecLength(const sf::Vector2f& vec) const;
+	inline float vecAngle(const sf::Vector2f& vec) const;
+	inline sf::Vector2f normalize(const sf::Vector2f& vec) const;
+	inline float dotProduct(const sf::Vector2f& vec1, const sf::Vector2f& vec2) const;
 	void findTarget();
 	void findInterceptPoint();
 	void trackTarget();
@@ -40,29 +41,28 @@ public:
 	};
 	uint8_t input;
 	sf::Clock delay;
+
+	sf::Vector2f currentTrajectory, pPos, pVel, ePos, eVel, vecFromE;
+	const sf::Vector2f screenCenter;
+
+	bool specialWeaponUsable = true, centering = false, chasing = false;
+	int specialWepCountdown;
+	struct Target
+	{
+		std::shared_ptr<Entity> entity;
+		sf::Vector2f interceptPos;
+		float distance = 0.f, angle = 0.f, angleDelta = 0.f, interceptTime = 0.f;
+	} t;
+	
+	std::shared_ptr<Player> m_player;
+private:
+	GameDataRef m_gameData;
 #if _DEBUG
+	inline void updateDebugInfo();
+public:
 	std::vector <std::array<sf::Vertex, 2>> lines;
 	sf::CircleShape targetCircle;
 	sf::CircleShape interceptPosCircle;
 	sf::CircleShape trajectoryPosCircle;
 #endif
-	sf::Vector2f currentTrajectory, pPos, pVel, ePos, eVel, vecFromE, interceptPos;
-
-	bool specialWeaponUsable = true;
-	int specialWepCntDn;
-	struct Target
-	{
-		bool centering = false;
-		bool chasing = false;
-		std::shared_ptr<Entity> entity;
-		sf::Vector2f interceptPos;
-		float distance = 0.f, angle = 0.f, angleDelta = 0.f;
-	};
-	Target t;
-	std::shared_ptr<Player> m_player;
-
-private:
-	const sf::Int32 FIRE_DELAY_MS = 120;
-	GameDataRef m_gameData;
 };
-

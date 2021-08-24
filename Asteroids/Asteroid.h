@@ -3,6 +3,7 @@
 #include "Defines.h"
 #include "Entity.h"
 
+
 class Asteroid : public Entity
 {
 public:
@@ -17,12 +18,24 @@ public:
 		type = EntityType::Asteroid;
 	}
 
-	void update() override
+	void updateImpl() override
 	{
 		x += dx;
 		y += dy;
 
-		if (x > SCRN_WIDTH) x = 0;  if (x < 0) x = SCRN_WIDTH;
-		if (y > SCRN_HEIGHT) y = 0;  if (y < 0) y = SCRN_HEIGHT;
+		wrapScreenPosition();
+	}
+
+	bool collideWith(Entity* other) override
+	{
+		if (other->alive) {
+			if (other->type == EntityType::Bullet)
+				if (isCollide(other))
+				{
+					alive = false;
+					return true;
+				}
+		}
+		return false;
 	}
 };

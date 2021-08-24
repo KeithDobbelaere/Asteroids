@@ -6,10 +6,9 @@
 #include <algorithm>
 
 
-AIComponent::AIComponent()
+AIComponent::AIComponent() :
+	input(KeyPressed::NONE), specialWepCountdown(0), screenCenter((float)SCRN_WIDTH / 2, (float)SCRN_HEIGHT / 2)
 {
-	input = KeyPressed::NONE;
-	specialWepCntDn = 0;
 }
 
 void AIComponent::init(GameDataRef data)
@@ -23,31 +22,11 @@ void AIComponent::update()
 	input = KeyPressed::NONE;
 
 	findTarget();
+	if (t.entity) findInterceptPoint();
 	trackTarget();
-
-#if _DEBUG
-	lines.clear();
-	std::array<sf::Vertex, 2> lineVertices;
-	float x, y, dx, dy, da, scale = 10.0f;
-	for (auto& entity : m_gameData->entities)
-	{
-		da = entity->da;
-		if (da == 0.0f)
-		{
-			x = entity->x;
-			y = entity->y;
-			dx = entity->dx;
-			dy = entity->dy;
-			lineVertices[0] = sf::Vertex(sf::Vector2f(x, y));
-			lineVertices[1] = sf::Vertex(sf::Vector2f(scale * dx + x, scale * dy + y));
-			lines.emplace_back(lineVertices);
-		}
-	}
-	targetCircle = sf::CircleShape(t.entity->R);
-	targetCircle.setPosition(t.entity->x - t.entity->R, t.entity->y - t.entity->R);
-	targetCircle.setFillColor(sf::Color::Transparent);
-	targetCircle.setOutlineThickness(1);
-#endif
+#	ifdef _DEBUG
+		updateDebugInfo();
+#	endif
 }
 
 //Method adapted from code written by Mike Oberberger.
@@ -88,7 +67,7 @@ float AIComponent::vecLength(const sf::Vector2f& vec) const
 
 float AIComponent::vecAngle(const sf::Vector2f& vec) const
 {
-	return std::atan2(-vec.y, -vec.x) / PI * 180 + 180;
+	return std::atan2(-vec.y, -vec.x) / (float)PI * 180 + 180;
 }
 
 sf::Vector2f AIComponent::normalize(const sf::Vector2f & vec) const
@@ -105,10 +84,11 @@ void AIComponent::findTarget()
 {
 	//Count down frames after firing special weapon to keep it from being fired repeatedly
 	if (!specialWeaponUsable)
-		if (--specialWepCntDn == 0) specialWeaponUsable = true;
+		if (--specialWepCountdown == 0) specialWeaponUsable = true;
 
 	pPos = { m_player->x, m_player->y };
 	float distanceToE, shortestDistToE = FLT_MAX;
+	t.entity = nullptr;
 	//Loop through all entities
 	for (const auto& entity : m_gameData->entities)
 	{
@@ -124,18 +104,18 @@ void AIComponent::findTarget()
 			{
 				//If the player is not invincible, and an asteroid is within twice the player's radius,
 				//fire special weapon, then wait ten frames to make it available again
-				if (!m_gameData->invincible && specialWeaponUsable && distanceToE < m_gameData->p->R * 2 + entity->R)
+				if (!m_gameData->p->isInvincible() && specialWeaponUsable && distanceToE < m_gameData->p->R * 2 + entity->R)
 				{
 					specialWeaponUsable = false;
-					specialWepCntDn = 10;
+					specialWepCountdown = 10;
 					input |= KeyPressed::SHIFT;
 				}
 			}
 			if (distanceToE < shortestDistToE)
 			{
 				//If the closest entity is an asteroid, or if it's a power-up and player isn't invincible,
-				//make that entity the target.
-				if (entity->type == EntityType::Asteroid || !m_gameData->invincible)
+				//add that entity the list of potential targets.
+				if (entity->type == EntityType::Asteroid || !m_gameData->p->isInvincible())
 				{
 					t.entity = entity;
 					shortestDistToE = distanceToE;
@@ -143,7 +123,6 @@ void AIComponent::findTarget()
 			}
 		}
 	}
-	findInterceptPoint();
 }
 
 void AIComponent::findInterceptPoint()
@@ -157,14 +136,14 @@ void AIComponent::findInterceptPoint()
 	ePos = { t.entity->x, t.entity->y };
 	eVel = { t.entity->dx, t.entity->dy };
 	vecFromE = pPos - ePos;
-	float distanceToE, eSpeed, interceptTime;
+	float distanceToE, eSpeed;
 	distanceToE = vecLength(vecFromE);
 	eSpeed = vecLength(eVel);
 	//If target entity is close to a stand-still, no need to calculate an intercept point 
 	if (eSpeed < 0.2f)
 	{
-		interceptPos = ePos;
-		interceptTime = distanceToE / BULLET_SPEED;
+		t.interceptPos = ePos;
+		t.interceptTime = distanceToE / BULLET_SPEED;
 	}
 	else
 	{
@@ -176,9 +155,8 @@ void AIComponent::findInterceptPoint()
 		}
 		else
 		{
-			//If target is a power-up, set coefficient 'a' to player's max speed, with padding 
-			//to avoid overshooting target.  This produces an approximation that works.
-			a = (MAX_SPEED + .5f) * (MAX_SPEED + .5f) - eSpeed * eSpeed;
+			//If target is a power-up, set coefficient 'a' to player's max speed.
+			a = MAX_SPEED * MAX_SPEED - eSpeed * eSpeed;
 		}
 		//Set remaining coefficients
 		float b = 2.0f * dotProduct(vecFromE, eVel);
@@ -200,55 +178,43 @@ void AIComponent::findInterceptPoint()
 
 
 		if (t1 > 0.0f && t2 > 0.0f)
-			interceptTime = std::min(t1, t2); //Both positive, take the smaller one
+			t.interceptTime = std::min(t1, t2); //Both positive, take the smaller one
 		else
-			interceptTime = std::max(t1, t2); //One has to be negative, so take the larger one
+			t.interceptTime = std::max(t1, t2); //One has to be negative, so take the larger one
 
-		interceptPos = ePos + eVel * interceptTime;
+		t.interceptPos = ePos + eVel * t.interceptTime;
 	}
-	t.chasing = false;
-	//If entity is a power-up, chase it!
-	if (t.entity->type != EntityType::Asteroid && t.entity->alive)
-	{
-		t.chasing = true;
-		currentTrajectory = pPos + pVel * interceptTime;
-		t.angle = vecAngle(interceptPos - currentTrajectory);
-	}
-	//Otherwise, point at it
-	else
-	{
-		t.angle = vecAngle(interceptPos - pPos);
-	}
-	float pAngle = m_player->angle;
-	t.angleDelta = t.angle - pAngle;
-	if (t.angleDelta < 0.0f) t.angleDelta += 360.0f; //Keep angles between 0 and 360
-	t.distance = distanceToE;
-	t.interceptPos = interceptPos;
-#if _DEBUG
-	const float R = 5.0;
-	interceptPosCircle = sf::CircleShape(R);
-	interceptPosCircle.setPosition(t.interceptPos - sf::Vector2f(R, R));
-	interceptPosCircle.setFillColor(sf::Color::Transparent);
-	interceptPosCircle.setOutlineColor(sf::Color::Yellow);
-	interceptPosCircle.setOutlineThickness(2);
-	trajectoryPosCircle = sf::CircleShape(R);
-	trajectoryPosCircle.setPosition(currentTrajectory - sf::Vector2f(R, R));
-	trajectoryPosCircle.setFillColor(sf::Color::Transparent);
-	trajectoryPosCircle.setOutlineColor(sf::Color::Red);
-	trajectoryPosCircle.setOutlineThickness(2);
-#endif
 }
 
 void AIComponent::trackTarget()
 {
-	if (!t.chasing)
+	if (t.entity) {
+		//If entity is a power-up, chase it!
+		if (t.entity->alive && t.entity->type != EntityType::Asteroid)
+		{
+			chasing = true;
+			currentTrajectory = pPos + pVel * t.interceptTime;
+			t.angle = vecAngle(t.interceptPos - currentTrajectory);
+		}
+		//Otherwise, point at it
+		else
+		{
+			chasing = false;
+			t.angle = vecAngle(t.interceptPos - pPos);
+		}
+	}
+	float pAngle = m_player->angle;
+	t.angleDelta = t.angle - pAngle;
+	if (t.angleDelta < 0.0f) t.angleDelta += 360.0f; //Keep angles between 0 and 360
+	t.distance = vecLength(pPos - t.interceptPos);
+	if (!chasing)
 	{
 		//Re-position player to center of screen if too close to perimeter
-		if ((!t.entity->alive || t.distance > 80) && (m_player->x < SCRN_WIDTH / 2 - 150 || m_player->x > SCRN_WIDTH / 2 + 150 ||
+		if ((!t.entity || t.distance > 80) && (m_player->x < SCRN_WIDTH / 2 - 150 || m_player->x > SCRN_WIDTH / 2 + 150 ||
 			m_player->y < SCRN_HEIGHT / 2 - 100 || m_player->y > SCRN_HEIGHT / 2 + 100))
 			moveToCenter();
 		else
-			t.centering = false;
+			centering = false;
 	}
 	if (t.angleDelta >= 90 && t.angleDelta <= 270)
 	{
@@ -266,33 +232,36 @@ void AIComponent::trackTarget()
 	}
 	float difference = m_player->angle - t.angle;
 	//If player is pointed at target:
-	if (difference > -4 && difference < 4)
+	if (difference > -2 && difference < 2)
 	{
 		float pSpeed = vecLength(sf::Vector2f(m_player->dx, m_player->dy));
+		float decelDistance = pSpeed * STOP_DISTANCE_MULTIPLIER;
 		//If target is a power-up:
-		if (t.entity->alive && (t.entity->type == EntityType::AddLife || t.entity->type == EntityType::AddSpecial ||
+		if (t.entity && (t.entity->type == EntityType::AddLife || t.entity->type == EntityType::AddSpecial ||
 			t.entity->type == EntityType::RapidFire))
 		{
 			//Slow down as player gets closer to power-up:
+			//if (t.distance > decelDistance - 160)
 			if (t.distance > 160 * (pSpeed / MAX_SPEED))
 				input |= KeyPressed::UP;
 		}
 		//If currently re-centering on the screen:
-		else if (t.centering)
+		else if (centering)
 		{
+			currentTrajectory = pPos + pVel * (decelDistance / pSpeed);
 			//Slow down as player gets nearer to center:
-			if (t.distance > 400 * (pSpeed / MAX_SPEED))
+			if (t.distance > decelDistance)
 				input |= KeyPressed::UP;
 		}
 		//If target is an asteroid:
-		else if (t.entity->alive)
+		else if (t.entity)
 			fireBullet();
 	}
 	//Fire weapon and abandon re-centering if Rapid Fire power-up is active or if asteroid
 	//is dangerously close
-	if (m_gameData->rapidFirePerk || (t.entity->alive && !t.chasing && t.distance < 80.0f))
+	if (m_gameData->asteroidCount > 12 || m_gameData->p->hasRapidFire() || (t.entity && !chasing && t.distance < 80.0f))
 	{
-		t.centering = false;
+		centering = false;
 		fireBullet();
 	}
 }
@@ -300,9 +269,9 @@ void AIComponent::trackTarget()
 //Add a slight delay to weapon firing to mimic a human
 void AIComponent::fireBullet()
 {
-	if (m_gameData->rapidFirePerk)
+	if (m_gameData->p->hasRapidFire())
 		input |= KeyPressed::SPACE;
-	else if (delay.getElapsedTime().asMilliseconds() >= FIRE_DELAY_MS)
+	else if (delay.getElapsedTime().asMilliseconds() >= AI_FIRE_DELAY_MS)
 	{
 		input |= KeyPressed::SPACE;
 		delay.restart();
@@ -312,12 +281,51 @@ void AIComponent::fireBullet()
 //Set target to center of screen
 void AIComponent::moveToCenter()
 {
-	sf::Vector2f target((float)SCRN_WIDTH/2, (float)SCRN_HEIGHT/2);
-	sf::Vector2f pPos(m_player->x, m_player->y);
-	sf::Vector2f diff(target - pPos);
+	sf::Vector2f diff(screenCenter - pPos);
+	t.distance = vecLength(diff);
 	t.angle = vecAngle(diff);
-	float playerAngle = m_player->angle;
-	t.angleDelta = t.angle - playerAngle;
+	t.angleDelta = t.angle - m_player->angle;
 	if (t.angleDelta < 0.0f) t.angleDelta += 360.0f;
-	t.centering = true;
+	centering = true;
+	chasing = false;
 }
+
+
+#if _DEBUG
+void AIComponent::updateDebugInfo()
+{
+	lines.clear();
+	std::array<sf::Vertex, 2> lineVertices;
+	float x, y, dx, dy;
+	const float SCALE = 10.0f;
+	for (auto& entity : m_gameData->entities)
+	{
+		x = entity->x;
+		y = entity->y;
+		dx = entity->dx;
+		dy = entity->dy;
+		lineVertices[0] = sf::Vertex(sf::Vector2f(x, y));
+		lineVertices[1] = sf::Vertex(sf::Vector2f(SCALE * dx + x, SCALE * dy + y));
+		lines.emplace_back(lineVertices);
+	}
+	if (t.entity) {
+		targetCircle = sf::CircleShape(t.entity->R);
+		targetCircle.setPosition(t.entity->x - t.entity->R, t.entity->y - t.entity->R);
+		targetCircle.setFillColor(sf::Color::Transparent);
+		targetCircle.setOutlineThickness(1);
+	}
+	const float R = 5.0;
+	interceptPosCircle = sf::CircleShape(R);
+	interceptPosCircle.setPosition(t.interceptPos - sf::Vector2f(R, R));
+	interceptPosCircle.setFillColor(sf::Color::Transparent);
+	auto interceptPosColor = t.entity ? sf::Color::Yellow : sf::Color::Transparent;
+	interceptPosCircle.setOutlineColor(interceptPosColor);
+	interceptPosCircle.setOutlineThickness(2);
+	trajectoryPosCircle = sf::CircleShape(R);
+	trajectoryPosCircle.setPosition(currentTrajectory - sf::Vector2f(R, R));
+	trajectoryPosCircle.setFillColor(sf::Color::Transparent);
+	auto trajectoryPosColor = chasing ? sf::Color::Red : centering ? sf::Color::Green : sf::Color::Transparent;
+	trajectoryPosCircle.setOutlineColor(trajectoryPosColor);
+	trajectoryPosCircle.setOutlineThickness(2);
+}
+#endif

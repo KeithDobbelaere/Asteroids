@@ -4,11 +4,12 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <memory>
-
 #include "AssetManager.h"
 #include "Application.h"
 #include "TextEffects.h"
+#include "Controls.h"
+
+#include <memory>
 
 
 class PlayState : public GameState
@@ -32,15 +33,14 @@ protected:
 	void handleCollisions();
 	void addNewEntities();
 	void updateEntities();
-	void drawScene();
-	void drawText();
-	bool isCollide(Entity* a, Entity* b);
 	void increaseScore(int amount);
+	virtual void drawScene();
+	virtual void drawText();
 	virtual void gameOver();
 
 protected:
 	template<class EntityType>
-	std::shared_ptr<EntityType> addEntity(Animation &a, int x, int y, float angle = 0.0f, float radius = 1);
+	void addEntity(Animation &a, int x, int y, float angle = 0.0f, float radius = 1);
 	template<class EntityType>
 	void addPowerup(Animation &a);
 
@@ -51,10 +51,7 @@ protected:
 
 	sf::RenderWindow* m_window;
 	sf::Font* m_font;
-	sf::Text scoreText, livesText, specialText, transitionText;
-#if _DEBUG
-	sf::Text debugText;
-#endif
+	sf::Text scoreText, livesText, specialText;
 	sf::Color transitionTextColor;
 	sf::Sprite background;
 	Animation explosionSprite, rockSprite, rockSmallSprite, blueBulletSprite, playerSprite, playerGoSprite;
@@ -64,21 +61,23 @@ protected:
 	SoundRef livesUpSound, specialUpSound, rapidUpSound;
 
 	PowerUpText powerUpText;
+	TransitionText transitionText;
+#if _DEBUG
+	sf::Text debugText;
+#endif
 };
 
 
 template<class EntityType>
-inline std::shared_ptr<EntityType> PlayState::addEntity(Animation & a, int x, int y, float angle, float radius)
+inline void PlayState::addEntity(Animation & a, int x, int y, float angle, float radius)
 {
 	auto e = std::make_shared<EntityType>();
 	e->settings(a, x, y, angle, radius);
 	m_gameData->entities.push_back(e);
-
-	return e;
 }
 
 template<class EntityType>
 inline void PlayState::addPowerup(Animation& a)
 {
-	(void)addEntity<EntityType>(a, rand() % (SCRN_WIDTH / 2) + SCRN_WIDTH / 4, rand() % (SCRN_HEIGHT / 2) + SCRN_HEIGHT / 4, (float)(rand() % 360), 28.0f);
+	addEntity<EntityType>(a, rand() % (SCRN_WIDTH / 2) + SCRN_WIDTH / 4, rand() % (SCRN_HEIGHT / 2) + SCRN_HEIGHT / 4, (float)(rand() % 360), 28.0f);
 }

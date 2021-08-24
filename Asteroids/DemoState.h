@@ -24,7 +24,8 @@ private:
 	void drawText();
 	void gameOver() override;
 
-	int fadeOut, oldDifficulty;
+	int fadeOut;
+	Difficulty oldDifficulty;
 	PulsingText pressKeyText;
 	PulsingText demoModeText;
 

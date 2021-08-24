@@ -12,6 +12,7 @@
 #include <iostream>
 #include <optional>
 
+
 using std::cout; using std::endl;
 
 namespace Registry

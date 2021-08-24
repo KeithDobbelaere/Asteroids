@@ -1,5 +1,6 @@
 #include <SFMLExt/fader.hpp>
 
+
 namespace sfext {
 
 	Fader::Fader()
@@ -156,7 +157,7 @@ namespace sfext {
 			return fader;
 		}
 
-		sf::Music& MusicManager::getMusic() {
+		sf::Music& MusicManager::getCurrent() {
 			bool prim_play = (primary.music.getStatus() == sf::SoundSource::Status::Playing);
 			bool sec_play = (secondary.music.getStatus() == sf::SoundSource::Status::Playing);
 

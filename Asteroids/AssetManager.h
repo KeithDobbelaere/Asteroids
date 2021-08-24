@@ -4,9 +4,9 @@
 #include <SFML/Audio.hpp>
 
 #include <memory>
-#include <vector>
 #include <string>
 #include <map>
+
 
 using SoundRef = std::shared_ptr <sf::Sound>;
 
@@ -16,7 +16,7 @@ public:
 	AssetManager() = default;
 	~AssetManager() = default;
 
-	bool loadTexture(const char* name, const char* filePath);
+	sf::Texture& loadTexture(const char* name, const char* filePath);
 	sf::Texture& getTexture(const char* name);
 	bool loadFont(const char* name, const char* filePath);
 	sf::Font* getFont(const char* name);
@@ -29,5 +29,9 @@ private:
 	std::map<std::string, sf::Texture> m_textures;
 	std::map<std::string, sf::Font> m_fonts;
 	std::map<std::string, sf::SoundBuffer> m_soundBuffers;
-	std::vector<std::pair<SoundRef, float>> m_soundRefs;
+	struct BaseVolume {
+		SoundRef soundRef;
+		float volume;
+	};
+	std::map<std::string, BaseVolume> m_soundVolumes;
 };

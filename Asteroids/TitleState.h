@@ -1,11 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-#include <vector>
-
 #include "MenuState.h"
 #include "Application.h"
 #include "StarField.h"
+
+#include <vector>
 
 
 class TitleState : public MenuState

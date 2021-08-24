@@ -1,4 +1,5 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
 
 #include "GameState.h"
@@ -22,7 +23,7 @@ public:
 	void updateImpl() override;
 	
 private:
-	int m_oldDifficultySetting, m_newDifficultySetting;
+	Difficulty m_oldDifficultySetting, m_newDifficultySetting;
 	void setDifficultyText();
 	void onEscapePressed() override;
 	void drawBackground() override;
@@ -31,4 +32,5 @@ private:
 	sf::Text m_restartReqText;
 	GameDataRef m_gameData;
 	StarField m_starField;
+	SoundRef m_effectsSound;
 };

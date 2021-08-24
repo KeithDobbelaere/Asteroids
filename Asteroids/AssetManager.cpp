@@ -1,21 +1,22 @@
 #include "AssetManager.h"
 
 #include <iostream>
+#include <algorithm>
 
-bool AssetManager::loadTexture(const char* name, const char* filePath)
+
+sf::Texture& AssetManager::loadTexture(const char* name, const char* filePath)
 {
 	if (m_textures.count(name) == 0)
 	{
 		sf::Texture tex;
 		if (tex.loadFromFile(filePath))
-		{
 			m_textures[name] = tex;
-			return true;
+		else
+		{
+			std::cerr << "ERROR: Unable to open file \"" << filePath << "\" for [" << name << "] texture.\n";
 		}
-		std::cerr << "ERROR: Unable to open file \"" << filePath << "\" for [" << name << "] texture.\n";
-		return false;
 	}
-	return true;
+	return m_textures.at(name);
 }
 
 sf::Texture& AssetManager::getTexture(const char* name)
@@ -67,21 +68,26 @@ sf::SoundBuffer & AssetManager::getSoundBuffer(const char * name)
 
 SoundRef AssetManager::linkSoundRef(const char * bufferName, float volume)
 {
-	if (m_soundBuffers.count(bufferName) > 0)
-	{
+	SoundRef ret;
+	if (m_soundVolumes.count(bufferName) == 0) {
 		sf::Sound tempSound(getSoundBuffer(bufferName));
 		tempSound.setVolume(volume);
-		SoundRef newSound = std::make_shared<sf::Sound>(tempSound);
-		m_soundRefs.emplace_back(newSound, volume);
-		return newSound;
+		ret = std::make_shared<sf::Sound>(tempSound);
+		BaseVolume tempAttribs;
+		tempAttribs.soundRef = ret;
+		tempAttribs.volume = volume;
+		m_soundVolumes.insert_or_assign(bufferName, tempAttribs);
 	}
-	return SoundRef();
+	else {
+		ret = m_soundVolumes.at(bufferName).soundRef;
+	}
+	return ret;
 }
 
 void AssetManager::adjustSoundVolume(float vol)
 {
-	for (auto& sound : m_soundRefs)
+	for (auto& attrib : m_soundVolumes)
 	{
-		sound.first->setVolume(sound.second * vol);
+		attrib.second.soundRef->setVolume(attrib.second.volume * vol);
 	}
 }

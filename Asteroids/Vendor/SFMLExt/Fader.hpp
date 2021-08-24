@@ -1,8 +1,10 @@
 #pragma once
 
+#include <SFML/Audio.hpp>
+
 #include <string>
 #include <functional>
-#include <SFML/Audio.hpp>
+
 
 namespace sfext {
 
@@ -52,7 +54,7 @@ namespace sfext {
 		float getMaxVolume() const;
 
 		sfext::Fader& getFader();
-		sf::Music& getMusic();
+		sf::Music& getCurrent();
 	};
 
 }

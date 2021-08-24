@@ -21,6 +21,7 @@ void StateMachine::processStateChanges()
 {
 	if (m_isRemoving && !m_states.empty())
 	{
+		m_states.top()->cleanup();
 		m_states.pop();
 
 		if (!m_states.empty())
@@ -35,6 +36,7 @@ void StateMachine::processStateChanges()
 		{
 			if (m_isReplacing)
 			{
+				m_states.top()->cleanup();
 				m_states.pop();
 			}
 			else

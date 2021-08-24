@@ -2,82 +2,49 @@
 
 #include <SHA256/sha256.h>
 
+#include "Registry.h"
+#include "Defines.h"
+
 #include <iostream>
 #include <fstream>
 #include <algorithm>
 #include <cctype>
 #include <filesystem>
 
-#include "Registry.h"
-#include "Defines.h"
 
+char ScoresManager::playerInitials[Entry::STRING_SIZE]{};
 
 ScoresManager::ScoresManager()
 {
-	char* buf = nullptr;
-	size_t sz = 0;
-	if (_dupenv_s(&buf, &sz, "appdata") == 0 && buf != nullptr)
-	{
-		m_appDataPath = buf;
-		free(buf);
-	}
-	m_appDataPath += APP_DATA_PATH;
-	if (!load(m_appDataPath))
-	{
+	if (!load()) {
 		generateNew();
-		save(m_appDataPath);
+		save();
 	}
 }
 
-bool ScoresManager::load(const std::string& fileName)
+bool ScoresManager::load()
 {
 	m_storedHash = Registry::GetStrVal(HKEY_CURRENT_USER, REGISTRY_KEY, "HighScoresHash");
 	if (!m_storedHash)
 	{
-		std::cout << "Generating High-Score Files...\n";
 		return false;
 	}
-	bool success;
-	Entry e[12 * 3];
-	std::ifstream file(fileName.c_str(), std::ios::in | std::ios::binary | std::ios::ate);
-	if (file.is_open())
+	std::array<Entry, 12 * 3> temp;
+	read(0, temp);
+	m_thisHash = sha256((const unsigned char*)temp.data(), sizeof(Entry) * 12U * 3U);
+	if (m_storedHash == m_thisHash)
 	{
-		std::streamsize fileSize = file.tellg();
-		std::streamsize dataSize = sizeof(Entry) * 12 * 3;
-		if (fileSize == dataSize)
-		{
-			file.seekg(0, std::ios::beg);
-			file.read((char*)e, dataSize);
-			m_thisHash = sha256((const unsigned char*)e, sizeof(Entry) * 12U * 3U);
-			if (m_storedHash == m_thisHash)
-			{
-				std::copy(std::begin(e), std::end(e), m_highScores.begin());
-				success = true;
-			}
-			else
-			{
-				std::cerr << "ERROR: File '" << fileName << "' has been corrupted.  Regenerating files...\n";
-				success = false;
-			}
-		}
-		else
-		{
-			std::cout << "Problem reading '" << fileName << ".'  Regenerating files...\n";
-			success = false;
-		}
-		file.close();
+		m_highScores = temp;
+		return true;
 	}
 	else
 	{
-		std::string errorMsg = "ERROR: Could not open file '" + fileName + "' for reading";
-		perror(errorMsg.c_str());
-		std::cout << "Building files...\n";
-		success = false;
+		std::cerr << "ERROR: App data file has been corrupted.\n";
+		return false;
 	}
-	return success;
 }
 
-void ScoresManager::save(const std::string& fileName)
+void ScoresManager::save()
 {
 	Entry* e = m_highScores.data();
 	m_thisHash = sha256((const unsigned char*)e, sizeof(Entry) * 12U * 3U);
@@ -85,48 +52,42 @@ void ScoresManager::save(const std::string& fileName)
 	Registry::SetStrVal(hKey, "HighScoresHash", m_thisHash);
 	RegCloseKey(hKey);
 
-	std::ofstream file(fileName.c_str(), std::ios::out | std::ios::binary);
-	if (file.is_open())
-	{
-		file.write((char*)e, sizeof(Entry) * 12 * 3);
-		file.close();
-	}
-	else
-	{
-		std::string errorMsg = "ERROR: Could not open/create file '" + fileName + "' for writing";
-		perror(errorMsg.c_str());
-	}
+	write(0, m_highScores);
 }
 
-void ScoresManager::addScore(const Entry& entry, int difficulty)
+void ScoresManager::addScore(const Entry& entry, Difficulty difficulty)
 {
-	difficulty -= 1;
-	if (entry.score > m_highScores[difficulty * 12 + 11].score)
+	int index = (static_cast<int>(difficulty) - 1) * 12;
+	if (entry.score > m_highScores[index + 11].score)
 	{
-		m_highScores[difficulty * 12 + 11] = entry;
-		auto begin = m_highScores.begin() + difficulty * 12;
+		m_highScores[index + 11] = entry;
+		auto begin = m_highScores.begin() + index;
 		auto end = begin + 12;
 		std::stable_sort(begin, end,
 			[](const Entry& a, const Entry& b) { 
 				return a.score > b.score; 
 			}
 		);
-		save(m_appDataPath);
+		save();
 	}
 }
 
-const ScoresManager::Entry& ScoresManager::getScore(int index, int difficulty) const
+const ScoresManager::Entry& ScoresManager::getScore(int index, int difficultyIndex) const
 {
-	return m_highScores.at((difficulty - 1) * 12 + index);
+	int first = difficultyIndex * 12;
+	return m_highScores.at(first + index);
 }
 
-const ScoresManager::Entry & ScoresManager::getLowest(int difficulty) const
+const ScoresManager::Entry& ScoresManager::getLowest(Difficulty difficulty) const
 {
-	return m_highScores[(difficulty - 1) * 12 + 11];
+	int first = (static_cast<int>(difficulty) - 1) * 12;
+	return m_highScores[first + 11];
 }
 
 void ScoresManager::generateNew()
 {
+	std::cout << "Generating High-Score file...\n";
+
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 12; j++)

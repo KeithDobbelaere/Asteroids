@@ -1,42 +1,43 @@
 #include "TitleState.h"
 
-#include <iostream>
-
 #include "PlayState.h"
 #include "DemoState.h"
 #include "OptionsState.h"
 #include "HighScoresState.h"
 
+#include <iostream>
+
 
 TitleState::TitleState(AppDataRef data, GameDataRef gameData) :
 	MenuState(data, gameData), m_gameData(gameData)
 {
-#if _DEBUG
-	std::cout << "STATE_MACHINE: TitleState constructed!\n";
-#endif
+#	if _DEBUG
+		std::cout << "STATE_MACHINE: TitleState constructed!\n";
+#	endif
 }
 
 TitleState::~TitleState()
 {
-#if _DEBUG
-	std::cout << "STATE_MACHINE: TitleState destroyed!\n";
-#endif
+#	if _DEBUG
+		std::cout << "STATE_MACHINE: TitleState destroyed!\n";
+#	endif
 }
 
 void TitleState::init()
 {
-	auto& musicMan = m_data->musicManager;
-	musicMan.setMaxVolume(m_data->musicVolumeFactor * 100);
-	musicMan.play("Sounds/Stardust_Memories.ogg");
-	musicMan.getMusic().setLoop(true);
+	auto& music = m_data->music;
+	music.setMaxVolume(m_data->musicVolumeFactor * 100);
+	music.play("Sounds/Stardust_Memories.ogg");
+	music.getCurrent().setLoop(true);
 
 	setDefaultColor(sf::Color::White);
 	setHighlightColor(sf::Color(155, 100, 255));
+
 	setTitle("(Asteroids!)", 200.0f, m_data->assets.getFont("arcadeItal"), sf::Text::Style::Italic,
 		sf::Color(55, 155, 255), sf::Color(255, 255, 75), 130, .9f);
-	setTopItemPos(m_window.getSize().y / 2);
-	setLineSpacing(60);
-	setItemAttribs(sf::Text::Bold, 80);
+	setTopItemPos(SCRN_HEIGHT / 2);
+	setDefaultLineSpacing(10);
+	setDefaultAttribs(sf::Text::Bold, 80);
 	addMenuItem("Start");
 	addMenuItem("Options");
 	addMenuItem("High Scores");
@@ -55,8 +56,9 @@ void TitleState::pause()
 
 void TitleState::resume()
 {
-	m_data->musicManager.play("Sounds/Stardust_Memories.ogg");
-	m_data->musicManager.getMusic().setLoop(true);
+	auto& music = m_data->music;
+	music.play("Sounds/Stardust_Memories.ogg");
+	music.getCurrent().setLoop(true);
 	m_clock.restart();
 }
 

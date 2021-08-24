@@ -3,15 +3,21 @@
 #include <SFML/Graphics.hpp>
 
 #include <unordered_map>
+#include <functional>
 
 class InputManager
 {
 public:
-	InputManager() = default;
+	InputManager() :
+		m_resizeViewFunPtr(nullptr) {}
+	InputManager(sf::Vector2f(* resizeCallback) (sf::View&, sf::Vector2u, float&)) :
+		m_resizeViewFunPtr(resizeCallback) {}
+	InputManager(std::function<sf::Vector2f(sf::View&, sf::Vector2u, float&)>resizeCallback) :
+		m_resizeViewFunPtr(resizeCallback) {}
 	~InputManager() = default;
 
 
-	void update(sf::RenderWindow& window);
+	void update(sf::RenderWindow& window, sf::View& view);
 
 	bool windowSizeChanged(const sf::RenderWindow& window) const;
 
@@ -24,8 +30,9 @@ public:
 
 	sf::Vector2f getMousePosition(const sf::RenderWindow& window) const;
 
-	bool wasKeyPressed(sf::Keyboard::Key key) const;
-	bool isKeyDown(sf::Keyboard::Key key) const;
+	bool mousePositionChanged() const;
+	bool wasKeyPressed(sf::Keyboard::Key keys) const;
+	bool isKeyDown(sf::Keyboard::Key keys) const;
 	bool anyKeyPressed() const;
 
 	bool wasButtonPressed(sf::Mouse::Button button) const;
@@ -35,13 +42,19 @@ public:
 	uint8_t getCharTyped() const;
 
 private:
+	void calculateScale();
+
 	bool m_windowResized = false, m_hasFocus = true;
 	uint8_t m_lastCharTyped = '\0';
 
-	sf::Event m_event = {};
+	sf::Event m_event {};
 	std::unordered_map<sf::Keyboard::Key, bool> m_keyStates;
 	std::unordered_map<sf::Mouse::Button, bool> m_buttonStates;
-	sf::Keyboard::Key m_lastKeyPressed = sf::Keyboard::Unknown;
+	sf::Keyboard::Key m_lastKeyPressed = sf::Keyboard::Key::Unknown;
+	std::function<sf::Vector2f(sf::View&, sf::Vector2u, float&)> m_resizeViewFunPtr;
+	sf::Vector2i m_mousePosition{}, m_lastMousePos{};
+	sf::Vector2f viewOffsets{};
+	float viewScaleFactor = 1;
 };
 
 template<typename T>

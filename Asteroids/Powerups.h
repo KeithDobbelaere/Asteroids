@@ -3,6 +3,7 @@
 #include "Defines.h"
 #include "Entity.h"
 
+
 class Powerup : public Entity
 {
 public:
@@ -16,13 +17,13 @@ public:
 		lifetime = 1000;
 	}
 
-	void update() override
+	void updateImpl() override
 	{
 		angle += da;
 		x += dx;
 		y += dy;
 
-		if (x > SCRN_WIDTH || x < 0 || y > SCRN_HEIGHT || y < 0 || --lifetime == 0)
+		if (notOnScreen() || --lifetime == 0)
 			alive = false;
 	}
 };

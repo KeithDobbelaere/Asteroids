@@ -1,25 +1,34 @@
 #include "InputManager.h"
 
-void InputManager::update(sf::RenderWindow & window)
+#include <iostream>
+
+
+void InputManager::update(sf::RenderWindow & window, sf::View& view)
 {
 	m_lastCharTyped = '\0';
 	m_lastKeyPressed = sf::Keyboard::Key::Unknown;
+	m_lastMousePos = m_mousePosition;
 	m_windowResized = false;
 	for (auto& button : m_buttonStates)
 	{
 		button.second = false;
 	}
-	for (auto& key : m_keyStates)
+	for (auto& keys : m_keyStates)
 	{
-		key.second = false;
+		keys.second = false;
 	}
 	while (window.pollEvent(m_event))
 	{
 		if (m_event.type == sf::Event::Closed)
 			window.close();
 
-		if (m_event.type == sf::Event::Resized)
+		if (m_event.type == sf::Event::Resized) {
 			m_windowResized = true;
+			if (m_resizeViewFunPtr != nullptr)
+				viewOffsets = m_resizeViewFunPtr(view, { m_event.size.width, m_event.size.height }, viewScaleFactor);
+			calculateScale();
+			window.setView(view);
+		}
 
 		if (m_event.type == sf::Event::LostFocus)
 			m_hasFocus = false;
@@ -43,6 +52,7 @@ void InputManager::update(sf::RenderWindow & window)
 			m_lastCharTyped = (uint8_t)toupper(std::min(std::max((int)m_event.text.unicode, 33), 126));
 		}
 	}
+	m_mousePosition = sf::Mouse::getPosition(window);
 }
 
 bool InputManager::windowSizeChanged(const sf::RenderWindow & window) const
@@ -52,22 +62,27 @@ bool InputManager::windowSizeChanged(const sf::RenderWindow & window) const
 
 sf::Vector2f InputManager::getMousePosition(const sf::RenderWindow & window) const
 {
-	sf::Vector2i pos = sf::Mouse::getPosition(window);
-	return sf::Vector2f((float)pos.x, (float)pos.y);
+	const auto& pos = m_mousePosition;
+	return (sf::Vector2f((float)pos.x, (float)pos.y) - viewOffsets) * viewScaleFactor;
 }
 
-bool InputManager::wasKeyPressed(sf::Keyboard::Key key) const
+bool InputManager::mousePositionChanged() const
 {
-	if (m_keyStates.count(key) > 0)
-		return m_keyStates.at(key);
+	return (m_mousePosition != m_lastMousePos);
+}
+
+bool InputManager::wasKeyPressed(sf::Keyboard::Key keys) const
+{
+	if (m_keyStates.count(keys) > 0)
+		return m_keyStates.at(keys);
 
 	return false;
 }
 
-bool InputManager::isKeyDown(sf::Keyboard::Key key) const
+bool InputManager::isKeyDown(sf::Keyboard::Key keys) const
 {
 	if (m_hasFocus)
-		return sf::Keyboard::isKeyPressed(key);
+		return sf::Keyboard::isKeyPressed(keys);
 
 	return false;
 }
@@ -104,4 +119,9 @@ sf::Keyboard::Key InputManager::lastKeyPressed() const
 uint8_t InputManager::getCharTyped() const
 {
 	return m_lastCharTyped;
+}
+
+void InputManager::calculateScale()
+{
+
 }

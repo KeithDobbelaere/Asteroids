@@ -1,13 +1,52 @@
 #include "Application.h"
 
+#include "SplashState.h"
+#include "Defines.h"
+
 #include <iostream>
 
-#include "SplashState.h"
 
+sf::Vector2f getLetterboxView(sf::View& view, const sf::Vector2u& windowSize, float& scaleFactor) {
 
-Application::Application(int width, int height, const char * title)
+	// Compares the aspect ratio of the window to the aspect ratio of the view,
+	// and sets the view's viewport accordingly in order to archieve a letterbox effect.
+	// A new view (with a new viewport set) is returned.
+
+	float windowRatio = windowSize.x / (float)windowSize.y;
+	float viewRatio = view.getSize().x / (float)view.getSize().y;
+	float sizeX = 1;
+	float sizeY = 1;
+	float posX = 0;
+	float posY = 0;
+
+	bool horizontalSpacing = true;
+	if (windowRatio < viewRatio)
+		horizontalSpacing = false;
+
+	// If horizontalSpacing is true, the black bars will appear on the left and right side.
+	// Otherwise, the black bars will appear on the top and bottom.
+
+	if (horizontalSpacing) {
+		sizeX = viewRatio / windowRatio;
+		posX = (1 - sizeX) / 2.f;
+		scaleFactor = SCRN_HEIGHT / (float)windowSize.y;
+	}
+	else {
+		sizeY = windowRatio / viewRatio;
+		posY = (1 - sizeY) / 2.f;
+		scaleFactor = SCRN_WIDTH / (float)windowSize.x;
+	}
+
+	view.setViewport(sf::FloatRect(posX, posY, sizeX, sizeY));
+
+	sf::Vector2f offsets(windowSize.x * posX, windowSize.y * posY);
+	return offsets;
+}
+
+Application::Application(int width, int height, const char * title) :
+	data(std::make_shared<ApplicationData>(getLetterboxView))
 {
-	data->window.create(sf::VideoMode(width, height), title, sf::Style::Titlebar | sf::Style::Close);
+	data->window.create(sf::VideoMode(width, height), title, sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
 	sf::Image icon;
 	icon.loadFromFile("Images/Icon.png");
 	data->window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
@@ -21,15 +60,14 @@ Application::Application(int width, int height, const char * title)
 	assets.loadFont("default", "Fonts/BarcadeNoBar.ttf");
 	assets.loadFont("arcadeItal", "Fonts/BarcadeBoldItalic.otf");
 	assets.loadFont("arcadeBar", "Fonts/Barcade.otf");
-	data->running = true;
-	Run();
 }
 
-void Application::Run()
+void Application::run()
 {
 	float newTime, frameTime, interpolation;
 	float currentTime = m_clock.getElapsedTime().asSeconds();
 	float accumulator = 0.0f;
+	data->running = true;
 
 	while (data->window.isOpen() && data->running)
 	{
@@ -49,7 +87,7 @@ void Application::Run()
 		{
 			activeState->processInput();
 			activeState->update(dt);
-			data->musicManager.update(sf::seconds(dt));
+			data->music.update(sf::seconds(dt));
 
 			accumulator -= dt;
 		}
