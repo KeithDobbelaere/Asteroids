@@ -21,7 +21,7 @@ public:
 private:
 	inline bool open();
 	inline void close();
-	inline void generateNew();
+	inline void wipeFile();
 
 	static std::string m_filePath;
 	static std::fstream m_file;

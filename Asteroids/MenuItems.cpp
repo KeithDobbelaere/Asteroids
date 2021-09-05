@@ -72,7 +72,6 @@ RangeSlider::RangeSlider(AppDataRef data, float & refVar, sf::Color* baseColor, 
 	m_valueText = sf::Text("100", *assets.getFont("default"), 20);
 	m_valueText.setFillColor(sf::Color::Black);
 
-	data->assets.loadTexture("slider", "images/range_slider.png").setSmooth(true);
 	const auto& texture = data->assets.getTexture("slider");
 
 	sf::IntRect tempRect(0, 0, 300, 12);

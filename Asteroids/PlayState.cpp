@@ -29,21 +29,8 @@ PlayState::PlayState(AppDataRef data, GameDataRef gameData) :
 		debugText = sf::Text("**Debug**", *m_font, 16);
 		debugText.setPosition(0, SCRN_HEIGHT - 200);
 #	endif
-	auto& assets = m_data->assets;
-	assets.loadTexture("ship", "images/spaceship.png").setSmooth(true);
-	assets.loadTexture("background0", "images/galaxy-4.png").setSmooth(true);
-	assets.loadTexture("background1", "images/galaxy-1.png").setSmooth(true);
-	assets.loadTexture("background2", "images/galaxy-2.png").setSmooth(true);
-	assets.loadTexture("explosion1", "images/explosions/type_C.png");
-	assets.loadTexture("rock_large", "images/rock.png");
-	assets.loadTexture("fire_blue", "images/fire_blue.png");
-	assets.loadTexture("rock_small", "images/rock_small.png");
-	assets.loadTexture("explosion2", "images/explosions/type_B.png");
-	assets.loadTexture("lives", "images/lives.png");
-	assets.loadTexture("fire_red", "images/fire_red.png");
-	assets.loadTexture("special", "images/special.png");
-	assets.loadTexture("rapid_fire", "images/rapid_fire.png");
 
+	auto& assets = m_data->assets;
 	explosionSprite = Animation(assets.getTexture("explosion1"), { 0, 0, 256, 256 }, 48, 0.5f);
 	rockSprite = Animation(assets.getTexture("rock_large"), { 0, 0, 64, 64 }, 16, 0.2f);
 	rockSmallSprite = Animation(assets.getTexture("rock_small"), { 0, 0, 64, 64 }, 16, 0.2f);
@@ -56,23 +43,14 @@ PlayState::PlayState(AppDataRef data, GameDataRef gameData) :
 	specialSprite = Animation(assets.getTexture("special"), { 0, 0, 64, 64 }, 1, 0.0f);
 	rapidFireSprite = Animation(assets.getTexture("rapid_fire"), { 0, 0, 64, 64 }, 1, 0.0f);
 
-	assets.loadSoundBuffer("Ship_Explosion", "Sounds/Ship_Explosion.wav");
-	assets.loadSoundBuffer("Basic_Phaser", "Sounds/Basic_Phaser.ogg");
-	assets.loadSoundBuffer("Rapid_Phaser", "Sounds/Rapid_Phaser.ogg");
-	assets.loadSoundBuffer("Impact", "Sounds/Impact.wav");
-	assets.loadSoundBuffer("Special_Weapon", "Sounds/Special_Weapon.ogg");
-	assets.loadSoundBuffer("Power_Up1", "Sounds/Power_Up1.ogg");
-	assets.loadSoundBuffer("Power_Up2", "Sounds/Power_Up2.ogg");
-	assets.loadSoundBuffer("Power_Up3", "Sounds/Power_Up3.ogg");
-
-	shipExplosionSound = assets.linkSoundRef("Ship_Explosion", 40.0f);
-	basicPhaserSound = assets.linkSoundRef("Basic_Phaser", 25.0f);
-	rapidPhaserSound = assets.linkSoundRef("Rapid_Phaser", 25.0f);
-	impactExplosionSound = assets.linkSoundRef("Impact", 25.0f);
-	specialWeaponSound = assets.linkSoundRef("Special_Weapon", 35.0f);
-	livesUpSound = assets.linkSoundRef("Power_Up2", 30.0f);
-	specialUpSound = assets.linkSoundRef("Power_Up1", 30.0f);
-	rapidUpSound = assets.linkSoundRef("Power_Up3", 30.0f);
+	shipExplosionSound = assets.linkSoundRef("ship_explosion", 40.0f);
+	basicPhaserSound = assets.linkSoundRef("basic_phaser", 25.0f);
+	rapidPhaserSound = assets.linkSoundRef("rapid_phaser", 25.0f);
+	impactExplosionSound = assets.linkSoundRef("impact", 25.0f);
+	specialWeaponSound = assets.linkSoundRef("special_weapon", 35.0f);
+	livesUpSound = assets.linkSoundRef("power_up2", 30.0f);
+	specialUpSound = assets.linkSoundRef("power_up1", 30.0f);
+	rapidUpSound = assets.linkSoundRef("power_up3", 30.0f);
 	assets.adjustSoundVolume(m_data->soundVolumeFactor);
 }
 
@@ -81,7 +59,7 @@ PlayState::~PlayState()
 #	if _DEBUG
 		std::cout << "STATE_MACHINE: PlayState destroyed!\n";
 #	endif
-	if (m_gameData->p.use_count() > 0)
+	if (m_gameData->p.use_count() != 0)
 		m_gameData->p->livesRemaining = 0;
 }
 
@@ -89,7 +67,7 @@ PlayState::~PlayState()
 void PlayState::init()
 {
 	m_gameData->asteroidCount = 0;
-	std::cout << "Deceleration constant: " << STOP_DISTANCE_MULTIPLIER2 << '\n';
+
 	m_gameData->entities.clear();
 	m_gameData->p = std::make_shared<Player>();
 	m_gameData->p->settings(playerSprite, SCRN_WIDTH / 2, SCRN_HEIGHT / 2, 0, 20.0f);

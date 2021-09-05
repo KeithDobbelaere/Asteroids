@@ -10,10 +10,10 @@
 class AIComponent
 {
 public:
-	AIComponent();
+	AIComponent(std::list<std::shared_ptr<Entity>>& entities, int& asteroidCount);
 	~AIComponent() = default;
 
-	void init(GameDataRef data);
+	void init(std::shared_ptr<Player> player);
 	void update();
 
 private:
@@ -55,8 +55,9 @@ public:
 	} t;
 	
 	std::shared_ptr<Player> m_player;
+	std::list<std::shared_ptr<Entity>>& m_entities;
+	int& m_asteroidCount;
 private:
-	GameDataRef m_gameData;
 #if _DEBUG
 	inline void updateDebugInfo();
 public:

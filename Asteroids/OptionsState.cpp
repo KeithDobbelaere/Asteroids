@@ -14,8 +14,7 @@ OptionsState::OptionsState(AppDataRef data, GameDataRef gameData) :
 #	endif
 
 	auto& assets = m_data->assets;
-	assets.loadSoundBuffer("Basic_Phaser", "Sounds/Basic_Phaser.ogg");
-	m_effectsSound = assets.linkSoundRef("Basic_Phaser", 25.0f);
+	m_effectsSound = assets.linkSoundRef("basic_phaser", 25.0f);
 	m_oldDifficultySetting = m_newDifficultySetting = m_data->difficulty;
 }
 
@@ -140,7 +139,7 @@ void OptionsState::setDifficultyText()
 		break;
 	}
 	bool restartRequired = (m_newDifficultySetting != m_oldDifficultySetting);
-	if (restartRequired && m_gameData->p.use_count() && m_gameData->p->getLivesRemaining() != 0)
+	if (restartRequired && m_gameData->p.use_count() != 0 && m_gameData->p->getLivesRemaining() != 0)
 	{
 		diffString += '*';
 		m_restartReqText.setFillColor(sf::Color::Yellow);

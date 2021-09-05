@@ -10,7 +10,7 @@
 
 
 DemoState::DemoState(AppDataRef data, GameDataRef gameData) :
-	PlayState(data, gameData)
+	PlayState(data, gameData), ai(gameData->entities, gameData->asteroidCount)
 {
 #	if _DEBUG
 		std::cout << "STATE_MACHINE: DemoState constructed!\n";
@@ -40,7 +40,7 @@ DemoState::~DemoState()
 void DemoState::init()
 {
 	PlayState::init();
-	ai.init(m_gameData);
+	ai.init(m_gameData->p);
 	ai.delay.restart();
 }
 

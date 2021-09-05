@@ -55,5 +55,5 @@ static const float STOP_DISTANCE_MULTIPLIER2 = getStopDistanceMultiplier(DECELER
 */
 
 constexpr const char* REGISTRY_KEY = "Software\\2R Games\\Asteroids!";
-constexpr const char* APP_DATA_PATH = "\\Asteroids!\\Asteroids.bin";
+constexpr const char* APP_DATA_FILE = "\\Asteroids!\\Asteroids.bin";
 constexpr const int APP_DATA_FILE_SIZE = 336;

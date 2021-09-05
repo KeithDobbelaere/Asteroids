@@ -9,7 +9,6 @@ MenuState::MenuState(AppDataRef data, GameDataRef gameData) :
 {
 	m_window.setKeyRepeatEnabled(true);
 
-	m_data->assets.loadSoundBuffer("click", "sounds/click_sound.ogg");
 	m_clickSound = m_data->assets.linkSoundRef("click");
 }
 

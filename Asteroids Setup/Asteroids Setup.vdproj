@@ -15,12 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_022B225EB42FA2EA1920403B6455D0EB"
-        "OwnerKey" = "8:_876358C4F1374B2AA2A74A1A909B426A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_023A2F342E5641098C98818041F40F68"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -34,12 +28,6 @@
         "Entry"
         {
         "MsmKey" = "8:_05EFECF5D5974515AC604D9FB35F7261"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_07EDF4CF8EF94D04AAA8FB9A8D672FD0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -165,6 +153,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_9207973FB316465F9B2482368B989FCF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_94B8CB019B8947C494966A4D7163C31A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9946551FCA0F4D9883376341909BE79C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -209,12 +209,6 @@
         {
         "MsmKey" = "8:_CE1211E018F44CDFA2BAAA77298A92B9"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DD5BADBA44F1C8C1BF24A393E31C9C3F"
-        "OwnerKey" = "8:_876358C4F1374B2AA2A74A1A909B426A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -285,7 +279,7 @@
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
-        "Compression" = "3:2"
+        "Compression" = "3:3"
         "SignOutput" = "11:FALSE"
         "CertificateFile" = "8:"
         "PrivateKeyFile" = "8:"
@@ -328,26 +322,6 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_022B225EB42FA2EA1920403B6455D0EB"
-            {
-            "SourcePath" = "8:OPENGL32.dll"
-            "TargetName" = "8:OPENGL32.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_43DD75E97CA540269D123727B52C2B1D"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_023A2F342E5641098C98818041F40F68"
             {
             "SourcePath" = "8:..\\Asteroids\\Sounds\\Ship_Explosion.wav"
@@ -394,26 +368,6 @@
             "TargetName" = "8:type_B.png"
             "Tag" = "8:"
             "Folder" = "8:_18F0DC258BDD49DBA81F26EDA1807290"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_07EDF4CF8EF94D04AAA8FB9A8D672FD0"
-            {
-            "SourcePath" = "8:..\\Asteroids\\README.md"
-            "TargetName" = "8:README.md"
-            "Tag" = "8:"
-            "Folder" = "8:_43DD75E97CA540269D123727B52C2B1D"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -808,6 +762,46 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9207973FB316465F9B2482368B989FCF"
+            {
+            "SourcePath" = "8:..\\README.md"
+            "TargetName" = "8:README.md"
+            "Tag" = "8:"
+            "Folder" = "8:_43DD75E97CA540269D123727B52C2B1D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_94B8CB019B8947C494966A4D7163C31A"
+            {
+            "SourcePath" = "8:..\\Release\\openal32.dll"
+            "TargetName" = "8:openal32.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_43DD75E97CA540269D123727B52C2B1D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9946551FCA0F4D9883376341909BE79C"
             {
             "SourcePath" = "8:..\\Asteroids\\Images\\rapid_fire.png"
@@ -966,26 +960,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DD5BADBA44F1C8C1BF24A393E31C9C3F"
-            {
-            "SourcePath" = "8:OpenAL32.dll"
-            "TargetName" = "8:OpenAL32.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_43DD75E97CA540269D123727B52C2B1D"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E6B8FA1C51184813AE17A295726DDFD4"
@@ -1190,15 +1164,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Asteroids!"
-        "ProductCode" = "8:{1190E2F9-09F4-4443-9EC8-A18DC3A45540}"
-        "PackageCode" = "8:{CDABB160-DD87-4987-9A9E-DC00CDD55A87}"
+        "ProductCode" = "8:{6A68F3A5-7D51-4C78-837E-A93968CB60A3}"
+        "PackageCode" = "8:{F1801A58-54F0-47BF-BA76-F9DB70B44B6A}"
         "UpgradeCode" = "8:{386F21F1-2216-4851-A7A7-B3C9CC364DB9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.2"
+        "ProductVersion" = "8:1.2.0"
         "Manufacturer" = "8:2R Games"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/KeithDobbelaere/Asteroids"

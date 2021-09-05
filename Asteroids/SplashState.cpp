@@ -23,8 +23,7 @@ SplashState::~SplashState()
 
 void SplashState::init()
 {
-	m_data->assets.loadTexture("Splash_State_Background", "images/splash_screen.jpg");
-	m_background.setTexture(m_data->assets.getTexture("Splash_State_Background"));
+	m_background.setTexture(m_data->assets.getTexture("splash_screen"));
 	m_background.setScale(sf::Vector2f(SCRN_WIDTH / m_background.getGlobalBounds().width,
 		SCRN_HEIGHT / m_background.getGlobalBounds().height));
 }

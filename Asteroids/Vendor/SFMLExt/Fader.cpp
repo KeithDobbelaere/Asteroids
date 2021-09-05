@@ -3,14 +3,20 @@
 
 namespace sfext {
 
-	Fader::Fader()
-		: in{ [](sf::Time const & elapsed, float value) {
-			return value + elapsed.asMilliseconds() / 30.f;
-		} }
-		, out{ [](sf::Time const & elapsed, float value) {
-			return value - elapsed.asMilliseconds() / 30.f;
-		} } {
-		}
+	Fader::Fader() 
+		: in (
+			[](sf::Time const & elapsed, float value)
+			{
+				return value + elapsed.asMilliseconds() / 30.f;
+			}
+		)
+		, out (
+			[](sf::Time const & elapsed, float value)
+			{
+				return value - elapsed.asMilliseconds() / 30.f;
+			}
+		)
+		{}
 
 		bool Fader::operator()(sf::Time const & elapsed, sf::SoundSource& sound, FadeMode mode, float max_volume) {
 			float volume = sound.getVolume();

@@ -6,15 +6,15 @@
 #include <algorithm>
 
 
-AIComponent::AIComponent() :
-	input(KeyPressed::NONE), specialWepCountdown(0), screenCenter((float)SCRN_WIDTH / 2, (float)SCRN_HEIGHT / 2)
+AIComponent::AIComponent(std::list<std::shared_ptr<Entity>>& entities, int& asteroidCount) :
+	m_entities(entities), m_asteroidCount(asteroidCount), input(KeyPressed::NONE), specialWepCountdown(0),
+	screenCenter((float)SCRN_WIDTH / 2, (float)SCRN_HEIGHT / 2)
 {
 }
 
-void AIComponent::init(GameDataRef data)
+void AIComponent::init(std::shared_ptr<Player> player)
 {
-	m_gameData = data;
-	m_player = data->p;
+	m_player = player;
 }
 
 void AIComponent::update()
@@ -90,7 +90,7 @@ void AIComponent::findTarget()
 	float distanceToE, shortestDistToE = FLT_MAX;
 	t.entity = nullptr;
 	//Loop through all entities
-	for (const auto& entity : m_gameData->entities)
+	for (const auto& entity : m_entities)
 	{
 		//Ignore all entities besides asteroids and power-ups
 		if (entity->type != EntityType::Bullet && entity->type != EntityType::Explosion &&
@@ -104,7 +104,7 @@ void AIComponent::findTarget()
 			{
 				//If the player is not invincible, and an asteroid is within twice the player's radius,
 				//fire special weapon, then wait ten frames to make it available again
-				if (!m_gameData->p->isInvincible() && specialWeaponUsable && distanceToE < m_gameData->p->R * 2 + entity->R)
+				if (!m_player->isInvincible() && specialWeaponUsable && distanceToE < m_player->R * 2 + entity->R)
 				{
 					specialWeaponUsable = false;
 					specialWepCountdown = 10;
@@ -115,7 +115,7 @@ void AIComponent::findTarget()
 			{
 				//If the closest entity is an asteroid, or if it's a power-up and player isn't invincible,
 				//add that entity the list of potential targets.
-				if (entity->type == EntityType::Asteroid || !m_gameData->p->isInvincible())
+				if (entity->type == EntityType::Asteroid || !m_player->isInvincible())
 				{
 					t.entity = entity;
 					shortestDistToE = distanceToE;
@@ -259,7 +259,7 @@ void AIComponent::trackTarget()
 	}
 	//Fire weapon and abandon re-centering if Rapid Fire power-up is active or if asteroid
 	//is dangerously close
-	if (m_gameData->asteroidCount > 12 || m_gameData->p->hasRapidFire() || (t.entity && !chasing && t.distance < 80.0f))
+	if (m_asteroidCount > 12 || m_player->hasRapidFire() || (t.entity && !chasing && t.distance < 80.0f))
 	{
 		centering = false;
 		fireBullet();
@@ -269,7 +269,7 @@ void AIComponent::trackTarget()
 //Add a slight delay to weapon firing to mimic a human
 void AIComponent::fireBullet()
 {
-	if (m_gameData->p->hasRapidFire())
+	if (m_player->hasRapidFire())
 		input |= KeyPressed::SPACE;
 	else if (delay.getElapsedTime().asMilliseconds() >= AI_FIRE_DELAY_MS)
 	{

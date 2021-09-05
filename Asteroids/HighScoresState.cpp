@@ -14,7 +14,6 @@ HighScoresState::HighScoresState(AppDataRef data, GameDataRef gameData) :
 #	if _DEBUG
 		std::cout << "STATE_MACHINE: HighScoresState constructed!\n";
 #	endif
-	m_data->assets.loadSoundBuffer("click", "sounds/click_sound.ogg");
 	m_clickSound = m_data->assets.linkSoundRef("click");
 
 	m_clearColor = sf::Color(1, 20, 51);

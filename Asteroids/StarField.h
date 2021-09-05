@@ -48,8 +48,6 @@ public:
 	void init(AppDataRef data)
 	{
 		AssetManager& assets = data->assets;
-		assets.loadTexture("haze", "images/haze.png");
-		assets.loadTexture("star_field", "images/starfield.png");
 	
 		sf::Texture& texRef = assets.getTexture("star_field");
 		sf::Vector2i dimensions(1200, 800);

@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <vector>
+#include <filesystem>
 
 
 std::string FileManager::m_filePath{};
@@ -22,9 +23,9 @@ FileManager::FileManager()
 		}
 		else
 			std::cerr << "ERROR: Problem accessing environment variable %appdata%.\n";
-		m_filePath += APP_DATA_PATH;
-	if (!open())
-		generateNew();
+		m_filePath += APP_DATA_FILE;
+		if (!open())
+			wipeFile();
 	}
 }
 
@@ -34,11 +35,14 @@ FileManager::~FileManager()
 }
 
 
-void FileManager::generateNew()
+void FileManager::wipeFile()
 {
 	if (m_file.is_open()) {
+		std::filesystem::resize_file(m_filePath, APP_DATA_FILE_SIZE);
 		std::vector<char> empty(APP_DATA_FILE_SIZE, 0);
+		m_file.seekg(std::ios::beg);
 		m_file.write(empty.data(), empty.size());
+		m_file.flush();
 	}
 }
 
