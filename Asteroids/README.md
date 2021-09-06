@@ -24,7 +24,7 @@ The controls are pretty basic, and can be remapped in the Custom Controls Menu:
 ## Install
 ___
 
-Just unzip the file [Asteroids.zip](https://drive.google.com/file/d/1dap_5WMoKBdrb1wED6WSEts9-Ec0AU9w/view?usp=sharing), and run setup.exe.
+Just unzip the file [Asteroids.zip](https://drive.google.com/drive/folders/1MMj2JpFcc9Lobh-euJyEXehgp8LgyUeD?usp=sharing), and run setup.exe.
 
 ## Credits
 ___
