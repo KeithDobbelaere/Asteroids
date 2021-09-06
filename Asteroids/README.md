@@ -1,6 +1,6 @@
 # Asteroids!
 
-Copyright (c) 2019-2020 Keith Dobbelaere. keith77mn77@gmail.com
+Copyright (c) 2019-2021 Keith Dobbelaere. keith77mn77@gmail.com
 
 ## About the Game
 ___
@@ -12,7 +12,7 @@ He created a quick Asteroids! clone as part of the series
 ## Controls
 ___
 
-The controls are pretty basic:
+The controls are pretty basic, and can be remapped in the Custom Controls Menu:
 
 * Left/A - Rotate Left
 * Right/D - Rotate Right
@@ -24,7 +24,7 @@ The controls are pretty basic:
 ## Install
 ___
 
-Just unzip the file Asteroids.zip, and run setup.exe.
+Just unzip the file [Asteroids.zip](https://drive.google.com/file/d/1dap_5WMoKBdrb1wED6WSEts9-Ec0AU9w/view?usp=sharing), and run setup.exe.
 
 ## Credits
 ___
@@ -41,7 +41,7 @@ To learn more about it, check out:
   * The [community wiki](https://github.com/SFML/SFML/wiki/)
   * The [community forum](https://en.sfml-dev.org/forums/) ([French](https://fr.sfml-dev.org/forums/))
 
-Original inspiration from FamTrinli on YouTube, thank you.
+Original inspiration from [FamTrinli](https://www.youtube.com/user/FamTrinli/about) on YouTube, thank you.
 
 I used an audio fader routine by [Glocke](https://github.com/cgloeckner/), from his SFMLExt project, so thanks go out to him.
 
@@ -49,17 +49,12 @@ I used routines for creating SHA-256 hashes by [Olivier Gay](http://www.ouah.org
 
 ### Audio
 
-Main song is 'Nearly There..' originally by Jochen Hippel for the Atari ST version of the game 'A Prehistoric Tale' from 1990, remake by Jogeir Liljedahl (1991).
+Main song is '[Nearly There..](https://www.youtube.com/watch?v=eclMFa0mD1c&t=5s)' originally by [Jochen Hippel](https://en.wikipedia.org/wiki/Jochen_Hippel) for the Atari ST version of the game 'A Prehistoric Tale' from 1990, remake by Jogeir Liljedahl (1991).
 
-Title music is 'Stardust Memories' by Jester/Sanity (1992).
+Title music is '[Stardust Memories](https://www.youtube.com/watch?v=GLMhBE99byM)' by [Jester/Sanity](https://modarchive.org/index.php?request=view_profile&query=69138) (1992).
 
 _Ah, the days of Mod Tracker music..._
 
 ### Font
 
 Barcade by Daniel Zadorozny, [Iconian Fonts](http://www.iconian.com/).
-
-## Contribute
-___
-
-Feel free to send me money.

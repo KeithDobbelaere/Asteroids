@@ -46,13 +46,14 @@ sf::Vector2f getLetterboxView(sf::View& view, const sf::Vector2u& windowSize, fl
 Application::Application(int width, int height, const char * title) :
 	data(std::make_shared<ApplicationData>(getLetterboxView))
 {
-	data->window.create(sf::VideoMode(width, height), title, sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
 	sf::Image icon;
 	icon.loadFromFile("Images/Icon.png");
-	data->window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-	data->window.setVerticalSyncEnabled(true); //vastly reduces resource consumption
-	data->window.setKeyRepeatEnabled(false);
-	data->machine.addState(StatePtr(std::make_unique<SplashState>(data, gameData)));
+
+	auto& window = data->window;
+	window.create(sf::VideoMode(width, height), title, sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
+	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+	window.setVerticalSyncEnabled(true); //vastly reduces resource consumption
+	window.setKeyRepeatEnabled(false);
 
 	auto& assets = data->assets;
 	assets.loadFont("default", "Fonts/BarcadeNoBar.ttf");
@@ -86,6 +87,8 @@ Application::Application(int width, int height, const char * title) :
 	assets.loadSoundBuffer("power_up1", "Sounds/Power_Up1.ogg");
 	assets.loadSoundBuffer("power_up2", "Sounds/Power_Up2.ogg");
 	assets.loadSoundBuffer("power_up3", "Sounds/Power_Up3.ogg");
+
+	data->machine.addState(StatePtr(std::make_unique<SplashState>(data, gameData)));
 }
 
 void Application::run()
