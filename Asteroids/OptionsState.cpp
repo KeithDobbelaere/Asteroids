@@ -6,7 +6,7 @@
 #include <string>
 
 
-OptionsState::OptionsState(AppDataRef data, GameDataRef gameData) :
+OptionsState::OptionsState(AppDataPtr data, GameDataPtr gameData) :
 	MenuState(data, gameData), m_gameData(gameData)
 {
 #	if _DEBUG
@@ -95,7 +95,7 @@ void OptionsState::updateImpl()
 		case 1:
 			break;
 		case 2:
-			m_data->machine.addState(StateRef(std::make_unique<CustomControlsState>(m_data, m_gameData)), false);
+			m_data->machine.addState(StatePtr(std::make_unique<CustomControlsState>(m_data, m_gameData)), false);
 			break;
 		case 3:
 			m_data->music.setMaxVolume(m_data->musicVolumeFactor * 100);

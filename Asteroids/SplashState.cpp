@@ -5,7 +5,7 @@
 #include <iostream>
 
 
-SplashState::SplashState(AppDataRef data, GameDataRef gameData) :
+SplashState::SplashState(AppDataPtr data, GameDataPtr gameData) :
 	m_data(data), m_gameData(gameData), m_window(data->window)
 {
 #	if _DEBUG
@@ -42,7 +42,7 @@ void SplashState::update(float dt)
 {
 	if (m_clock.getElapsedTime().asSeconds() > SPLASH_SCREEN_DELAY)
 	{
-		m_data->machine.addState(StateRef(std::make_unique<TitleState>(m_data, m_gameData)), true);
+		m_data->machine.addState(StatePtr(std::make_unique<TitleState>(m_data, m_gameData)), true);
 	}
 }
 

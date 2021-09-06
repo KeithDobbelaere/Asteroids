@@ -11,7 +11,7 @@
 class GameOverState : public GameState
 {
 public:
-	GameOverState(AppDataRef data, GameDataRef gameData);
+	GameOverState(AppDataPtr data, GameDataPtr gameData);
 	~GameOverState();
 
 	void init() override;
@@ -31,8 +31,8 @@ private:
 	void drawText();
 
 private:
-	AppDataRef m_data;
-	GameDataRef m_gameData;
+	AppDataPtr m_data;
+	GameDataPtr m_gameData;
 
 	sf::RenderWindow* m_window;
 	sf::Font* m_font;

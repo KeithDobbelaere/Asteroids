@@ -11,7 +11,7 @@
 class OptionsState : public MenuState
 {
 public:
-	OptionsState(AppDataRef data, GameDataRef gameData); 
+	OptionsState(AppDataPtr data, GameDataPtr gameData); 
 	~OptionsState();
 
 	void init() override;
@@ -30,7 +30,7 @@ private:
 
 private:
 	sf::Text m_restartReqText;
-	GameDataRef m_gameData;
+	GameDataPtr m_gameData;
 	StarField m_starField;
 	SoundRef m_effectsSound;
 };

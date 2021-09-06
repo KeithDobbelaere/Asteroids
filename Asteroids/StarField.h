@@ -45,7 +45,7 @@ private:
 		float parallax{};
 	};
 public:
-	void init(AppDataRef data)
+	void init(AppDataPtr data)
 	{
 		AssetManager& assets = data->assets;
 	

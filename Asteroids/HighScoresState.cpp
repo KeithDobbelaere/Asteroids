@@ -7,7 +7,7 @@
 #include <algorithm>
 
 
-HighScoresState::HighScoresState(AppDataRef data, GameDataRef gameData) :
+HighScoresState::HighScoresState(AppDataPtr data, GameDataPtr gameData) :
 	m_data(data), m_gameData(gameData), m_window(data->window), 
 	m_font(m_data->assets.getFont("default")), m_titleFont(m_data->assets.getFont("arcadeBar"))
 {

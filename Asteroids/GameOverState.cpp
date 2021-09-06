@@ -12,7 +12,7 @@
 #include <iostream>
 
 
-GameOverState::GameOverState(AppDataRef data, GameDataRef gameData) :
+GameOverState::GameOverState(AppDataPtr data, GameDataPtr gameData) :
 	m_data(data), m_font(m_data->assets.getFont("default")), m_gameData(gameData)
 {
 #	if _DEBUG
@@ -95,7 +95,7 @@ void GameOverState::processInput()
 	{
 		if (m_gameData->score > m_data->highScores.getLowest(m_data->difficulty).score)
 		{
-			m_data->machine.addState(StateRef(std::make_unique<ScoreEntryState>(m_data, m_gameData)), true);
+			m_data->machine.addState(StatePtr(std::make_unique<ScoreEntryState>(m_data, m_gameData)), true);
 		}
 		else
 		{
@@ -104,7 +104,7 @@ void GameOverState::processInput()
 	}
 	if (input.wasKeyPressed(sf::Keyboard::Key::Escape))
 	{
-		m_data->machine.addState(StateRef(std::make_unique<PausedState>(m_data, m_gameData)), false);
+		m_data->machine.addState(StatePtr(std::make_unique<PausedState>(m_data, m_gameData)), false);
 		return;
 	}
 	if (input.wasKeyPressed(sf::Keyboard::Key::S) ||

@@ -10,7 +10,7 @@
 class MenuState : public GameState
 {
 public:
-	MenuState(AppDataRef data, GameDataRef gameData);
+	MenuState(AppDataPtr data, GameDataPtr gameData);
 	~MenuState();
 
 	void init() override = 0;
@@ -56,7 +56,7 @@ protected:
 	int m_subMenuLastOpened = -1;
 	sf::Text m_titleText;
 	SoundRef m_clickSound;
-	AppDataRef m_data;
+	AppDataPtr m_data;
 	sf::Font* m_font;
 	sf::Color m_baseColor = sf::Color::White;
 	sf::Color m_highlightColor = sf::Color::Blue;

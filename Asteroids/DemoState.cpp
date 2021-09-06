@@ -9,7 +9,7 @@
 #include <iostream>
 
 
-DemoState::DemoState(AppDataRef data, GameDataRef gameData) :
+DemoState::DemoState(AppDataPtr data, GameDataPtr gameData) :
 	PlayState(data, gameData), ai(gameData->entities, gameData->asteroidCount)
 {
 #	if _DEBUG

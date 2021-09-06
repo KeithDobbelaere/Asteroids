@@ -13,7 +13,7 @@
 class HighScoresState : public GameState
 {
 public:
-	HighScoresState(AppDataRef data, GameDataRef gameData);
+	HighScoresState(AppDataPtr data, GameDataPtr gameData);
 	~HighScoresState();
 
 
@@ -47,8 +47,8 @@ private:
 	RainbowShiftText* p_newNameText = nullptr;
 	RainbowShiftText* p_newScoreText = nullptr;
 	sf::Clock m_timer;
-	AppDataRef m_data;
-	GameDataRef m_gameData;
+	AppDataPtr m_data;
+	GameDataPtr m_gameData;
 	sf::Font* m_font, *m_titleFont;
 	sf::Texture m_backgroundTexture;
 	StarField m_starField;

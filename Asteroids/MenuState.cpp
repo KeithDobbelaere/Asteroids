@@ -4,7 +4,7 @@
 #include <iostream>
 
 
-MenuState::MenuState(AppDataRef data, GameDataRef gameData) :
+MenuState::MenuState(AppDataPtr data, GameDataPtr gameData) :
 	m_data(data), m_window(data->window), m_font(m_data->assets.getFont("default"))
 {
 	m_window.setKeyRepeatEnabled(true);
@@ -59,32 +59,16 @@ void MenuState::processInput()
 		break;
 	}
 
-	int i = 0;
 	for (auto& item : m_menuItems)
 	{
 		item.unhighlight();
-		if (input.mousePositionChanged() && input.isItemHovered(item, m_window))
+	
+		bool wasSelected = item.handleInput(input, m_window, m_itemHighlighted, m_subItemHighlighted);
+		if (wasSelected)
 		{
-			m_itemHighlighted = i;
+			selectItem();
+			break;
 		}
-		if (input.wasItemClicked(item, sf::Mouse::Button::Left, m_window))
-		{
-			if (item.isOpen())
-				item.close();
-			else
-				selectItem();
-		}
-		if (item.isOpen())
-		{
-			bool wasSelected = item.handleInput(input, m_window, m_itemHighlighted, m_subItemHighlighted);
-			if (wasSelected)
-			{
-				m_itemHighlighted = i;
-				selectItem();
-				break;
-			}
-		}
-		i++;
 	}
 	if (m_itemHighlighted < 0)
 		m_itemHighlighted = (int)m_menuItems.size() - 1;

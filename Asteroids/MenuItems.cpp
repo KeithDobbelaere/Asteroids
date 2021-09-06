@@ -63,7 +63,7 @@ void TextItem::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(m_text, states);
 }
 
-RangeSlider::RangeSlider(AppDataRef data, float & refVar, sf::Color* baseColor, sf::Color* highlightColor) 
+RangeSlider::RangeSlider(AppDataPtr data, float & refVar, sf::Color* baseColor, sf::Color* highlightColor) 
 	: SubItem(baseColor, highlightColor), m_value(refVar), m_itemDimensions(312, 50)
 {
 	type = Type::RangeSlider;
@@ -218,20 +218,39 @@ SubItem* MenuItem::getSubItem(int index)
 
 bool MenuItem::handleInput(const InputManager& input, const sf::RenderWindow& window, int& itemHighlighted, int& subItemHighlighted)
 {
-	int i = 0;
-	for (const auto& subItem : m_subItems)
+	if (input.mousePositionChanged() && input.isItemHovered(*this, window))
 	{
-		subItem->unhighlight();
-		if (input.isItemHovered(*subItem, window))
+		itemHighlighted = m_index;
+	}
+	if (input.wasItemClicked(*this, sf::Mouse::Button::Left, window))
+	{
+		if (this->isOpen())
+		{
+			this->close();
+		}
+		else
 		{
 			itemHighlighted = m_index;
-			subItemHighlighted = i;
-		}
-		if (subItem->processInput(input, window))
-		{
 			return true;
 		}
-		i++;
+	}
+	if (this->isOpen())
+	{
+		int i = 0;
+		for (const auto& subItem : m_subItems)
+		{
+			subItem->unhighlight();
+			if (input.isItemHovered(*subItem, window))
+			{
+				itemHighlighted = m_index;
+				subItemHighlighted = i;
+			}
+			if (subItem->processInput(input, window))
+			{
+				return true;
+			}
+			i++;
+		}
 	}
 	return false;
 }

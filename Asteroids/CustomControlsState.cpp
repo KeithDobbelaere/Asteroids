@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-CustomControlsState::CustomControlsState(AppDataRef data, GameDataRef gameData) :
+CustomControlsState::CustomControlsState(AppDataPtr data, GameDataPtr gameData) :
 	MenuState(data, gameData), m_controls(data->controls), m_lastItem(0), m_lastSubItem(0)
 {
 #	if _DEBUG

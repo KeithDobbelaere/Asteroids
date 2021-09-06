@@ -15,7 +15,7 @@
 class PlayState : public GameState
 {
 public:
-	PlayState(AppDataRef data, GameDataRef gameData);
+	PlayState(AppDataPtr data, GameDataPtr gameData);
 	~PlayState();
 
 	void init() override;
@@ -46,8 +46,8 @@ protected:
 
 protected:
 	int fadeIn;
-	AppDataRef m_data;
-	GameDataRef m_gameData;
+	AppDataPtr m_data;
+	GameDataPtr m_gameData;
 
 	sf::RenderWindow* m_window;
 	sf::Font* m_font;

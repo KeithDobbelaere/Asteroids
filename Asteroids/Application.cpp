@@ -52,7 +52,7 @@ Application::Application(int width, int height, const char * title) :
 	data->window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	data->window.setVerticalSyncEnabled(true); //vastly reduces resource consumption
 	data->window.setKeyRepeatEnabled(false);
-	data->machine.addState(StateRef(std::make_unique<SplashState>(data, gameData)));
+	data->machine.addState(StatePtr(std::make_unique<SplashState>(data, gameData)));
 
 	auto& assets = data->assets;
 	assets.loadFont("default", "Fonts/BarcadeNoBar.ttf");

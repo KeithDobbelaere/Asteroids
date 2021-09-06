@@ -9,7 +9,7 @@
 class CustomControlsState : public MenuState
 {
 public:
-	CustomControlsState(AppDataRef data, GameDataRef gameData);
+	CustomControlsState(AppDataPtr data, GameDataPtr gameData);
 	~CustomControlsState();
 
 	void init() override;

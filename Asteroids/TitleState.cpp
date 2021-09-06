@@ -8,7 +8,7 @@
 #include <iostream>
 
 
-TitleState::TitleState(AppDataRef data, GameDataRef gameData) :
+TitleState::TitleState(AppDataPtr data, GameDataPtr gameData) :
 	MenuState(data, gameData), m_gameData(gameData)
 {
 #	if _DEBUG
@@ -76,20 +76,20 @@ void TitleState::updateImpl()
 {
 	if (m_clock.getElapsedTime().asSeconds() > TITLE_SCREEN_DELAY)
 	{
-		m_data->machine.addState(StateRef(std::make_unique<DemoState>(m_data, m_gameData)), false);
+		m_data->machine.addState(StatePtr(std::make_unique<DemoState>(m_data, m_gameData)), false);
 	}
 	if (m_itemSelected != -1)
 	{
 		switch (m_itemSelected)
 		{
 			case 0:
-				m_data->machine.addState(StateRef(std::make_unique<PlayState>(m_data, m_gameData)), false);
+				m_data->machine.addState(StatePtr(std::make_unique<PlayState>(m_data, m_gameData)), false);
 				break;
 			case 1:
-				m_data->machine.addState(StateRef(std::make_unique<OptionsState>(m_data, m_gameData)), false);
+				m_data->machine.addState(StatePtr(std::make_unique<OptionsState>(m_data, m_gameData)), false);
 				break;
 			case 2:
-				m_data->machine.addState(StateRef(std::make_unique<HighScoresState>(m_data, m_gameData)), false);
+				m_data->machine.addState(StatePtr(std::make_unique<HighScoresState>(m_data, m_gameData)), false);
 				break;
 			default:
 				std::cerr << "Error selecting menu item!" << '\n';

@@ -9,7 +9,7 @@
 class ScoreEntryState : public GameState
 {
 public:
-	ScoreEntryState(AppDataRef data, GameDataRef gameData);
+	ScoreEntryState(AppDataPtr data, GameDataPtr gameData);
 	~ScoreEntryState();
 
 	void init() override;
@@ -24,8 +24,8 @@ private:
 	int m_cursorPosition, m_lastCursorPos;
 	const int m_characterSize = 120;
 	sf::Vector2f m_cursorScreenPos;
-	AppDataRef m_data;
-	GameDataRef m_gameData;
+	AppDataPtr m_data;
+	GameDataPtr m_gameData;
 	sf::Font* m_font, *m_titleFont;
 	sf::Text m_titleText, m_instructionText, m_initialsText;
 	BlinkingText m_cursorText;

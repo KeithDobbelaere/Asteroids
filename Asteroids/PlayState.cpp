@@ -11,7 +11,7 @@
 #include <iostream>
 
 
-PlayState::PlayState(AppDataRef data, GameDataRef gameData) :
+PlayState::PlayState(AppDataPtr data, GameDataPtr gameData) :
 	m_data(data), m_font(m_data->assets.getFont("default")), powerUpText(*m_font), m_gameData(gameData),
 	transitionText("Ready", *m_font, 80), scoreText("", *m_font, 40), livesText("", *m_font, 40),
 	specialText("", *m_font, 40)
@@ -117,7 +117,7 @@ void PlayState::processInput()
 	const auto& controls = m_data->controls;
 	if (input.wasKeyPressed(sf::Keyboard::Key::Escape))
 	{
-		m_data->machine.addState(StateRef(std::make_unique<PausedState>(m_data, m_gameData)), false);
+		m_data->machine.addState(StatePtr(std::make_unique<PausedState>(m_data, m_gameData)), false);
 		return;
 	}
 	if (input.wasKeyPressed(controls.key(Control::Reverse1)) ||
@@ -370,5 +370,5 @@ void PlayState::increaseScore(int amount)
 
 void PlayState::gameOver()
 {
-	m_data->machine.addState(StateRef(std::make_unique<GameOverState>(m_data, m_gameData)), false);
+	m_data->machine.addState(StatePtr(std::make_unique<GameOverState>(m_data, m_gameData)), false);
 }

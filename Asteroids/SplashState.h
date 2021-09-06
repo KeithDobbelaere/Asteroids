@@ -9,7 +9,7 @@
 class SplashState : public GameState
 {
 public:
-	SplashState(AppDataRef data, GameDataRef gameData);
+	SplashState(AppDataPtr data, GameDataPtr gameData);
 	~SplashState();
 	void init() override;
 	void cleanup() override;
@@ -19,8 +19,8 @@ public:
 	void draw(float dt) override;
 
 private:
-	AppDataRef m_data;
-	GameDataRef m_gameData;
+	AppDataPtr m_data;
+	GameDataPtr m_gameData;
 	sf::Clock m_clock;
 	sf::Sprite m_background;
 	sf::RenderWindow& m_window;

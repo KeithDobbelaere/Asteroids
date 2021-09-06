@@ -6,7 +6,7 @@
 #include <iostream>
 
 
-PausedState::PausedState(AppDataRef data, GameDataRef gameData) :
+PausedState::PausedState(AppDataPtr data, GameDataPtr gameData) :
 	m_gameData(gameData), MenuState(data, gameData)
 {
 #	if _DEBUG
@@ -77,7 +77,7 @@ void PausedState::updateImpl()
 			m_data->machine.removeState();
 			break;
 		case 2:
-			m_data->machine.addState(StateRef(std::make_unique<OptionsState>(m_data, m_gameData)), false);
+			m_data->machine.addState(StatePtr(std::make_unique<OptionsState>(m_data, m_gameData)), false);
 			break; 
 		case 3:
 			m_data->machine.removeState();

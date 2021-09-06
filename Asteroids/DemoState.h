@@ -10,7 +10,7 @@
 class DemoState : public PlayState
 {
 public:
-	DemoState(AppDataRef data, GameDataRef gameData);
+	DemoState(AppDataPtr data, GameDataPtr gameData);
 	~DemoState();
 
 	void init() override;

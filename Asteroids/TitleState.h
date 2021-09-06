@@ -11,7 +11,7 @@
 class TitleState : public MenuState
 {
 public:
-	TitleState(AppDataRef data, GameDataRef gameData);
+	TitleState(AppDataPtr data, GameDataPtr gameData);
 	~TitleState();
 
 
@@ -28,7 +28,7 @@ private:
 	void drawBackground() override;
 
 private:
-	GameDataRef m_gameData;
+	GameDataPtr m_gameData;
 	sf::Clock m_clock;
 	StarField m_starField;
 };

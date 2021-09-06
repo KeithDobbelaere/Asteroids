@@ -72,7 +72,7 @@ private:
 class RangeSlider : public SubItem
 {
 public:
-	RangeSlider(AppDataRef data, float& refVar, sf::Color* baseColor, sf::Color* highlightColor);
+	RangeSlider(AppDataPtr data, float& refVar, sf::Color* baseColor, sf::Color* highlightColor);
 
 	void highlight() override;
 	void unhighlight() override;

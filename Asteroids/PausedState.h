@@ -10,7 +10,7 @@
 class PausedState : public MenuState
 {
 public:
-	PausedState(AppDataRef data, GameDataRef gameData);
+	PausedState(AppDataPtr data, GameDataPtr gameData);
 	~PausedState();
 
 	void init() override;
@@ -26,7 +26,7 @@ private:
 	void onEscapePressed() override;
 	void drawBackground() override;
 
-	GameDataRef m_gameData;
+	GameDataPtr m_gameData;
 	StarField m_starField;
 };
 

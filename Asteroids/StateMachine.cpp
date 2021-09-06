@@ -4,7 +4,7 @@
 #include "GameState.h"
 
 
-void StateMachine::addState(StateRef newState, bool isReplacing)
+void StateMachine::addState(StatePtr newState, bool isReplacing)
 {
 	m_isAdding = true;
 	m_isReplacing = isReplacing;
@@ -50,7 +50,7 @@ void StateMachine::processStateChanges()
 	}
 }
 
-StateRef& StateMachine::getActiveState()
+StatePtr& StateMachine::getActiveState()
 {
 	return m_states.top();
 }

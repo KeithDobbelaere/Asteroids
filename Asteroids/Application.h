@@ -48,8 +48,8 @@ struct ApplicationData
 	Controls controls;
 };
 
-using AppDataRef = std::shared_ptr<ApplicationData>;
-using GameDataRef = std::shared_ptr<GameData>;
+using AppDataPtr = std::shared_ptr<ApplicationData>;
+using GameDataPtr = std::shared_ptr<GameData>;
 
 class Application
 {
@@ -62,6 +62,6 @@ public:
 private:
 	const float dt = 1.0f / 60.0f;
 	sf::Clock m_clock;
-	AppDataRef data;
-	GameDataRef gameData = std::make_shared<GameData>();
+	AppDataPtr data;
+	GameDataPtr gameData = std::make_shared<GameData>();
 };

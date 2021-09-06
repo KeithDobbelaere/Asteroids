@@ -6,7 +6,7 @@
 #include <iostream>
 
 
-ScoreEntryState::ScoreEntryState(AppDataRef data, GameDataRef gameData) :
+ScoreEntryState::ScoreEntryState(AppDataPtr data, GameDataPtr gameData) :
 	m_data(data), m_gameData(gameData), m_window(data->window),
 	m_font(m_data->assets.getFont("default")),
 	m_titleFont(m_data->assets.getFont("arcadeBar")),
@@ -79,7 +79,7 @@ void ScoreEntryState::processInput()
 	{
 		strncpy_s(m_data->highScores.playerInitials, m_initials, strlen(m_initials));
 		m_data->newHighScore = true;
-		m_data->machine.addState(StateRef(std::make_unique<HighScoresState>(m_data, m_gameData)), true);
+		m_data->machine.addState(StatePtr(std::make_unique<HighScoresState>(m_data, m_gameData)), true);
 	}
 	else if (m_data->input.wasKeyPressed(sf::Keyboard::Key::BackSpace))
 	{

@@ -6,7 +6,7 @@
 #include <stack>
 
 
-using StateRef = std::unique_ptr<GameState>;
+using StatePtr = std::unique_ptr<GameState>;
 
 class StateMachine
 {
@@ -15,16 +15,16 @@ public:
 	~StateMachine() = default;
 
 
-	void addState(StateRef newState, bool isReplacing = true);
+	void addState(StatePtr newState, bool isReplacing = true);
 	void removeState();
 
 	void processStateChanges();
 
-	StateRef& getActiveState();
+	StatePtr& getActiveState();
 
 private:
-	std::stack<StateRef> m_states;
-	StateRef m_newState;
+	std::stack<StatePtr> m_states;
+	StatePtr m_newState;
 
 	bool m_isRemoving = false;
 	bool m_isAdding = false;
