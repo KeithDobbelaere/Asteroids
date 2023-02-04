@@ -23,8 +23,8 @@ DemoState::DemoState(AppDataPtr data, GameDataPtr gameData) :
 	demoModeText.setStyle(sf::Text::Bold);
 	const auto& bounds2 = demoModeText.getLocalBounds();
 	demoModeText.setPosition(SCRN_WIDTH / 2 - bounds2.width / 2, 10);
-	oldDifficulty = m_data->difficulty;
-	m_data->difficulty = Difficulty::Hard;
+	oldDifficulty = m_appData->difficulty;
+	m_appData->difficulty = Difficulty::Hard;
 	fadeOut = 0;
 }
 
@@ -33,7 +33,7 @@ DemoState::~DemoState()
 #	if _DEBUG
 		std::cout << "STATE_MACHINE: DemoState destroyed!\n";
 #	endif
-	m_data->difficulty = oldDifficulty;
+	m_appData->difficulty = oldDifficulty;
 }
 
 
@@ -48,11 +48,11 @@ void DemoState::processInput()
 {
 	Player* p = m_gameData->p.get();
 
-	m_data->input.update(m_data->window, m_data->view);
+	m_appData->input.update(m_appData->window, m_appData->view);
 
-	if (m_data->input.anyKeyPressed())
+	if (m_appData->input.anyKeyPressed())
 	{
-		m_data->machine.removeState();
+		m_appData->machine.removeState();
 		return;
 	}
 
@@ -114,7 +114,7 @@ void DemoState::update(float dt)
 
 	if (fadeOut >= 255)
 	{
-		m_data->machine.removeState();
+		m_appData->machine.removeState();
 	}
 	pressKeyText.update(0.05f);
 	demoModeText.update(0.05f);
@@ -123,7 +123,7 @@ void DemoState::update(float dt)
 void DemoState::draw(float dt)
 {
 	m_window->clear();
-	m_window->setView(m_data->view);
+	m_window->setView(m_appData->view);
 	drawScene();
 	drawText();
 	if (fadeIn > 0)

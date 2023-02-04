@@ -19,9 +19,10 @@ public:
 	void draw(float dt) override;
 
 private:
-	AppDataPtr m_data;
+	AppDataPtr m_appData;
 	GameDataPtr m_gameData;
 	sf::Clock m_clock;
 	sf::Sprite m_background;
 	sf::RenderWindow& m_window;
+	sf::Text m_version;
 };

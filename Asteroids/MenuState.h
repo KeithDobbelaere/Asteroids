@@ -46,8 +46,8 @@ protected:
 	void setClearColor(sf::Color color) { m_clearColor = color; }
 	virtual void onEscapePressed() {};
 	virtual void drawBackground() {};
+	virtual void processInputImpl() {};
 	virtual void updateImpl() {};
-
 protected:
 	sf::Uint32 m_style = sf::Text::Style::Bold;
 	int m_topItemPos = 400, m_textSize = 44, m_lineSpacing = 10, m_subItemTextSize = 40;
@@ -56,7 +56,7 @@ protected:
 	int m_subMenuLastOpened = -1;
 	sf::Text m_titleText;
 	SoundRef m_clickSound;
-	AppDataPtr m_data;
+	AppDataPtr m_appData;
 	sf::Font* m_font;
 	sf::Color m_baseColor = sf::Color::White;
 	sf::Color m_highlightColor = sf::Color::Blue;

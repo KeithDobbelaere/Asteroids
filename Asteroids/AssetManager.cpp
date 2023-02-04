@@ -74,12 +74,12 @@ SoundRef AssetManager::linkSoundRef(const char * bufferName, float volume)
 		tempSound.setVolume(volume);
 		ret = std::make_shared<sf::Sound>(tempSound);
 		BaseVolume tempAttribs;
-		tempAttribs.soundRef = ret;
+		tempAttribs.reference = ret;
 		tempAttribs.volume = volume;
 		m_soundVolumes.insert_or_assign(bufferName, tempAttribs);
 	}
 	else {
-		ret = m_soundVolumes.at(bufferName).soundRef;
+		ret = m_soundVolumes.at(bufferName).reference;
 	}
 	return ret;
 }
@@ -88,6 +88,6 @@ void AssetManager::adjustSoundVolume(float vol)
 {
 	for (auto& attrib : m_soundVolumes)
 	{
-		attrib.second.soundRef->setVolume(attrib.second.volume * vol);
+		attrib.second.reference->setVolume(attrib.second.volume * vol);
 	}
 }

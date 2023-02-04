@@ -47,7 +47,7 @@ private:
 	RainbowShiftText* p_newNameText = nullptr;
 	RainbowShiftText* p_newScoreText = nullptr;
 	sf::Clock m_timer;
-	AppDataPtr m_data;
+	AppDataPtr m_appData;
 	GameDataPtr m_gameData;
 	sf::Font* m_font, *m_titleFont;
 	sf::Texture m_backgroundTexture;

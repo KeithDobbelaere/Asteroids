@@ -44,21 +44,23 @@ sf::Vector2f getLetterboxView(sf::View& view, const sf::Vector2u& windowSize, fl
 }
 
 Application::Application(int width, int height, const char * title) :
-	data(std::make_shared<ApplicationData>(getLetterboxView))
+	m_appData(std::make_shared<ApplicationData>(getLetterboxView))
 {
 	sf::Image icon;
 	icon.loadFromFile("Images/Icon.png");
 
-	auto& window = data->window;
+	auto& window = m_appData->window;
 	window.create(sf::VideoMode(width, height), title, sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 	window.setVerticalSyncEnabled(true); //vastly reduces resource consumption
 	window.setKeyRepeatEnabled(false);
 
-	auto& assets = data->assets;
+	auto& assets = m_appData->assets;
 	assets.loadFont("default", "Fonts/BarcadeNoBar.ttf");
 	assets.loadFont("arcadeItal", "Fonts/BarcadeBoldItalic.otf");
 	assets.loadFont("arcadeBar", "Fonts/Barcade.otf");
+	assets.loadFont("arial", "Fonts/Arial.ttf");
+
 
 	assets.loadTexture("splash_screen", "images/splash_screen.jpg");
 	assets.loadTexture("haze", "images/haze.png");
@@ -88,7 +90,16 @@ Application::Application(int width, int height, const char * title) :
 	assets.loadSoundBuffer("power_up2", "Sounds/Power_Up2.ogg");
 	assets.loadSoundBuffer("power_up3", "Sounds/Power_Up3.ogg");
 
-	data->machine.addState(StatePtr(std::make_unique<SplashState>(data, gameData)));
+	m_appData->machine.addState(StatePtr(std::make_unique<SplashState>(m_appData, m_gameData)));
+}
+
+Application::~Application()
+{
+	m_appData->machine.cleanup();
+#	if _DEBUG
+	std::cout << "Application data pointer count: " << m_appData.use_count() << '\n';
+	std::cout << "Game data pointer count: " << m_gameData.use_count() << '\n';
+#	endif
 }
 
 void Application::run()
@@ -96,11 +107,11 @@ void Application::run()
 	float newTime, frameTime, interpolation;
 	float currentTime = m_clock.getElapsedTime().asSeconds();
 	float accumulator = 0.0f;
-	data->running = true;
+	m_appData->running = true;
 
-	while (data->window.isOpen() && data->running)
+	while (m_appData->window.isOpen() && m_appData->running)
 	{
-		auto& machine = data->machine;
+		auto& machine = m_appData->machine;
 		machine.processStateChanges();
 
 		newTime = m_clock.getElapsedTime().asSeconds();
@@ -116,7 +127,7 @@ void Application::run()
 		{
 			activeState->processInput();
 			activeState->update(dt);
-			data->music.update(sf::seconds(dt));
+			m_appData->music.update(sf::seconds(dt));
 
 			accumulator -= dt;
 		}

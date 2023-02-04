@@ -5,24 +5,23 @@
 
 
 MenuState::MenuState(AppDataPtr data, GameDataPtr gameData) :
-	m_data(data), m_window(data->window), m_font(m_data->assets.getFont("default"))
+	m_appData(data), m_window(data->window), m_font(m_appData->assets.getFont("default"))
 {
-	m_window.setKeyRepeatEnabled(true);
-
-	m_clickSound = m_data->assets.linkSoundRef("click");
+	m_clickSound = m_appData->assets.linkSoundRef("click");
 }
 
 MenuState::~MenuState()
 {
-	m_window.setKeyRepeatEnabled(false);
 }
 
 void MenuState::processInput()
 {
-	m_data->input.update(m_window, m_data->view);
+	m_appData->input.update(m_window, m_appData->view);
+
+	processInputImpl();
 
 	auto& item = m_menuItems[m_itemHighlighted];
-	const auto& input = m_data->input;
+	const auto& input = m_appData->input;
 	const auto& lastKey = input.lastKeyPressed();
 	switch (lastKey)
 	{
@@ -114,7 +113,7 @@ void MenuState::update(float dt)
 void MenuState::draw(float dt)
 {
 	m_window.clear(m_clearColor);
-	m_window.setView(m_data->view);
+	m_window.setView(m_appData->view);
 
 	drawBackground();
 	m_window.draw(m_titleText);
@@ -195,7 +194,7 @@ void MenuState::addSubItem(const sf::String& string, bool selectable, bool visib
 
 void MenuState::addSlider(float& ref)
 {
-	RangeSlider slider(m_data, ref, &m_baseColor, &m_highlightColor);
+	RangeSlider slider(m_appData, ref, &m_baseColor, &m_highlightColor);
 	auto& item = m_menuItems.back();
 	item.addSubItem(slider);
 	item.setSelectable(true);

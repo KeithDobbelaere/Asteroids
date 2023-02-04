@@ -14,9 +14,11 @@
     <ClCompile Include="AIComponent.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AssetManager.cpp" />
+    <ClCompile Include="Color.cpp" />
     <ClCompile Include="Controls.cpp" />
     <ClCompile Include="CustomControlsState.cpp" />
     <ClCompile Include="DemoState.cpp" />
+    <ClCompile Include="DialogState.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="GameOverState.cpp" />
     <ClCompile Include="HighScoresState.cpp" />
@@ -46,15 +48,16 @@
     <ClInclude Include="CustomControlsState.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DemoState.h" />
+    <ClInclude Include="DialogState.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="GameOverState.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="MenuItems.h" />
     <ClInclude Include="HighScoresState.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MenuState.h" />
-    <ClInclude Include="MenuItems.h" />
     <ClInclude Include="OptionsState.h" />
     <ClInclude Include="PausedState.h" />
     <ClInclude Include="Player.h" />
@@ -125,13 +128,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>

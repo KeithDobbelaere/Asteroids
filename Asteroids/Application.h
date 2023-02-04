@@ -27,6 +27,11 @@ struct GameData
 	unsigned int frameCounter;
 };
 
+enum class Dialog {
+	Accept,
+	Reject,
+	Cancel
+};
 
 struct ApplicationData
 {
@@ -35,17 +40,18 @@ struct ApplicationData
 		
 	}
 	StateMachine machine {};
+	sfext::MusicManager music;
+	AssetManager assets;
 	sf::RenderWindow window;
 	sf::View view;
-	AssetManager assets;
 	InputManager input;
 	bool running = false, restartRequired = false, newHighScore = false, backToTitle = false;
 	float soundVolumeFactor = 1.0f, musicVolumeFactor = 0.3f;
 	Difficulty difficulty = Difficulty::Medium;
-	sfext::MusicManager music;
 	ScoresManager highScores;
 	std::string background;
 	Controls controls;
+	Dialog dialog = Dialog::Cancel;
 };
 
 using AppDataPtr = std::shared_ptr<ApplicationData>;
@@ -55,13 +61,13 @@ class Application
 {
 public:
 	Application(int width, int height, const char* title);
-	~Application() = default;
+	~Application();
 
 	void run();
 
 private:
 	const float dt = 1.0f / 60.0f;
 	sf::Clock m_clock;
-	AppDataPtr data;
-	GameDataPtr gameData = std::make_shared<GameData>();
+	AppDataPtr m_appData;
+	GameDataPtr m_gameData = std::make_shared<GameData>();
 };

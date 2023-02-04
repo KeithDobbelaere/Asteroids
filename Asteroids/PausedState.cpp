@@ -23,15 +23,15 @@ PausedState::~PausedState()
 
 void PausedState::init()
 {
-	auto& music = m_data->music;
-	music.setMaxVolume(m_data->musicVolumeFactor * 100);
+	auto& music = m_appData->music;
+	music.setMaxVolume(m_appData->musicVolumeFactor * 100);
 	music.play("Sounds/Stardust_Memories.ogg");
 	music.getCurrent().setLoop(true);
 
-	m_starField.init(m_data);
+	m_starField.init(m_appData);
 	setDefaultColor(sf::Color::Yellow);
 	setHighlightColor(sf::Color::White);
-	setTitle("(Paused)", 160.0f, m_data->assets.getFont("arcadeBar"), sf::Text::Style::Regular, sf::Color::Yellow, sf::Color::Transparent, 84, .9f);
+	setTitle("(Paused)", 160.0f, m_appData->assets.getFont("arcadeBar"), sf::Text::Style::Regular, sf::Color::Yellow, sf::Color::Transparent, 84, .9f);
 	setTopItemPos(300);
 	setDefaultLineSpacing(14);
 	setDefaultAttribs(sf::Text::Bold | sf::Text::Italic, 62, 54);
@@ -56,12 +56,12 @@ void PausedState::resume()
 
 void PausedState::onEscapePressed()
 {
-	m_data->machine.removeState();
+	m_appData->machine.removeState();
 }
 
 void PausedState::drawBackground()
 {
-	m_data->window.draw(m_starField);
+	m_appData->window.draw(m_starField);
 }
 
 void PausedState::updateImpl()
@@ -71,21 +71,21 @@ void PausedState::updateImpl()
 		switch (m_itemSelected)
 		{
 		case 0:
-			m_data->running = false;
+			m_appData->running = false;
 			break;
 		case 1:
-			m_data->machine.removeState();
+			m_appData->machine.removeState();
 			break;
 		case 2:
-			m_data->machine.addState(StatePtr(std::make_unique<OptionsState>(m_data, m_gameData)), false);
+			m_appData->machine.addState(StatePtr(std::make_unique<OptionsState>(m_appData, m_gameData)));
 			break; 
 		case 3:
-			m_data->machine.removeState();
-			m_data->restartRequired = true;
+			m_appData->machine.removeState();
+			m_appData->restartRequired = true;
 			break;
 		case 4:
-			m_data->machine.removeState();
-			m_data->backToTitle = true;
+			m_appData->machine.removeState();
+			m_appData->backToTitle = true;
 			break;
 		default:
 			std::cerr << "Error selecting menu item!\n";

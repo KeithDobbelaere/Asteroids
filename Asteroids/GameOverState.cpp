@@ -13,12 +13,12 @@
 
 
 GameOverState::GameOverState(AppDataPtr data, GameDataPtr gameData) :
-	m_data(data), m_font(m_data->assets.getFont("default")), m_gameData(gameData)
+	m_appData(data), m_font(m_appData->assets.getFont("default")), m_gameData(gameData)
 {
 #	if _DEBUG
 		std::cout << "STATE_MACHINE: GameOverState constructed!\n";
 #	endif
-	m_window = &m_data->window;
+	m_window = &m_appData->window;
 	scoreText.setFont(*m_font);
 	scoreText.setPosition(0, 0);
 	livesText.setFont(*m_font);
@@ -35,11 +35,11 @@ GameOverState::GameOverState(AppDataPtr data, GameDataPtr gameData) :
 		sf::FloatRect bounds = pressKeyText.getLocalBounds();
 		pressKeyText.setPosition(SCRN_WIDTH / 2 - bounds.width / 2, SCRN_HEIGHT - 50);
 	}
-	auto& assets = m_data->assets;
+	auto& assets = m_appData->assets;
 	assets.getTexture("ship").setSmooth(true);
-	assets.getTexture(m_data->background.c_str()).setSmooth(true);
+	assets.getTexture(m_appData->background.c_str()).setSmooth(true);
 
-	background = sf::Sprite(assets.getTexture(m_data->background.c_str()));
+	background = sf::Sprite(assets.getTexture(m_appData->background.c_str()));
 
 	explosionSprite = Animation(assets.getTexture("explosion1"), { 0, 0, 256, 256 }, 48, 0.5f);
 	rockSprite = Animation(assets.getTexture("rock_large"), { 0, 0, 64, 64 }, 16, 0.2f);
@@ -65,8 +65,8 @@ GameOverState::~GameOverState()
 
 void GameOverState::init()
 {
-	auto& music = m_data->music;
-	music.setMaxVolume(m_data->musicVolumeFactor * 100);
+	auto& music = m_appData->music;
+	music.setMaxVolume(m_appData->musicVolumeFactor * 100);
 	music.play("Sounds/Stardust_Memories.ogg");
 	music.getCurrent().setLoop(true);
 	m_gameData->p->setGodMode();
@@ -88,23 +88,23 @@ void GameOverState::resume()
 void GameOverState::processInput()
 {
 	Player* p = m_gameData->p.get();
-	m_data->input.update(m_data->window, m_data->view);
+	m_appData->input.update(m_appData->window, m_appData->view);
 
-	const auto& input = m_data->input;
+	const auto& input = m_appData->input;
 	if (input.wasKeyPressed(sf::Keyboard::Key::Enter))
 	{
-		if (m_gameData->score > m_data->highScores.getLowest(m_data->difficulty).score)
+		if (m_gameData->score > m_appData->highScores.getLowest(m_appData->difficulty).score)
 		{
-			m_data->machine.addState(StatePtr(std::make_unique<ScoreEntryState>(m_data, m_gameData)), true);
+			m_appData->machine.replaceState(StatePtr(std::make_unique<ScoreEntryState>(m_appData, m_gameData)));
 		}
 		else
 		{
-			m_data->restartRequired = true;
+			m_appData->restartRequired = true;
 		}
 	}
 	if (input.wasKeyPressed(sf::Keyboard::Key::Escape))
 	{
-		m_data->machine.addState(StatePtr(std::make_unique<PausedState>(m_data, m_gameData)), false);
+		m_appData->machine.addState(StatePtr(std::make_unique<PausedState>(m_appData, m_gameData)));
 		return;
 	}
 	if (input.wasKeyPressed(sf::Keyboard::Key::S) ||
@@ -127,8 +127,8 @@ void GameOverState::processInput()
 
 void GameOverState::update(float dt)
 {
-	if (m_data->restartRequired || m_data->backToTitle)
-		m_data->machine.removeState();
+	if (m_appData->restartRequired || m_appData->backToTitle)
+		m_appData->machine.removeState();
 
 	updateEntities();
 
@@ -139,7 +139,7 @@ void GameOverState::update(float dt)
 void GameOverState::draw(float dt)
 {
 	m_window->clear();
-	m_window->setView(m_data->view);
+	m_window->setView(m_appData->view);
 	drawScene();
 	drawText();
 	m_window->display();

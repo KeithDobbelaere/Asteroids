@@ -7,9 +7,9 @@
 
 
 ScoreEntryState::ScoreEntryState(AppDataPtr data, GameDataPtr gameData) :
-	m_data(data), m_gameData(gameData), m_window(data->window),
-	m_font(m_data->assets.getFont("default")),
-	m_titleFont(m_data->assets.getFont("arcadeBar")),
+	m_appData(data), m_gameData(gameData), m_window(data->window),
+	m_font(m_appData->assets.getFont("default")),
+	m_titleFont(m_appData->assets.getFont("arcadeBar")),
 	m_initials("---")
 {
 #	if _DEBUG
@@ -27,8 +27,8 @@ ScoreEntryState::~ScoreEntryState()
 
 void ScoreEntryState::init()
 {
-	auto& music = m_data->music;
-	music.setMaxVolume(m_data->musicVolumeFactor * 100);
+	auto& music = m_appData->music;
+	music.setMaxVolume(m_appData->musicVolumeFactor * 100);
 	music.play("Sounds/Stardust_Memories.ogg");
 	music.getCurrent().setLoop(true);
 
@@ -55,7 +55,7 @@ void ScoreEntryState::init()
 	m_cursorText.setStyle(sf::Text::Style::Underlined);
 	m_cursorText.effect(true);
 
-	m_starField.init(m_data);
+	m_starField.init(m_appData);
 }
 
 void ScoreEntryState::cleanup()
@@ -65,23 +65,23 @@ void ScoreEntryState::cleanup()
 
 void ScoreEntryState::processInput()
 {
-	m_data->input.update(m_window, m_data->view);
+	m_appData->input.update(m_window, m_appData->view);
 
-	if (m_data->input.wasKeyPressed(sf::Keyboard::Key::Left))
+	if (m_appData->input.wasKeyPressed(sf::Keyboard::Key::Left))
 	{
 		m_cursorPosition = std::max(0, m_cursorPosition - 1);
 	}
-	else if (m_data->input.wasKeyPressed(sf::Keyboard::Key::Right))
+	else if (m_appData->input.wasKeyPressed(sf::Keyboard::Key::Right))
 	{
 		m_cursorPosition = std::min(3, m_cursorPosition + 1);
 	}
-	else if (m_data->input.wasKeyPressed(sf::Keyboard::Key::Enter))
+	else if (m_appData->input.wasKeyPressed(sf::Keyboard::Key::Enter))
 	{
-		strncpy_s(m_data->highScores.playerInitials, m_initials, strlen(m_initials));
-		m_data->newHighScore = true;
-		m_data->machine.addState(StatePtr(std::make_unique<HighScoresState>(m_data, m_gameData)), true);
+		strncpy_s(m_appData->highScores.playerInitials, m_initials, strlen(m_initials));
+		m_appData->newHighScore = true;
+		m_appData->machine.replaceState(StatePtr(std::make_unique<HighScoresState>(m_appData, m_gameData)));
 	}
-	else if (m_data->input.wasKeyPressed(sf::Keyboard::Key::BackSpace))
+	else if (m_appData->input.wasKeyPressed(sf::Keyboard::Key::BackSpace))
 	{
 		if (m_cursorPosition > 0)
 		{
@@ -93,7 +93,7 @@ void ScoreEntryState::processInput()
 				m_initials[2] = '-';
 		}
 	}
-	else if (uint8_t charTyped = m_data->input.getCharTyped(); charTyped >= 'A' && charTyped <= 'Z')
+	else if (uint8_t charTyped = m_appData->input.getCharTyped(); charTyped >= 'A' && charTyped <= 'Z')
 	{
 		if (m_cursorPosition < 3)
 		{
@@ -127,7 +127,7 @@ void ScoreEntryState::update(float dt)
 void ScoreEntryState::draw(float dt)
 {
 	m_window.clear();
-	m_window.setView(m_data->view);
+	m_window.setView(m_appData->view);
 
 	m_window.draw(m_starField);
 	m_window.draw(m_titleText);

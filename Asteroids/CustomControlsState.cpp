@@ -1,10 +1,11 @@
 #include "CustomControlsState.h"
+#include "DialogState.h"
 
 #include <iostream>
 
 
 CustomControlsState::CustomControlsState(AppDataPtr data, GameDataPtr gameData) :
-	MenuState(data, gameData), m_controls(data->controls), m_lastItem(0), m_lastSubItem(0)
+	MenuState(data, gameData), m_gameData(gameData), m_controls(data->controls), m_lastItem(0), m_lastSubItem(0), m_saveRequired(false)
 {
 #	if _DEBUG
 		std::cout << "STATE_MACHINE: CustomControlsState constructed!\n";
@@ -32,16 +33,16 @@ CustomControlsState::~CustomControlsState()
 
 void CustomControlsState::init()
 {
-	auto& music = m_data->music;
-	music.setMaxVolume(m_data->musicVolumeFactor * 100);
+	auto& music = m_appData->music;
+	music.setMaxVolume(m_appData->musicVolumeFactor * 100);
 	music.play("Sounds/Stardust_Memories.ogg");
 	music.getCurrent().setLoop(true);
 
-	m_starField.init(m_data);
+	m_starField.init(m_appData);
 
 	setDefaultColor(m_textColor);
 	setHighlightColor(sf::Color::White);
-	setTitle("(Custom\u00a0Controls)", 60.0f, m_data->assets.getFont("arcadeBar"), sf::Text::Style::Regular, sf::Color::Yellow, sf::Color::Transparent, 84, .9f);
+	setTitle("(Custom\u00a0Controls)", 60.0f, m_appData->assets.getFont("arcadeBar"), sf::Text::Style::Regular, sf::Color::Yellow, sf::Color::Transparent, 84, .9f);
 	setTopItemPos(200);
 	setDefaultLineSpacing(3);
 	setDefaultAttribs(sf::Text::Bold | sf::Text::Italic, 58, 48);
@@ -78,19 +79,45 @@ void CustomControlsState::resume()
 {
 }
 
-void CustomControlsState::updateImpl()
+void CustomControlsState::processInputImpl()
 {
-	auto& input = m_data->input;
-	if (m_controlSelected != Control::None) {
+	if (m_saveRequired) {
+		switch (m_appData->dialog)
+		{
+		case Dialog::Accept:
+			m_controls.save();
+			clearAndExit();
+			return;
+		case Dialog::Reject:
+			m_controls.load();
+			clearAndExit();
+			return;
+		case Dialog::Cancel:
+			m_saveRequired = false;
+			break;
+		}
+	}
+}
+
+void CustomControlsState::updateImpl()
+{	
+	m_starField.update(sf::Vector2f(-3.0f, 0.0f));
+	auto& input = m_appData->input;
+	if (m_controlSelected != Control::None) { //one of the controls is selected
 		m_itemHighlighted = m_lastItem;
 		m_subItemHighlighted = m_lastSubItem;
 		if (input.anyKeyPressed())
 		{
-			if (!input.wasKeyPressed(sf::Keyboard::Key::Escape))
+			if (!input.wasKeyPressed(sf::Keyboard::Key::Escape)) //escape bails out of binding change
 				m_controls.change(m_controlSelected, input.lastKeyPressed());
 			m_controlSelected = Control::None;
 			refresh();
 			unselectSubItems();
+			if (input.wasKeyPressed(sf::Keyboard::Key::Enter)) //prevents reselecting this control binding by parent class (hacky)
+			{
+				m_itemSelected = -1;
+				m_subItemSelected = -1;
+			}
 		}
 	}
 	if (input.isItemHovered(m_backText, m_window))
@@ -104,16 +131,16 @@ void CustomControlsState::updateImpl()
 	if (input.wasItemClicked(m_backText, sf::Mouse::Button::Left, m_window)) {
 		m_clickSound->play();
 		if (m_controls.wasChanged())
-			m_controls.load();
-		m_data->machine.removeState();
+			promptForSave();
+		else
+			m_appData->machine.removeState();
 	}
 	if (input.wasKeyPressed(sf::Keyboard::Key::F1) ||
 		input.wasItemClicked(m_saveText, sf::Mouse::Button::Left, m_window)) {
 		m_clickSound->play();
 		m_controls.save();
-		m_data->machine.removeState();
+		m_appData->machine.removeState();
 	}
-	m_starField.update(sf::Vector2f(-3.0f, 0.0f));
 	if (!m_menuItems[m_lastItem].isOpen())
 	{
 		m_controlSelected = Control::None;
@@ -178,6 +205,25 @@ void CustomControlsState::updateImpl()
 	}
 }
 
+void CustomControlsState::promptForSave()
+{
+	m_saveRequired = true;
+	m_appData->machine.addState(StatePtr(std::make_unique<DialogState>(m_appData, m_gameData)));
+}
+
+void CustomControlsState::clearAndExit()
+{
+	m_backText.setString({});
+	m_saveText.setString({});
+	m_menuItems.clear();
+	addMenuItem({});
+	m_lastItem = 0;
+	m_itemHighlighted = 0;
+	m_subItemHighlighted = 0;
+	m_titleText.setString({});
+	m_appData->machine.removeState();
+}
+
 void CustomControlsState::refresh()
 {
 	int i = 0;
@@ -191,7 +237,6 @@ void CustomControlsState::refresh()
 
 void CustomControlsState::unselectSubItems()
 {
-	m_menuItems[0].getSubItem(0)->select(false);
 	for (auto& item : m_menuItems)
 		if (item.hasSubItems())
 			for (auto& subItem : item.getSubItems())
@@ -206,14 +251,17 @@ void CustomControlsState::setBlink(int item, int subItem)
 void CustomControlsState::onEscapePressed()
 {
 	if (m_controls.wasChanged())
-		m_controls.load();
-	m_data->machine.removeState();
+		promptForSave();
+	else
+		m_appData->machine.removeState();
 }
 
 void CustomControlsState::drawBackground()
 {
-	auto& window = m_data->window;
+	auto& window = m_appData->window;
 	window.draw(m_starField);
 	window.draw(m_backText);
 	window.draw(m_saveText);
 }
+
+

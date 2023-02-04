@@ -4,10 +4,27 @@
 #include "GameState.h"
 
 
-void StateMachine::addState(StatePtr newState, bool isReplacing)
+void StateMachine::cleanup()
+{
+	while (!m_states.empty()) {
+		auto& state = m_states.top();
+		state->cleanup();
+		m_states.pop();
+	}
+}
+
+void StateMachine::addState(StatePtr newState)
 {
 	m_isAdding = true;
-	m_isReplacing = isReplacing;
+	m_isReplacing = false;
+
+	m_newState = std::move(newState);
+}
+
+void StateMachine::replaceState(StatePtr newState)
+{
+	m_isAdding = true;
+	m_isReplacing = true;
 
 	m_newState = std::move(newState);
 }

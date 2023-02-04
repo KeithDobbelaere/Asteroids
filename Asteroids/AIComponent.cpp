@@ -298,7 +298,7 @@ void AIComponent::updateDebugInfo()
 	std::array<sf::Vertex, 2> lineVertices;
 	float x, y, dx, dy;
 	const float SCALE = 10.0f;
-	for (auto& entity : m_gameData->entities)
+	for (auto& entity : m_entities)
 	{
 		x = entity->x;
 		y = entity->y;

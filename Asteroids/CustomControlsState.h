@@ -24,13 +24,18 @@ private:
 	void setBlink(int item, int subItem);
 	void onEscapePressed() override;
 	void drawBackground() override;
+	void processInputImpl() override;
 	void updateImpl() override;
+	void promptForSave();
+	void clearAndExit();
 
+	GameDataPtr m_gameData;
 	Controls& m_controls;
 	Control m_controlSelected;
 	sf::Color m_textColor;
 	sf::Text m_backText, m_saveText;
 	StarField m_starField;
 	int m_lastItem, m_lastSubItem;
+	bool m_saveRequired;
 };
 

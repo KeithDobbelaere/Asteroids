@@ -12,25 +12,25 @@
 
 
 PlayState::PlayState(AppDataPtr data, GameDataPtr gameData) :
-	m_data(data), m_font(m_data->assets.getFont("default")), powerUpText(*m_font), m_gameData(gameData),
+	m_appData(data), m_font(m_appData->assets.getFont("default")), powerUpText(*m_font), m_gameData(gameData),
 	transitionText("Ready", *m_font, 80), scoreText("", *m_font, 40), livesText("", *m_font, 40),
 	specialText("", *m_font, 40)
 {
 #	if _DEBUG
 		std::cout << "STATE_MACHINE: PlayState constructed!\n";
 #	endif
-	auto& music = m_data->music;
-	music.setMaxVolume(m_data->musicVolumeFactor * 100);
+	auto& music = m_appData->music;
+	music.setMaxVolume(m_appData->musicVolumeFactor * 100);
 	music.play("Sounds/Nearly_There.ogg");
 	music.getCurrent().setLoop(true);
-	m_window = &m_data->window;
+	m_window = &m_appData->window;
 	scoreText.setPosition(0, 0);
 #	if _DEBUG
 		debugText = sf::Text("**Debug**", *m_font, 16);
 		debugText.setPosition(0, SCRN_HEIGHT - 200);
 #	endif
 
-	auto& assets = m_data->assets;
+	auto& assets = m_appData->assets;
 	explosionSprite = Animation(assets.getTexture("explosion1"), { 0, 0, 256, 256 }, 48, 0.5f);
 	rockSprite = Animation(assets.getTexture("rock_large"), { 0, 0, 64, 64 }, 16, 0.2f);
 	rockSmallSprite = Animation(assets.getTexture("rock_small"), { 0, 0, 64, 64 }, 16, 0.2f);
@@ -51,7 +51,7 @@ PlayState::PlayState(AppDataPtr data, GameDataPtr gameData) :
 	livesUpSound = assets.linkSoundRef("power_up2", 30.0f);
 	specialUpSound = assets.linkSoundRef("power_up1", 30.0f);
 	rapidUpSound = assets.linkSoundRef("power_up3", 30.0f);
-	assets.adjustSoundVolume(m_data->soundVolumeFactor);
+	assets.adjustSoundVolume(m_appData->soundVolumeFactor);
 }
 
 PlayState::~PlayState()
@@ -85,8 +85,8 @@ void PlayState::init()
 	m_gameData->stage = 0;
 	m_gameData->frameCounter = 0;
 
-	m_data->background = std::string("background") + std::to_string(rand() % 3);
-	background = sf::Sprite(m_data->assets.getTexture(m_data->background.c_str()));
+	m_appData->background = std::string("background") + std::to_string(rand() % 3);
+	background = sf::Sprite(m_appData->assets.getTexture(m_appData->background.c_str()));
 
 	transitionText.reset("Ready");
 	fadeIn = 255;
@@ -102,8 +102,8 @@ void PlayState::pause()
 
 void PlayState::resume()
 {
-	auto& music = m_data->music;
-	music.setMaxVolume(m_data->musicVolumeFactor * 100);
+	auto& music = m_appData->music;
+	music.setMaxVolume(m_appData->musicVolumeFactor * 100);
 	music.play("Sounds/Nearly_There.ogg");
 	music.getCurrent().setLoop(true);
 }
@@ -112,12 +112,12 @@ void PlayState::processInput()
 {
 	Player* p = m_gameData->p.get();
 
-	m_data->input.update(m_data->window, m_data->view);
-	const auto& input = m_data->input;
-	const auto& controls = m_data->controls;
+	m_appData->input.update(m_appData->window, m_appData->view);
+	const auto& input = m_appData->input;
+	const auto& controls = m_appData->controls;
 	if (input.wasKeyPressed(sf::Keyboard::Key::Escape))
 	{
-		m_data->machine.addState(StatePtr(std::make_unique<PausedState>(m_data, m_gameData)), false);
+		m_appData->machine.addState(StatePtr(std::make_unique<PausedState>(m_appData, m_gameData)));
 		return;
 	}
 	if (input.wasKeyPressed(controls.key(Control::Reverse1)) ||
@@ -171,15 +171,15 @@ void PlayState::processInput()
 
 void PlayState::update(float dt)
 {
-	if (m_data->restartRequired)
+	if (m_appData->restartRequired)
 	{
 		init();
-		m_data->restartRequired = false;
+		m_appData->restartRequired = false;
 	}
-	if (m_data->backToTitle)
+	if (m_appData->backToTitle)
 	{
-		m_data->machine.removeState();
-		m_data->backToTitle = false;
+		m_appData->machine.removeState();
+		m_appData->backToTitle = false;
 	}
 	handleCollisions();
 	addNewEntities();
@@ -193,7 +193,7 @@ void PlayState::update(float dt)
 void PlayState::draw(float dt)
 {
 	m_window->clear();
-	m_window->setView(m_data->view);
+	m_window->setView(m_appData->view);
 
 	drawScene();
 	drawText();
@@ -358,7 +358,7 @@ void PlayState::drawText()
 void PlayState::increaseScore(int amount)
 {
 	m_gameData->score += amount;
-	if (m_gameData->score % (STAGE_INTERVAL * static_cast<int>(m_data->difficulty)) == 0)
+	if (m_gameData->score % (STAGE_INTERVAL * static_cast<int>(m_appData->difficulty)) == 0)
 	{
 		m_gameData->stage++;
 		m_gameData->maxAsteroids += 6;
@@ -370,5 +370,5 @@ void PlayState::increaseScore(int amount)
 
 void PlayState::gameOver()
 {
-	m_data->machine.addState(StatePtr(std::make_unique<GameOverState>(m_data, m_gameData)), false);
+	m_appData->machine.addState(StatePtr(std::make_unique<GameOverState>(m_appData, m_gameData)));
 }

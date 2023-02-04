@@ -8,13 +8,13 @@
 
 
 HighScoresState::HighScoresState(AppDataPtr data, GameDataPtr gameData) :
-	m_data(data), m_gameData(gameData), m_window(data->window), 
-	m_font(m_data->assets.getFont("default")), m_titleFont(m_data->assets.getFont("arcadeBar"))
+	m_appData(data), m_gameData(gameData), m_window(data->window), 
+	m_font(m_appData->assets.getFont("default")), m_titleFont(m_appData->assets.getFont("arcadeBar"))
 {
 #	if _DEBUG
 		std::cout << "STATE_MACHINE: HighScoresState constructed!\n";
 #	endif
-	m_clickSound = m_data->assets.linkSoundRef("click");
+	m_clickSound = m_appData->assets.linkSoundRef("click");
 
 	m_clearColor = sf::Color(1, 20, 51);
 	m_textColor = sf::Color::Yellow;
@@ -39,7 +39,7 @@ HighScoresState::HighScoresState(AppDataPtr data, GameDataPtr gameData) :
 	m_backText.setFillColor(m_textColor);
 	m_backText.setPosition(50, SCRN_HEIGHT - m_backText.getGlobalBounds().height - 50);
 
-	m_displayedDifficulty = static_cast<int>(m_data->difficulty) - 1;
+	m_displayedDifficulty = static_cast<int>(m_appData->difficulty) - 1;
 }
 
 HighScoresState::~HighScoresState()
@@ -52,8 +52,8 @@ HighScoresState::~HighScoresState()
 
 void HighScoresState::init()
 {
-	auto& music = m_data->music;
-	music.setMaxVolume(m_data->musicVolumeFactor * 100);
+	auto& music = m_appData->music;
+	music.setMaxVolume(m_appData->musicVolumeFactor * 100);
 	music.play("Sounds/Stardust_Memories.ogg");
 	music.getCurrent().setLoop(true);
 
@@ -66,9 +66,9 @@ void HighScoresState::init()
 
 	p_newNameText = &m_nameTexts[m_displayedDifficulty][11];
 	p_newScoreText = &m_scoreTexts[m_displayedDifficulty][11];
-	if (m_data->newHighScore)
+	if (m_appData->newHighScore)
 	{
-		p_newNameText->setString(m_data->highScores.playerInitials);
+		p_newNameText->setString(m_appData->highScores.playerInitials);
 		p_newScoreText->setString(std::to_string(m_gameData->score));
 		p_newScoreText->setPosition(840.f - (p_newScoreText->getLocalBounds().width +
 			p_newScoreText->getLocalBounds().left), p_newScoreText->getPosition().y);
@@ -76,16 +76,16 @@ void HighScoresState::init()
 		p_newScoreText->effect(true);
 	}
 
-	m_starField.init(m_data);
+	m_starField.init(m_appData);
 }
 
 void HighScoresState::cleanup()
 {
-	if (m_data->newHighScore)
+	if (m_appData->newHighScore)
 	{
-	m_data->highScores.addScore(ScoresManager::Entry(m_data->highScores.playerInitials, m_gameData->score), m_data->difficulty);
-	m_data->newHighScore = false;
-	m_data->backToTitle = true;
+	m_appData->highScores.addScore(ScoresManager::Entry(m_appData->highScores.playerInitials, m_gameData->score), m_appData->difficulty);
+	m_appData->newHighScore = false;
+	m_appData->backToTitle = true;
 	}
 }
 
@@ -99,15 +99,15 @@ void HighScoresState::resume()
 
 void HighScoresState::processInput()
 {
-	m_data->input.update(m_data->window, m_data->view);
+	m_appData->input.update(m_appData->window, m_appData->view);
 
-	const auto& input = m_data->input;
-	if (input.wasKeyPressed(sf::Keyboard::Key::Escape) || m_data->input.wasKeyPressed(sf::Keyboard::Key::Enter) ||
+	const auto& input = m_appData->input;
+	if (input.wasKeyPressed(sf::Keyboard::Key::Escape) || m_appData->input.wasKeyPressed(sf::Keyboard::Key::Enter) ||
 		input.wasItemClicked(m_backText, sf::Mouse::Button::Left, m_window))
 	{
 		m_clickSound->play();
 		if (sorted)
-			m_data->machine.removeState();
+			m_appData->machine.removeState();
 	}	
 	if (input.wasKeyPressed(sf::Keyboard::Key::Left) ||
 		input.wasItemClicked(m_leftArrow, sf::Mouse::Button::Left, m_window))
@@ -200,7 +200,7 @@ void HighScoresState::update(float dt)
 			slide = false;
 		}
 	}
-	if (m_data->newHighScore)
+	if (m_appData->newHighScore)
 	{
 		p_newNameText->update(alpha);
 		p_newScoreText->update(alpha);
@@ -210,7 +210,7 @@ void HighScoresState::update(float dt)
 void HighScoresState::draw(float dt)
 {
 	m_window.clear(m_clearColor);
-	m_window.setView(m_data->view);
+	m_window.setView(m_appData->view);
 
 	m_window.draw(m_starField);
 
@@ -251,7 +251,7 @@ void HighScoresState::refreshScores(float xPos, const sf::Color& color)
 {
 	for (int i = 0; i < 12; i++)
 	{
-		ScoresManager::Entry entry = m_data->highScores.getScore(i, m_displayedDifficulty);
+		ScoresManager::Entry entry = m_appData->highScores.getScore(i, m_displayedDifficulty);
 		auto& nameText = m_nameTexts[m_displayedDifficulty][i];
 		nameText.setPosition(xPos, nameText.getPosition().y);
 		nameText.setOutlineColor(color);
@@ -261,7 +261,6 @@ void HighScoresState::refreshScores(float xPos, const sf::Color& color)
 			scoreText.getLocalBounds().left), scoreText.getPosition().y);
 		scoreText.setOutlineColor(color);
 	}
-
 }
 
 void HighScoresState::initializeScoresText(float xPos, const sf::Color& color, int difficulty)
@@ -269,7 +268,7 @@ void HighScoresState::initializeScoresText(float xPos, const sf::Color& color, i
 	float yPosition = 160.f;
 	for (int i = 0; i < 12; i++)
 	{
-		ScoresManager::Entry entry = m_data->highScores.getScore(i, difficulty);
+		ScoresManager::Entry entry = m_appData->highScores.getScore(i, difficulty);
 		std::string nameStr = std::string(entry.initials);
 		std::string scoreStr = std::to_string(entry.score);
 		auto& nameText = m_nameTexts[difficulty][i];

@@ -85,7 +85,7 @@ RangeSlider::RangeSlider(AppDataPtr data, float & refVar, sf::Color* baseColor, 
 	m_barSpriteRight.setOrigin(300.f / 2, 12.f / 2);
 	m_barSpriteRight.setTextureRect(tempRect);
 	m_barSpriteRight.setPosition(sf::Vector2f(312.f / 2, 50.f / 2));
-	sf::Uint32 rightBarColor = ext::Color::multiply(*m_baseColor, .6f);
+	sf::Uint32 rightBarColor = ext::multiply(*m_baseColor, .6f).integer;
 	m_barSpriteRight.setColor(sf::Color(rightBarColor));
 
 	tempRect = sf::IntRect(162, 15, 50, 32);

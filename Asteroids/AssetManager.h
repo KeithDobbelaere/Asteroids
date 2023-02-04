@@ -26,12 +26,12 @@ public:
 	void adjustSoundVolume(float vol);
 
 private:
-	std::map<std::string, sf::Texture> m_textures;
-	std::map<std::string, sf::Font> m_fonts;
-	std::map<std::string, sf::SoundBuffer> m_soundBuffers;
 	struct BaseVolume {
-		SoundRef soundRef;
+		SoundRef reference;
 		float volume;
 	};
 	std::map<std::string, BaseVolume> m_soundVolumes;
+	std::map<std::string, sf::Texture> m_textures;
+	std::map<std::string, sf::Font> m_fonts;
+	std::map<std::string, sf::SoundBuffer> m_soundBuffers;
 };

@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_022B225EB42FA2EA1920403B6455D0EB"
+        "OwnerKey" = "8:_876358C4F1374B2AA2A74A1A909B426A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_023A2F342E5641098C98818041F40F68"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -100,6 +106,12 @@
         "Entry"
         {
         "MsmKey" = "8:_3BAA89EA88524A11B0648C52314CE92A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3CB4F5DC837043F3A8032E27B669A245"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -213,6 +225,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_DD5BADBA44F1C8C1BF24A393E31C9C3F"
+        "OwnerKey" = "8:_876358C4F1374B2AA2A74A1A909B426A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E6B8FA1C51184813AE17A295726DDFD4"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -322,6 +340,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_022B225EB42FA2EA1920403B6455D0EB"
+            {
+            "SourcePath" = "8:OPENGL32.dll"
+            "TargetName" = "8:OPENGL32.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_43DD75E97CA540269D123727B52C2B1D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_023A2F342E5641098C98818041F40F68"
             {
             "SourcePath" = "8:..\\Asteroids\\Sounds\\Ship_Explosion.wav"
@@ -608,6 +646,26 @@
             "TargetName" = "8:galaxy-2.png"
             "Tag" = "8:"
             "Folder" = "8:_7ED51E7F6F7B47BF970F343E0BD1B45C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3CB4F5DC837043F3A8032E27B669A245"
+            {
+            "SourcePath" = "8:..\\Asteroids\\Fonts\\Arial.ttf"
+            "TargetName" = "8:Arial.ttf"
+            "Tag" = "8:"
+            "Folder" = "8:_51147007B20A47298135E827712BAB27"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -962,6 +1020,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DD5BADBA44F1C8C1BF24A393E31C9C3F"
+            {
+            "SourcePath" = "8:OpenAL32.dll"
+            "TargetName" = "8:OpenAL32.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_43DD75E97CA540269D123727B52C2B1D"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E6B8FA1C51184813AE17A295726DDFD4"
             {
             "SourcePath" = "8:..\\Asteroids\\Images\\spaceship.png"
@@ -1165,7 +1243,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Asteroids!"
         "ProductCode" = "8:{6A68F3A5-7D51-4C78-837E-A93968CB60A3}"
-        "PackageCode" = "8:{F1801A58-54F0-47BF-BA76-F9DB70B44B6A}"
+        "PackageCode" = "8:{CC7896A5-1935-4AC8-B005-BF950BD2F269}"
         "UpgradeCode" = "8:{386F21F1-2216-4851-A7A7-B3C9CC364DB9}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

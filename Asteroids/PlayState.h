@@ -46,7 +46,7 @@ protected:
 
 protected:
 	int fadeIn;
-	AppDataPtr m_data;
+	AppDataPtr m_appData;
 	GameDataPtr m_gameData;
 
 	sf::RenderWindow* m_window;

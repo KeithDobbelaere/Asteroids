@@ -13,9 +13,9 @@ OptionsState::OptionsState(AppDataPtr data, GameDataPtr gameData) :
 		std::cout << "STATE_MACHINE: OptionsState constructed!\n";
 #	endif
 
-	auto& assets = m_data->assets;
+	auto& assets = m_appData->assets;
 	m_effectsSound = assets.linkSoundRef("basic_phaser", 25.0f);
-	m_oldDifficultySetting = m_newDifficultySetting = m_data->difficulty;
+	m_oldDifficultySetting = m_newDifficultySetting = m_appData->difficulty;
 }
 
 OptionsState::~OptionsState()
@@ -27,14 +27,14 @@ OptionsState::~OptionsState()
 
 void OptionsState::init()
 {
-	auto& music = m_data->music;
-	music.setMaxVolume(m_data->musicVolumeFactor * 100);
+	auto& music = m_appData->music;
+	music.setMaxVolume(m_appData->musicVolumeFactor * 100);
 	music.play("Sounds/Stardust_Memories.ogg");
 	music.getCurrent().setLoop(true);
 
 	setDefaultColor(sf::Color::Yellow);
 	setHighlightColor(sf::Color::White);
-	setTitle("(Options)", 60.0f, m_data->assets.getFont("arcadeBar"), sf::Text::Style::Regular, sf::Color::Yellow, sf::Color::Transparent, 84, .9f);
+	setTitle("(Options)", 60.0f, m_appData->assets.getFont("arcadeBar"), sf::Text::Style::Regular, sf::Color::Yellow, sf::Color::Transparent, 84, .9f);
 	setTopItemPos(200);
 	setDefaultLineSpacing(7);
 	setDefaultAttribs(sf::Text::Bold | sf::Text::Italic, 62, 54);
@@ -50,18 +50,18 @@ void OptionsState::init()
 	setDefaultAttribs(sf::Text::Bold | sf::Text::Italic, 62, 54);
 	addMenuItem("Customize Controls");
 	addMenuItem("Music Volume");
-	addSlider(m_data->musicVolumeFactor);
+	addSlider(m_appData->musicVolumeFactor);
 	addMenuItem("Sound Volume");
-	addSlider(m_data->soundVolumeFactor);
+	addSlider(m_appData->soundVolumeFactor);
 	addMenuItem("Back");
 	
-	m_restartReqText = sf::Text("*Restart Required", *m_data->assets.getFont("default"));
+	m_restartReqText = sf::Text("*Restart Required", *m_appData->assets.getFont("default"));
 	m_restartReqText.setPosition(20.f, (float)SCRN_HEIGHT - 50.f);
 	m_restartReqText.setFillColor(sf::Color::Transparent);
 
 	setDifficultyText();
 
-	m_starField.init(m_data);
+	m_starField.init(m_appData);
 }
 
 void OptionsState::cleanup()
@@ -95,25 +95,25 @@ void OptionsState::updateImpl()
 		case 1:
 			break;
 		case 2:
-			m_data->machine.addState(StatePtr(std::make_unique<CustomControlsState>(m_data, m_gameData)), false);
+			m_appData->machine.addState(StatePtr(std::make_unique<CustomControlsState>(m_appData, m_gameData)));
 			break;
 		case 3:
-			m_data->music.setMaxVolume(m_data->musicVolumeFactor * 100);
+			m_appData->music.setMaxVolume(m_appData->musicVolumeFactor * 100);
 			break;
 		case 4:
 			if (m_subItemSelected != -1)
 			{
-				m_data->assets.adjustSoundVolume(m_data->soundVolumeFactor);
+				m_appData->assets.adjustSoundVolume(m_appData->soundVolumeFactor);
 				m_effectsSound->play();
 			}
 			break;
 		case 5:
 			if (m_oldDifficultySetting != m_newDifficultySetting)
 			{
-				m_data->difficulty = m_newDifficultySetting;
-				m_data->restartRequired = true;
+				m_appData->difficulty = m_newDifficultySetting;
+				m_appData->restartRequired = true;
 			}
-			m_data->machine.removeState();
+			m_appData->machine.removeState();
 			break;
 		default:
 			std::cerr << "Error selecting menu item!" << '\n';
@@ -152,11 +152,11 @@ void OptionsState::setDifficultyText()
 
 void OptionsState::onEscapePressed()
 {
-	m_data->machine.removeState();
+	m_appData->machine.removeState();
 }
 
 void OptionsState::drawBackground()
 {
-	m_data->window.draw(m_starField);
-	m_data->window.draw(m_restartReqText);
+	m_appData->window.draw(m_starField);
+	m_appData->window.draw(m_restartReqText);
 }

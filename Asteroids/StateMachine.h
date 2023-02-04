@@ -14,8 +14,10 @@ public:
 	StateMachine() = default;
 	~StateMachine() = default;
 
+	void cleanup();
 
-	void addState(StatePtr newState, bool isReplacing = true);
+	void addState(StatePtr newState);
+	void replaceState(StatePtr newState);
 	void removeState();
 
 	void processStateChanges();

@@ -15,7 +15,7 @@ void InputManager::update(sf::RenderWindow & window, sf::View& view)
 	}
 	for (auto& keys : m_keyStates)
 	{
-		keys.second = false;
+		keys.second = false;  
 	}
 	while (window.pollEvent(m_event))
 	{

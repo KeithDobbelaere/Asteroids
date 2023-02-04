@@ -24,7 +24,7 @@ private:
 	int m_cursorPosition, m_lastCursorPos;
 	const int m_characterSize = 120;
 	sf::Vector2f m_cursorScreenPos;
-	AppDataPtr m_data;
+	AppDataPtr m_appData;
 	GameDataPtr m_gameData;
 	sf::Font* m_font, *m_titleFont;
 	sf::Text m_titleText, m_instructionText, m_initialsText;
